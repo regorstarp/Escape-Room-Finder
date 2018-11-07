@@ -1,0 +1,6 @@
+framework module Pods_Escape_Room_Finder {
+  umbrella header "Pods-Escape Room Finder-umbrella.h"
+
+  export *
+  module * { export * }
+}

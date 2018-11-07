@@ -7,21 +7,41 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		69843E216737DE9B29873722 /* Pods_Escape_Room_Finder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1E617AFC588768FBD49A608 /* Pods_Escape_Room_Finder.framework */; };
+		DB24D8ED21936C880028D897 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB24D8EC21936C880028D897 /* GoogleService-Info.plist */; };
+		DB24D8F6219373310028D897 /* FirstScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB24D8EF219373310028D897 /* FirstScreenPresenter.swift */; };
+		DB24D8F7219373310028D897 /* FirstScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB24D8F0219373310028D897 /* FirstScreenViewController.swift */; };
+		DB24D8F8219373310028D897 /* FirstScreenBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB24D8F1219373310028D897 /* FirstScreenBuilder.swift */; };
+		DB24D8F9219373310028D897 /* FirstScreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB24D8F2219373310028D897 /* FirstScreenInteractor.swift */; };
+		DB24D8FA219373310028D897 /* FirstScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB24D8F3219373310028D897 /* FirstScreenViewModel.swift */; };
+		DB24D8FB219373310028D897 /* FirstScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB24D8F4219373310028D897 /* FirstScreenViewController.xib */; };
+		DB24D8FC219373310028D897 /* FirstScreenWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB24D8F5219373310028D897 /* FirstScreenWireframe.swift */; };
 		DB36CE46219369A800772BF5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB36CE45219369A800772BF5 /* AppDelegate.swift */; };
 		DB36CE48219369A800772BF5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB36CE47219369A800772BF5 /* ViewController.swift */; };
 		DB36CE4B219369A800772BF5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB36CE49219369A800772BF5 /* Main.storyboard */; };
 		DB36CE4D219369A800772BF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB36CE4C219369A800772BF5 /* Assets.xcassets */; };
-		DB36CE50219369A800772BF5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB36CE4E219369A800772BF5 /* LaunchScreen.storyboard */; };
+		DBFC158D219393430044B61D /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFC158C219393430044B61D /* UIViewController+Alerts.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		66B11CC29D49DE1F0F797080 /* Pods-Escape Room Finder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Escape Room Finder.release.xcconfig"; path = "Pods/Target Support Files/Pods-Escape Room Finder/Pods-Escape Room Finder.release.xcconfig"; sourceTree = "<group>"; };
+		D1E617AFC588768FBD49A608 /* Pods_Escape_Room_Finder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Escape_Room_Finder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB24D8EC21936C880028D897 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DB24D8EF219373310028D897 /* FirstScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstScreenPresenter.swift; sourceTree = "<group>"; };
+		DB24D8F0219373310028D897 /* FirstScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstScreenViewController.swift; sourceTree = "<group>"; };
+		DB24D8F1219373310028D897 /* FirstScreenBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstScreenBuilder.swift; sourceTree = "<group>"; };
+		DB24D8F2219373310028D897 /* FirstScreenInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstScreenInteractor.swift; sourceTree = "<group>"; };
+		DB24D8F3219373310028D897 /* FirstScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstScreenViewModel.swift; sourceTree = "<group>"; };
+		DB24D8F4219373310028D897 /* FirstScreenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FirstScreenViewController.xib; sourceTree = "<group>"; };
+		DB24D8F5219373310028D897 /* FirstScreenWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstScreenWireframe.swift; sourceTree = "<group>"; };
 		DB36CE42219369A800772BF5 /* Escape Room Finder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Escape Room Finder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB36CE45219369A800772BF5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DB36CE47219369A800772BF5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DB36CE4A219369A800772BF5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DB36CE4C219369A800772BF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		DB36CE4F219369A800772BF5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DB36CE51219369A800772BF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DBFC158C219393430044B61D /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
+		EF23E55B17D84B2BD7843E51 /* Pods-Escape Room Finder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Escape Room Finder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Escape Room Finder/Pods-Escape Room Finder.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +49,51 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69843E216737DE9B29873722 /* Pods_Escape_Room_Finder.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		44820648838EC537353F5AF0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D1E617AFC588768FBD49A608 /* Pods_Escape_Room_Finder.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CB6946E324B1B2A89CC22E0B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EF23E55B17D84B2BD7843E51 /* Pods-Escape Room Finder.debug.xcconfig */,
+				66B11CC29D49DE1F0F797080 /* Pods-Escape Room Finder.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		DB24D8EE219373050028D897 /* First Screen */ = {
+			isa = PBXGroup;
+			children = (
+				DB24D8EF219373310028D897 /* FirstScreenPresenter.swift */,
+				DB24D8F0219373310028D897 /* FirstScreenViewController.swift */,
+				DB24D8F1219373310028D897 /* FirstScreenBuilder.swift */,
+				DB24D8F2219373310028D897 /* FirstScreenInteractor.swift */,
+				DB24D8F3219373310028D897 /* FirstScreenViewModel.swift */,
+				DB24D8F4219373310028D897 /* FirstScreenViewController.xib */,
+				DB24D8F5219373310028D897 /* FirstScreenWireframe.swift */,
+			);
+			path = "First Screen";
+			sourceTree = "<group>";
+		};
 		DB36CE39219369A700772BF5 = {
 			isa = PBXGroup;
 			children = (
 				DB36CE44219369A800772BF5 /* Escape Room Finder */,
 				DB36CE43219369A800772BF5 /* Products */,
+				CB6946E324B1B2A89CC22E0B /* Pods */,
+				44820648838EC537353F5AF0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,12 +108,14 @@
 		DB36CE44219369A800772BF5 /* Escape Room Finder */ = {
 			isa = PBXGroup;
 			children = (
+				DB24D8EE219373050028D897 /* First Screen */,
 				DB36CE45219369A800772BF5 /* AppDelegate.swift */,
 				DB36CE47219369A800772BF5 /* ViewController.swift */,
 				DB36CE49219369A800772BF5 /* Main.storyboard */,
 				DB36CE4C219369A800772BF5 /* Assets.xcassets */,
-				DB36CE4E219369A800772BF5 /* LaunchScreen.storyboard */,
+				DB24D8EC21936C880028D897 /* GoogleService-Info.plist */,
 				DB36CE51219369A800772BF5 /* Info.plist */,
+				DBFC158C219393430044B61D /* UIViewController+Alerts.swift */,
 			);
 			path = "Escape Room Finder";
 			sourceTree = "<group>";
@@ -71,9 +127,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DB36CE54219369A800772BF5 /* Build configuration list for PBXNativeTarget "Escape Room Finder" */;
 			buildPhases = (
+				B822D00FB6C79F809743E57F /* [CP] Check Pods Manifest.lock */,
 				DB36CE3E219369A800772BF5 /* Sources */,
 				DB36CE3F219369A800772BF5 /* Frameworks */,
 				DB36CE40219369A800772BF5 /* Resources */,
+				8FC29656D7FADEC0C946CB2B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -122,7 +180,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB36CE50219369A800772BF5 /* LaunchScreen.storyboard in Resources */,
+				DB24D8ED21936C880028D897 /* GoogleService-Info.plist in Resources */,
+				DB24D8FB219373310028D897 /* FirstScreenViewController.xib in Resources */,
 				DB36CE4D219369A800772BF5 /* Assets.xcassets in Resources */,
 				DB36CE4B219369A800772BF5 /* Main.storyboard in Resources */,
 			);
@@ -130,13 +189,65 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		8FC29656D7FADEC0C946CB2B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Escape Room Finder/Pods-Escape Room Finder-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Escape Room Finder/Pods-Escape Room Finder-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B822D00FB6C79F809743E57F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Escape Room Finder-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		DB36CE3E219369A800772BF5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				DB36CE48219369A800772BF5 /* ViewController.swift in Sources */,
+				DB24D8F7219373310028D897 /* FirstScreenViewController.swift in Sources */,
+				DB24D8FA219373310028D897 /* FirstScreenViewModel.swift in Sources */,
+				DB24D8F8219373310028D897 /* FirstScreenBuilder.swift in Sources */,
+				DB24D8F6219373310028D897 /* FirstScreenPresenter.swift in Sources */,
 				DB36CE46219369A800772BF5 /* AppDelegate.swift in Sources */,
+				DB24D8F9219373310028D897 /* FirstScreenInteractor.swift in Sources */,
+				DBFC158D219393430044B61D /* UIViewController+Alerts.swift in Sources */,
+				DB24D8FC219373310028D897 /* FirstScreenWireframe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,14 +260,6 @@
 				DB36CE4A219369A800772BF5 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		DB36CE4E219369A800772BF5 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DB36CE4F219369A800772BF5 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -280,9 +383,11 @@
 		};
 		DB36CE55219369A800772BF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EF23E55B17D84B2BD7843E51 /* Pods-Escape Room Finder.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = HJMS9Y3CPZ;
 				INFOPLIST_FILE = "Escape Room Finder/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -297,9 +402,11 @@
 		};
 		DB36CE56219369A800772BF5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 66B11CC29D49DE1F0F797080 /* Pods-Escape Room Finder.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = HJMS9Y3CPZ;
 				INFOPLIST_FILE = "Escape Room Finder/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
