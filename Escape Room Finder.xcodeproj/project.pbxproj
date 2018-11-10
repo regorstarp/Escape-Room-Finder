@@ -9,17 +9,13 @@
 /* Begin PBXBuildFile section */
 		69843E216737DE9B29873722 /* Pods_Escape_Room_Finder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1E617AFC588768FBD49A608 /* Pods_Escape_Room_Finder.framework */; };
 		DB24D8ED21936C880028D897 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB24D8EC21936C880028D897 /* GoogleService-Info.plist */; };
-		DB24D8F6219373310028D897 /* FirstScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB24D8EF219373310028D897 /* FirstScreenPresenter.swift */; };
-		DB24D8F7219373310028D897 /* FirstScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB24D8F0219373310028D897 /* FirstScreenViewController.swift */; };
-		DB24D8F8219373310028D897 /* FirstScreenBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB24D8F1219373310028D897 /* FirstScreenBuilder.swift */; };
-		DB24D8F9219373310028D897 /* FirstScreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB24D8F2219373310028D897 /* FirstScreenInteractor.swift */; };
-		DB24D8FA219373310028D897 /* FirstScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB24D8F3219373310028D897 /* FirstScreenViewModel.swift */; };
-		DB24D8FB219373310028D897 /* FirstScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB24D8F4219373310028D897 /* FirstScreenViewController.xib */; };
-		DB24D8FC219373310028D897 /* FirstScreenWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB24D8F5219373310028D897 /* FirstScreenWireframe.swift */; };
 		DB36CE46219369A800772BF5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB36CE45219369A800772BF5 /* AppDelegate.swift */; };
-		DB36CE48219369A800772BF5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB36CE47219369A800772BF5 /* ViewController.swift */; };
-		DB36CE4B219369A800772BF5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB36CE49219369A800772BF5 /* Main.storyboard */; };
 		DB36CE4D219369A800772BF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB36CE4C219369A800772BF5 /* Assets.xcassets */; };
+		DB4A72752197820500ABA9A3 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4A72732197820500ABA9A3 /* WelcomeViewController.swift */; };
+		DB4A72762197820500ABA9A3 /* WelcomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB4A72742197820500ABA9A3 /* WelcomeViewController.xib */; };
+		DB4A727A219785A400ABA9A3 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4A7279219785A400ABA9A3 /* TabBarController.swift */; };
+		DB4A727D219785E800ABA9A3 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4A727B219785E800ABA9A3 /* MapViewController.swift */; };
+		DB4A727E219785E800ABA9A3 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB4A727C219785E800ABA9A3 /* MapViewController.xib */; };
 		DBFC158D219393430044B61D /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFC158C219393430044B61D /* UIViewController+Alerts.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,19 +23,15 @@
 		66B11CC29D49DE1F0F797080 /* Pods-Escape Room Finder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Escape Room Finder.release.xcconfig"; path = "Pods/Target Support Files/Pods-Escape Room Finder/Pods-Escape Room Finder.release.xcconfig"; sourceTree = "<group>"; };
 		D1E617AFC588768FBD49A608 /* Pods_Escape_Room_Finder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Escape_Room_Finder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB24D8EC21936C880028D897 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		DB24D8EF219373310028D897 /* FirstScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstScreenPresenter.swift; sourceTree = "<group>"; };
-		DB24D8F0219373310028D897 /* FirstScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstScreenViewController.swift; sourceTree = "<group>"; };
-		DB24D8F1219373310028D897 /* FirstScreenBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstScreenBuilder.swift; sourceTree = "<group>"; };
-		DB24D8F2219373310028D897 /* FirstScreenInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstScreenInteractor.swift; sourceTree = "<group>"; };
-		DB24D8F3219373310028D897 /* FirstScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstScreenViewModel.swift; sourceTree = "<group>"; };
-		DB24D8F4219373310028D897 /* FirstScreenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FirstScreenViewController.xib; sourceTree = "<group>"; };
-		DB24D8F5219373310028D897 /* FirstScreenWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstScreenWireframe.swift; sourceTree = "<group>"; };
 		DB36CE42219369A800772BF5 /* Escape Room Finder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Escape Room Finder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB36CE45219369A800772BF5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DB36CE47219369A800772BF5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		DB36CE4A219369A800772BF5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DB36CE4C219369A800772BF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DB36CE51219369A800772BF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB4A72732197820500ABA9A3 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		DB4A72742197820500ABA9A3 /* WelcomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WelcomeViewController.xib; sourceTree = "<group>"; };
+		DB4A7279219785A400ABA9A3 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		DB4A727B219785E800ABA9A3 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		DB4A727C219785E800ABA9A3 /* MapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
 		DBFC158C219393430044B61D /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
 		EF23E55B17D84B2BD7843E51 /* Pods-Escape Room Finder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Escape Room Finder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Escape Room Finder/Pods-Escape Room Finder.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -73,24 +65,11 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		DB24D8EE219373050028D897 /* First Screen */ = {
-			isa = PBXGroup;
-			children = (
-				DB24D8EF219373310028D897 /* FirstScreenPresenter.swift */,
-				DB24D8F0219373310028D897 /* FirstScreenViewController.swift */,
-				DB24D8F1219373310028D897 /* FirstScreenBuilder.swift */,
-				DB24D8F2219373310028D897 /* FirstScreenInteractor.swift */,
-				DB24D8F3219373310028D897 /* FirstScreenViewModel.swift */,
-				DB24D8F4219373310028D897 /* FirstScreenViewController.xib */,
-				DB24D8F5219373310028D897 /* FirstScreenWireframe.swift */,
-			);
-			path = "First Screen";
-			sourceTree = "<group>";
-		};
 		DB36CE39219369A700772BF5 = {
 			isa = PBXGroup;
 			children = (
-				DB36CE44219369A800772BF5 /* Escape Room Finder */,
+				DB4A7277219783C000ABA9A3 /* Resources */,
+				DB36CE44219369A800772BF5 /* Classes */,
 				DB36CE43219369A800772BF5 /* Products */,
 				CB6946E324B1B2A89CC22E0B /* Pods */,
 				44820648838EC537353F5AF0 /* Frameworks */,
@@ -105,19 +84,44 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		DB36CE44219369A800772BF5 /* Escape Room Finder */ = {
+		DB36CE44219369A800772BF5 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				DB24D8EE219373050028D897 /* First Screen */,
 				DB36CE45219369A800772BF5 /* AppDelegate.swift */,
-				DB36CE47219369A800772BF5 /* ViewController.swift */,
-				DB36CE49219369A800772BF5 /* Main.storyboard */,
-				DB36CE4C219369A800772BF5 /* Assets.xcassets */,
+				DBFC158C219393430044B61D /* UIViewController+Alerts.swift */,
+				DB4A7278219783D400ABA9A3 /* Welcome */,
+				DB4A7279219785A400ABA9A3 /* TabBarController.swift */,
+				DB4A727F219785EF00ABA9A3 /* Map */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		DB4A7277219783C000ABA9A3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
 				DB24D8EC21936C880028D897 /* GoogleService-Info.plist */,
 				DB36CE51219369A800772BF5 /* Info.plist */,
-				DBFC158C219393430044B61D /* UIViewController+Alerts.swift */,
+				DB36CE4C219369A800772BF5 /* Assets.xcassets */,
 			);
-			path = "Escape Room Finder";
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		DB4A7278219783D400ABA9A3 /* Welcome */ = {
+			isa = PBXGroup;
+			children = (
+				DB4A72732197820500ABA9A3 /* WelcomeViewController.swift */,
+				DB4A72742197820500ABA9A3 /* WelcomeViewController.xib */,
+			);
+			path = Welcome;
+			sourceTree = "<group>";
+		};
+		DB4A727F219785EF00ABA9A3 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				DB4A727B219785E800ABA9A3 /* MapViewController.swift */,
+				DB4A727C219785E800ABA9A3 /* MapViewController.xib */,
+			);
+			path = Map;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -180,10 +184,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB4A72762197820500ABA9A3 /* WelcomeViewController.xib in Resources */,
 				DB24D8ED21936C880028D897 /* GoogleService-Info.plist in Resources */,
-				DB24D8FB219373310028D897 /* FirstScreenViewController.xib in Resources */,
 				DB36CE4D219369A800772BF5 /* Assets.xcassets in Resources */,
-				DB36CE4B219369A800772BF5 /* Main.storyboard in Resources */,
+				DB4A727E219785E800ABA9A3 /* MapViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,30 +243,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB36CE48219369A800772BF5 /* ViewController.swift in Sources */,
-				DB24D8F7219373310028D897 /* FirstScreenViewController.swift in Sources */,
-				DB24D8FA219373310028D897 /* FirstScreenViewModel.swift in Sources */,
-				DB24D8F8219373310028D897 /* FirstScreenBuilder.swift in Sources */,
-				DB24D8F6219373310028D897 /* FirstScreenPresenter.swift in Sources */,
+				DB4A72752197820500ABA9A3 /* WelcomeViewController.swift in Sources */,
+				DB4A727A219785A400ABA9A3 /* TabBarController.swift in Sources */,
 				DB36CE46219369A800772BF5 /* AppDelegate.swift in Sources */,
-				DB24D8F9219373310028D897 /* FirstScreenInteractor.swift in Sources */,
+				DB4A727D219785E800ABA9A3 /* MapViewController.swift in Sources */,
 				DBFC158D219393430044B61D /* UIViewController+Alerts.swift in Sources */,
-				DB24D8FC219373310028D897 /* FirstScreenWireframe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		DB36CE49219369A800772BF5 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DB36CE4A219369A800772BF5 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		DB36CE52219369A800772BF5 /* Debug */ = {
@@ -388,7 +377,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HJMS9Y3CPZ;
-				INFOPLIST_FILE = "Escape Room Finder/Info.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -407,7 +396,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HJMS9Y3CPZ;
-				INFOPLIST_FILE = "Escape Room Finder/Info.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
