@@ -16,6 +16,8 @@
 		DB4A727A219785A400ABA9A3 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4A7279219785A400ABA9A3 /* TabBarController.swift */; };
 		DB4A727D219785E800ABA9A3 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4A727B219785E800ABA9A3 /* MapViewController.swift */; };
 		DB4A727E219785E800ABA9A3 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB4A727C219785E800ABA9A3 /* MapViewController.xib */; };
+		DB7172772198CA20008C785C /* RoomDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7172762198CA1F008C785C /* RoomDetailViewController.swift */; };
+		DB7172792198D61A008C785C /* RoomDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB7172782198D61A008C785C /* RoomDetailViewController.xib */; };
 		DBFC158D219393430044B61D /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFC158C219393430044B61D /* UIViewController+Alerts.swift */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +34,8 @@
 		DB4A7279219785A400ABA9A3 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		DB4A727B219785E800ABA9A3 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		DB4A727C219785E800ABA9A3 /* MapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
+		DB7172762198CA1F008C785C /* RoomDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomDetailViewController.swift; sourceTree = "<group>"; };
+		DB7172782198D61A008C785C /* RoomDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoomDetailViewController.xib; sourceTree = "<group>"; };
 		DBFC158C219393430044B61D /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
 		EF23E55B17D84B2BD7843E51 /* Pods-Escape Room Finder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Escape Room Finder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Escape Room Finder/Pods-Escape Room Finder.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,6 +124,8 @@
 			children = (
 				DB4A727B219785E800ABA9A3 /* MapViewController.swift */,
 				DB4A727C219785E800ABA9A3 /* MapViewController.xib */,
+				DB7172762198CA1F008C785C /* RoomDetailViewController.swift */,
+				DB7172782198D61A008C785C /* RoomDetailViewController.xib */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -188,6 +194,7 @@
 				DB24D8ED21936C880028D897 /* GoogleService-Info.plist in Resources */,
 				DB36CE4D219369A800772BF5 /* Assets.xcassets in Resources */,
 				DB4A727E219785E800ABA9A3 /* MapViewController.xib in Resources */,
+				DB7172792198D61A008C785C /* RoomDetailViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +250,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB7172772198CA20008C785C /* RoomDetailViewController.swift in Sources */,
 				DB4A72752197820500ABA9A3 /* WelcomeViewController.swift in Sources */,
 				DB4A727A219785A400ABA9A3 /* TabBarController.swift in Sources */,
 				DB36CE46219369A800772BF5 /* AppDelegate.swift in Sources */,

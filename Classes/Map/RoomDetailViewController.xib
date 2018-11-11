@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RoomDetailViewController" customModule="Escape_Room_Finder" customModuleProvider="target">
+            <connections>
+                <outlet property="closeButton" destination="guj-Db-SrI" id="jrR-Qm-Q9X"/>
+                <outlet property="gripperView" destination="Btc-rS-Ha5" id="ZyX-0I-P96"/>
+                <outlet property="tableView" destination="3ed-5q-0fd" id="AK4-OJ-Rxb"/>
+                <outlet property="view" destination="sYM-oY-x7O" id="E63-oy-pec"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="sYM-oY-x7O">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3ed-5q-0fd">
+                    <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </tableView>
+                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kx9-Zu-4Jm">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                    <items>
+                        <navigationItem id="KBO-94-sXs">
+                            <nil key="title"/>
+                            <barButtonItem key="leftBarButtonItem" style="plain" id="Bmg-MJ-3sk">
+                                <view key="customView" contentMode="scaleToFill" id="khK-3f-sl2">
+                                    <rect key="frame" x="16" y="5.5" width="83" height="33"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
+                            </barButtonItem>
+                            <view key="titleView" contentMode="scaleToFill" id="QYG-MQ-QUZ">
+                                <rect key="frame" x="161" y="5.5" width="53" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Btc-rS-Ha5">
+                                        <rect key="frame" x="9" y="6" width="35" height="4"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="4" id="Lqc-Z2-qVr"/>
+                                            <constraint firstAttribute="width" constant="35" id="Vnk-Ld-3lU"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="Btc-rS-Ha5" firstAttribute="centerX" secondItem="QYG-MQ-QUZ" secondAttribute="centerX" id="7km-wY-ScH"/>
+                                    <constraint firstItem="Btc-rS-Ha5" firstAttribute="top" secondItem="QYG-MQ-QUZ" secondAttribute="top" constant="6" id="n8C-zi-d4E"/>
+                                </constraints>
+                            </view>
+                            <barButtonItem key="rightBarButtonItem" systemItem="stop" id="guj-Db-SrI"/>
+                        </navigationItem>
+                    </items>
+                </navigationBar>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="RwG-dL-Lv6" firstAttribute="bottom" secondItem="3ed-5q-0fd" secondAttribute="bottom" id="3MI-9Q-Waz"/>
+                <constraint firstItem="RwG-dL-Lv6" firstAttribute="trailing" secondItem="kx9-Zu-4Jm" secondAttribute="trailing" id="AtZ-lG-YzX"/>
+                <constraint firstItem="3ed-5q-0fd" firstAttribute="top" secondItem="kx9-Zu-4Jm" secondAttribute="bottom" id="UZW-mc-f7u"/>
+                <constraint firstItem="RwG-dL-Lv6" firstAttribute="trailing" secondItem="3ed-5q-0fd" secondAttribute="trailing" id="cUG-Zy-xHE"/>
+                <constraint firstItem="3ed-5q-0fd" firstAttribute="leading" secondItem="RwG-dL-Lv6" secondAttribute="leading" id="jx7-K6-BI7"/>
+                <constraint firstItem="kx9-Zu-4Jm" firstAttribute="leading" secondItem="sYM-oY-x7O" secondAttribute="leading" id="nOM-rN-mhj"/>
+                <constraint firstItem="kx9-Zu-4Jm" firstAttribute="top" secondItem="sYM-oY-x7O" secondAttribute="top" id="xlo-1Q-xSl"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="RwG-dL-Lv6"/>
+            <point key="canvasLocation" x="538" y="-398"/>
+        </view>
+    </objects>
+</document>

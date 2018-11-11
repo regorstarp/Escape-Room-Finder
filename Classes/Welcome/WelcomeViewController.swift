@@ -17,7 +17,7 @@ class WelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        FirebaseApp.configure()
+//        FirebaseApp.configure()
         
 //        let ref = Database.database().reference(withPath: "escape-room")
 //        ref.observeSingleEvent(of: .value, with: { snapshot in

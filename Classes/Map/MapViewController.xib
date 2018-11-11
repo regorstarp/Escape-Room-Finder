@@ -12,7 +12,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MapViewController" customModule="Escape_Room_Finder" customModuleProvider="target">
             <connections>
+                <outlet property="filterButtonContentView" destination="Nsn-y7-sbj" id="dJu-oK-oqU"/>
                 <outlet property="mapView" destination="xjF-hf-geN" id="h5F-VI-zUG"/>
+                <outlet property="userTrackingButtonContentView" destination="Riz-5e-wRL" id="NTy-Za-gKU"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -24,15 +26,36 @@
                 <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="xjF-hf-geN">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </mapView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Riz-5e-wRL">
+                    <rect key="frame" x="315" y="603" width="44" height="44"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="ovF-Lv-y7l"/>
+                        <constraint firstAttribute="width" constant="44" id="q2U-n6-UWC"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nsn-y7-sbj">
+                    <rect key="frame" x="315" y="557" width="44" height="44"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="44" id="8Zd-Um-wQ9"/>
+                        <constraint firstAttribute="height" constant="44" id="VGN-Uq-RS6"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="xjF-hf-geN" secondAttribute="bottom" id="CF7-7U-f83"/>
+                <constraint firstItem="Riz-5e-wRL" firstAttribute="top" secondItem="Nsn-y7-sbj" secondAttribute="bottom" constant="2" id="Gb9-eJ-SRX"/>
                 <constraint firstItem="xjF-hf-geN" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="INe-uo-Yix"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Riz-5e-wRL" secondAttribute="bottom" constant="20" id="OBL-Mq-EhP"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="xjF-hf-geN" secondAttribute="trailing" id="Rcg-V5-sN3"/>
                 <constraint firstItem="xjF-hf-geN" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Yuj-cP-9Yk"/>
+                <constraint firstAttribute="trailing" secondItem="Riz-5e-wRL" secondAttribute="trailing" constant="16" id="Zkq-w5-kAQ"/>
+                <constraint firstItem="Riz-5e-wRL" firstAttribute="trailing" secondItem="Nsn-y7-sbj" secondAttribute="trailing" id="n8Y-HT-tol"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="53.600000000000001" y="48.125937031484263"/>
         </view>
     </objects>
 </document>

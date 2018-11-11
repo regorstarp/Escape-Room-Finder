@@ -12,7 +12,7 @@ class TabBarController: UITabBarController {
     
     override func viewDidLoad() {
         let mapViewController = MapViewController()
-        mapViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .downloads, tag: 0)
+        mapViewController.tabBarItem = UITabBarItem(title: "Map", image: UIImage(named: "map"), tag: 0)
         let nc = UINavigationController(rootViewController: mapViewController)
         nc.navigationBar.isHidden = true
         viewControllers = [nc]
