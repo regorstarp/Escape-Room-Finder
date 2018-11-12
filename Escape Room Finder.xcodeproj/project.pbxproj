@@ -11,6 +11,9 @@
 		DB24D8ED21936C880028D897 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB24D8EC21936C880028D897 /* GoogleService-Info.plist */; };
 		DB36CE46219369A800772BF5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB36CE45219369A800772BF5 /* AppDelegate.swift */; };
 		DB36CE4D219369A800772BF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB36CE4C219369A800772BF5 /* Assets.xcassets */; };
+		DB3E71002199DD1300C48A43 /* Drawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3E70FF2199DD1300C48A43 /* Drawer.swift */; };
+		DB3E71042199DDA000C48A43 /* UiColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3E71032199DDA000C48A43 /* UiColorExtensions.swift */; };
+		DB3E71062199DE1000C48A43 /* SpringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3E71052199DE1000C48A43 /* SpringExtensions.swift */; };
 		DB4A72752197820500ABA9A3 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4A72732197820500ABA9A3 /* WelcomeViewController.swift */; };
 		DB4A72762197820500ABA9A3 /* WelcomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB4A72742197820500ABA9A3 /* WelcomeViewController.xib */; };
 		DB4A727A219785A400ABA9A3 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4A7279219785A400ABA9A3 /* TabBarController.swift */; };
@@ -29,6 +32,9 @@
 		DB36CE45219369A800772BF5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DB36CE4C219369A800772BF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DB36CE51219369A800772BF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB3E70FF2199DD1300C48A43 /* Drawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drawer.swift; sourceTree = "<group>"; };
+		DB3E71032199DDA000C48A43 /* UiColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UiColorExtensions.swift; sourceTree = "<group>"; };
+		DB3E71052199DE1000C48A43 /* SpringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringExtensions.swift; sourceTree = "<group>"; };
 		DB4A72732197820500ABA9A3 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		DB4A72742197820500ABA9A3 /* WelcomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WelcomeViewController.xib; sourceTree = "<group>"; };
 		DB4A7279219785A400ABA9A3 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -96,6 +102,9 @@
 				DB4A7278219783D400ABA9A3 /* Welcome */,
 				DB4A7279219785A400ABA9A3 /* TabBarController.swift */,
 				DB4A727F219785EF00ABA9A3 /* Map */,
+				DB3E70FF2199DD1300C48A43 /* Drawer.swift */,
+				DB3E71052199DE1000C48A43 /* SpringExtensions.swift */,
+				DB3E71032199DDA000C48A43 /* UiColorExtensions.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -254,8 +263,11 @@
 				DB4A72752197820500ABA9A3 /* WelcomeViewController.swift in Sources */,
 				DB4A727A219785A400ABA9A3 /* TabBarController.swift in Sources */,
 				DB36CE46219369A800772BF5 /* AppDelegate.swift in Sources */,
+				DB3E71062199DE1000C48A43 /* SpringExtensions.swift in Sources */,
+				DB3E71042199DDA000C48A43 /* UiColorExtensions.swift in Sources */,
 				DB4A727D219785E800ABA9A3 /* MapViewController.swift in Sources */,
 				DBFC158D219393430044B61D /* UIViewController+Alerts.swift in Sources */,
+				DB3E71002199DD1300C48A43 /* Drawer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

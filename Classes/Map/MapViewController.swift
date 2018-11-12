@@ -28,6 +28,8 @@ class MapViewController: UIViewController {
         setupFilterButton()
         checkLocationServices()
         setupAnotations()
+        navigationController?.tabBarController?.tabBar.isHidden = true
+        addChild(RoomDetailViewController())
     }
     
     func setupAnotations() {
@@ -176,13 +178,21 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        tabBarController?.tabBar.isHidden = true
-        let roomDetailViewController = RoomDetailViewController()
-        let nc = UINavigationController(rootViewController: roomDetailViewController)
-        nc.definesPresentationContext = true
-        nc.modalTransitionStyle = .coverVertical
-        nc.modalPresentationStyle = .overCurrentContext
-        nc.isNavigationBarHidden = true
-        present(nc, animated: true)
+        
+        
+        guard let location = locationManager.location?.coordinate else { return }
+        mapView.setCenter(location, animated: true)
+        
+        let drawerVc = DrawerViewController()
+        drawerVc.modalPresentationStyle = .overCurrentContext
+        drawerVc.delegate = self
+        present(drawerVc, animated: true)
+    }
+}
+
+extension MapViewController: DrawerViewControllerDelegate {
+    func dismiss() {
+        presentedViewController?.dismiss(animated: true)
+        mapView.selectedAnnotations = []
     }
 }
