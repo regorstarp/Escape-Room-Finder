@@ -21,6 +21,9 @@
 		DB4A727E219785E800ABA9A3 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB4A727C219785E800ABA9A3 /* MapViewController.xib */; };
 		DB7172772198CA20008C785C /* RoomDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7172762198CA1F008C785C /* RoomDetailViewController.swift */; };
 		DB7172792198D61A008C785C /* RoomDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB7172782198D61A008C785C /* RoomDetailViewController.xib */; };
+		DBDC0982219C7CAE00DB26E6 /* EscapeRoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDC0981219C7CAE00DB26E6 /* EscapeRoomModel.swift */; };
+		DBDC0984219CBACE00DB26E6 /* UIColor+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDC0983219CBACE00DB26E6 /* UIColor+Theme.swift */; };
+		DBDC0986219CD54900DB26E6 /* BusinessDetailTableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDC0985219CD54900DB26E6 /* BusinessDetailTableDelegate.swift */; };
 		DBFC158D219393430044B61D /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFC158C219393430044B61D /* UIViewController+Alerts.swift */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +45,9 @@
 		DB4A727C219785E800ABA9A3 /* MapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
 		DB7172762198CA1F008C785C /* RoomDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomDetailViewController.swift; sourceTree = "<group>"; };
 		DB7172782198D61A008C785C /* RoomDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoomDetailViewController.xib; sourceTree = "<group>"; };
+		DBDC0981219C7CAE00DB26E6 /* EscapeRoomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EscapeRoomModel.swift; sourceTree = "<group>"; };
+		DBDC0983219CBACE00DB26E6 /* UIColor+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Theme.swift"; sourceTree = "<group>"; };
+		DBDC0985219CD54900DB26E6 /* BusinessDetailTableDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessDetailTableDelegate.swift; sourceTree = "<group>"; };
 		DBFC158C219393430044B61D /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
 		EF23E55B17D84B2BD7843E51 /* Pods-Escape Room Finder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Escape Room Finder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Escape Room Finder/Pods-Escape Room Finder.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -105,6 +111,7 @@
 				DB3E70FF2199DD1300C48A43 /* Drawer.swift */,
 				DB3E71052199DE1000C48A43 /* SpringExtensions.swift */,
 				DB3E71032199DDA000C48A43 /* UiColorExtensions.swift */,
+				DBDC0983219CBACE00DB26E6 /* UIColor+Theme.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -132,9 +139,11 @@
 			isa = PBXGroup;
 			children = (
 				DB4A727B219785E800ABA9A3 /* MapViewController.swift */,
+				DBDC0981219C7CAE00DB26E6 /* EscapeRoomModel.swift */,
 				DB4A727C219785E800ABA9A3 /* MapViewController.xib */,
 				DB7172762198CA1F008C785C /* RoomDetailViewController.swift */,
 				DB7172782198D61A008C785C /* RoomDetailViewController.xib */,
+				DBDC0985219CD54900DB26E6 /* BusinessDetailTableDelegate.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -260,14 +269,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB7172772198CA20008C785C /* RoomDetailViewController.swift in Sources */,
+				DBDC0984219CBACE00DB26E6 /* UIColor+Theme.swift in Sources */,
 				DB4A72752197820500ABA9A3 /* WelcomeViewController.swift in Sources */,
 				DB4A727A219785A400ABA9A3 /* TabBarController.swift in Sources */,
 				DB36CE46219369A800772BF5 /* AppDelegate.swift in Sources */,
 				DB3E71062199DE1000C48A43 /* SpringExtensions.swift in Sources */,
 				DB3E71042199DDA000C48A43 /* UiColorExtensions.swift in Sources */,
 				DB4A727D219785E800ABA9A3 /* MapViewController.swift in Sources */,
+				DBDC0986219CD54900DB26E6 /* BusinessDetailTableDelegate.swift in Sources */,
 				DBFC158D219393430044B61D /* UIViewController+Alerts.swift in Sources */,
 				DB3E71002199DD1300C48A43 /* Drawer.swift in Sources */,
+				DBDC0982219C7CAE00DB26E6 /* EscapeRoomModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

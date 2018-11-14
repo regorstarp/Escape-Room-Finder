@@ -20,6 +20,10 @@ class MapViewController: UIViewController {
     let locationManager = CLLocationManager()
     let regionInMeters: Double = 6000
     var directionsArray: [MKDirections] = []
+    var businesses: [Business] = []
+    let tableController = BusinessDetailTableDelegate()
+    
+    private var closedTransform = CGAffineTransform.identity
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,36 +31,28 @@ class MapViewController: UIViewController {
         setupLocateButton()
         setupFilterButton()
         checkLocationServices()
-        setupAnotations()
+        FirebaseManager.getBusinesses { (businesses) in
+            self.businesses = businesses
+            self.setupAnnotations()
+        }
         navigationController?.tabBarController?.tabBar.isHidden = true
-        addChild(RoomDetailViewController())
+        
     }
     
-    func setupAnotations() {
-        guard let location = locationManager.location?.coordinate else { return }
-        
-        let anotation = MKPointAnnotation()
-        anotation.title = "Home"
-        anotation.coordinate = location
-        self.mapView.addAnnotation(anotation)
-        
-//        let geoCoder = CLGeocoder()
-//        geoCoder.geocodeAddressString("josep renom 105, sabadell") { (placemarks, error) in
-//            guard
-//                let placemarks = placemarks,
-//                let location = placemarks.first?.location
-//                else {
-//                    // handle no location found
-//                    return
-//            }
-//
-//            // Use your location
-//
-//            let anotation = MKPointAnnotation()
-//            anotation.title = "Home"
-//            anotation.coordinate = location.coordinate
-//            self.mapView.addAnnotation(anotation)
-//        }
+    func setupAnnotations() {
+        for business in businesses {
+            getCoordinate(addressString: business.address) { (coordinate, error) in
+//                guard error != nil else { return } //to ignore wrong coordinate
+                self.addAnnotation(coordinate: coordinate, name: business.name)
+            }
+        }
+    }
+    
+    func addAnnotation(coordinate: CLLocationCoordinate2D, name: String) {
+        let annotation = MKPointAnnotation()
+        annotation.title = name
+        annotation.coordinate = coordinate
+        mapView.addAnnotation(annotation)
     }
     
     private func setupLocateButton() {
@@ -137,12 +133,67 @@ class MapViewController: UIViewController {
         mapView.showsUserLocation = true
         centerViewOnUserLocation()
         locationManager.startUpdatingLocation()
+        
+//        getCoordinate(addressString: "Carrer de Casp, 9 08204 SABADELL") { (coordinate, error) in
+//            print(coordinate)
+//        }
     }
     
-//    let coordinate = CLLocationCoordinate2DMake(theLatitude,theLongitude)
-//    let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary:nil))
-//    mapItem.name = "Target location"
-//    mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
+    func getCoordinate( addressString : String,
+                        completionHandler: @escaping(CLLocationCoordinate2D, NSError?) -> Void ) {
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(addressString) { (placemarks, error) in
+            if error == nil {
+                if let placemark = placemarks?[0] {
+                    let location = placemark.location!
+                    
+                    completionHandler(location.coordinate, nil)
+                    return
+                }
+            }
+            
+            completionHandler(kCLLocationCoordinate2DInvalid, error as NSError?)
+        }
+    }
+    
+    private lazy var drawerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 8
+        return view
+        }()
+    
+    private lazy var drawerNavigationBar: UINavigationBar = {
+        let navBar = UINavigationBar()
+        navBar.translatesAutoresizingMaskIntoConstraints = false
+        navBar.layer.cornerRadius = 8
+        
+        let titleItem = UINavigationItem(title: "")
+        let doneButton = UIButton(type: .roundedRect)
+        doneButton.frame = CGRect(x: 0, y: 0, width: 60, height: 30)
+        doneButton.setTitle("Done", for: .normal)
+        doneButton.backgroundColor = #colorLiteral(red: 0.8521460295, green: 0.8940392137, blue: 0.9998423457, alpha: 1)
+        doneButton.layer.cornerRadius = 10
+        doneButton.addTarget(self, action: #selector(done), for: .touchUpInside)
+        titleItem.rightBarButtonItem = UIBarButtonItem(customView: doneButton)
+        navBar.setItems([titleItem], animated: false)
+        
+        return navBar
+    }()
+    
+    private lazy var tableView: UITableView = {
+        let table = UITableView(frame: .zero, style: .grouped)
+        table.translatesAutoresizingMaskIntoConstraints = false
+        return table
+    }()
+    
+    @objc private func done() {
+        closedTransform = CGAffineTransform(translationX: 0, y: self.view.bounds.height)
+        drawerView.transform = closedTransform
+        drawerView.removeFromSuperview()
+        mapView.deselectAnnotation(mapView.selectedAnnotations.first, animated: true)
+    }
 }
 
 extension MapViewController: CLLocationManagerDelegate {
@@ -167,7 +218,7 @@ extension MapViewController: MKMapViewDelegate {
         
         if annotationView == nil {
             let markerAnnotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            markerAnnotationView.glyphText = "Test"
+//            markerAnnotationView.glyphText = annotation.title ?? ""
             annotationView = markerAnnotationView
             annotationView!.canShowCallout = true
         } else {
@@ -178,15 +229,63 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+
+//        guard let location = view.annotation?.coordinate else { return }
+//        mapView.setCenter(location, animated: true)
+        
+        self.view.addSubview(drawerView)
+        
+        NSLayoutConstraint.activate([
+//            drawerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 80),
+            drawerView.heightAnchor.constraint(equalToConstant: self.view.bounds.height * 0.4),
+            drawerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 10),
+            drawerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            drawerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+            ])
+        
+        drawerView.addSubview(drawerNavigationBar)
+        
+        NSLayoutConstraint.activate([
+            drawerNavigationBar.topAnchor.constraint(equalTo: drawerView.topAnchor),
+            drawerNavigationBar.leadingAnchor.constraint(equalTo: drawerView.leadingAnchor),
+            drawerNavigationBar.trailingAnchor.constraint(equalTo: drawerView.trailingAnchor)
+            ])
         
         
-        guard let location = locationManager.location?.coordinate else { return }
-        mapView.setCenter(location, animated: true)
         
-        let drawerVc = DrawerViewController()
-        drawerVc.modalPresentationStyle = .overCurrentContext
-        drawerVc.delegate = self
-        present(drawerVc, animated: true)
+        if case let annotationTitle?? = view.annotation?.title {
+            drawerNavigationBar.topItem?.title = annotationTitle
+            FirebaseManager.getBusiness(withName: annotationTitle) { (business) in
+                self.setupTableView(forBusiness: business)
+            }
+        }
+        
+//        closedTransform = CGAffineTransform(translationX: 0, y: self.view.bounds.height * 0.4)
+//        drawerView.transform = closedTransform
+    }
+    
+    private func setupTableView(forBusiness business: Business) {
+        drawerView.addSubview(tableView)
+        
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: drawerNavigationBar.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: drawerNavigationBar.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: drawerNavigationBar.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: drawerView.bottomAnchor)
+            ])
+        
+        tableController.business = business
+        tableView.delegate = tableController
+        tableView.dataSource = tableController
+        DispatchQueue.main.async {
+          self.tableView.reloadData()
+        }
+        
+    }
+    
+    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        drawerNavigationBar.topItem?.title = ""
+        drawerView.removeFromSuperview()
     }
 }
 

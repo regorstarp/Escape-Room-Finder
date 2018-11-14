@@ -38,7 +38,16 @@ class DrawerViewController: UIViewController {
         navigationBar.translatesAutoresizingMaskIntoConstraints = false
         navigationBar.isTranslucent = true
         let titleItem = UINavigationItem(title: "Test")
-        titleItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.stop, target: nil, action: #selector(done))
+        
+        let doneButton = UIButton(type: .roundedRect)
+        doneButton.frame = CGRect(x: 0, y: 0, width: 60, height: 30)
+        doneButton.setTitle("Done", for: .normal)
+        doneButton.backgroundColor = #colorLiteral(red: 0.8521460295, green: 0.8940392137, blue: 0.9998423457, alpha: 1)
+        doneButton.layer.cornerRadius = 10
+        doneButton.addTarget(self, action: #selector(done), for: .touchUpInside)
+        
+        titleItem.rightBarButtonItem = UIBarButtonItem(customView: doneButton)
+    
         navigationBar.setItems([titleItem], animated: false)
         return navigationBar
     }()
