@@ -1,0 +1,68 @@
+
+{
+    "business" : {
+        "0" : {
+            "address" : "Carrer de Casp, 9 08204 SABADELL",
+            "mail" : "info@escapem.com",
+            "name" : "Escapem",
+            "phone" : 682289441,
+            "website" : "https://escapem.com",
+            "rooms" : ["Bajo Zero", "La Sospecha"]
+        },
+        "1" : {
+            "address" : "Budapest, 73 08206 Sabadell",
+            "mail" : "hola@estelartrek.com",
+            "name" : "Estelar Trek",
+            "phone" : 609848456,
+            "website" : "http://estelartrek.com",
+            "rooms" : ["Estelar Trek"]
+        },
+        "2" : {
+            "address" : "Ronda de Zamenhof, 7908201 Sabadell",
+            "mail" : "info@escapanimus.cat",
+            "name" : "Escapanimus",
+            "phone" : 678032632,
+            "website" : "http://www.escapanimus.cat/es/",
+            "rooms" : ["Victus"]
+        },
+        "3" : {
+            "address" : "Zurbano 7 Baixos, 08201 Sabadell",
+            "mail" : "wolfcrowescape@gmail.com",
+            "name" : "Wolfcrow",
+            "phone" : 605299388,
+            "website" : "https://escaperoomsabadell.es"
+        },
+        "4" : {
+            "address" : "Carrer d'Empordà 15 Bajos, 08210 Barberà del Vallès",
+            "mail" : "lavisitaroomscape@gmail.com",
+            "name" : "La Visita",
+            "phone" : 690864450,
+            "website" : "https://xavierin89.wixsite.com/lavisitaroomscape"
+        },
+        "escape-rooms" : {
+            "Bajo Zero" : {
+                "description" : "Prepárate para una aventura inesperada.   Tendrás que ser muy ágil para no acabar con el cuerpo congelado.   La supervivencia está en tus manos   ¿lograrás vencer el frío y salir de esta situación?   Bajo Zero es un room scape que no te dejará indiferente. Ideal para esas personas que buscan una sala con algún hecho diferenciador y original.   ¿Buscas un plan divertido? No lo dudes, Bajo Zero es una opción ganadora..",
+                "price-person" : [null, null, 30, 24, 20, 18, 16 ],
+                "business" : "Escapem"
+            },
+            "La Sospecha" : {
+                "description" : "Crees que todo está bajo control, que nada malo puede pasar, pero algo te ronda la cabeza. Una sospecha. No sabes que es, pero tienes claro que hasta que no resuelvas el misterio estarás sin salida.   ¿Serás capaz de unir las piezas y escapar de la sala? Sabes que puedes hacerlo, pero, ¿llegarás a tiempo antes de que te descubran?  La sospecha es una trepidante aventura en la que el tiempo será tu mayor enemigo. Atrévete con el reto que te proponemos en escapem y demuestra que eres capaz de conseguirlo.",
+                "price" : [55,85],
+                "players" : [2,7],
+                "business" : "Escapem"
+            },
+            "Estelar Trek" : {
+                "description" : "PODRÁS REGRESAR A LA TIERRA EN 60 MINUTOS? Una aventura que difícilmente olvidarás! Bienvenido a la base Estelar Trek. Hoy celebramos tu graduación disfrutando de un fantástico viaje en la nave insignia de la flota estelar, el Enterprise! la nave más poderosa jamás creada por el hombre, capaz de alcanzar velocidades factor 9.7 gracias a sus potentes reactores de Dilitio. Un viaje difícil de olvidar… si es que puedes contarlo! Tienes lo que hay que tener para superar todas las pruebas que te encuentres? Sabrás encajar las piezas? Podrás hacerlo antes de que se acabe el tiempo?",
+                "price" : [55,85],
+                "players" : [2,7],
+                "business" : "Estelar Trek"
+            },
+            "Victus" : {
+                "description" : "Nos encontramos en el S.II antes de Cristo. El hombre ha cometido un gran error, robar al Dios Júpiter uno de sus tesoros más valiosos: el pergamino de su linaje. Los Dioses, hartos de la soberbia de los hombres, han decidido librar el caos el caos en la Tierra. El Oráculo lo acaba de vaticinar: “se acerca el apocalipsis”. Sólo una prueba de humildad y sumisión devolverán el equilibrio.",
+                "price" : [55,85],
+                "players" : [2,7],
+                "business" : "Escapanimus"
+            }
+        }
+    }
+}

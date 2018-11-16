@@ -146,7 +146,8 @@ class MapViewController: UIViewController {
             if error == nil {
                 if let placemark = placemarks?[0] {
                     let location = placemark.location!
-                    
+                    let region = MKCoordinateRegion.init(center: location.coordinate, latitudinalMeters: self.regionInMeters, longitudinalMeters: self.regionInMeters)
+                    self.mapView.setRegion(region, animated: true)
                     completionHandler(location.coordinate, nil)
                     return
                 }
@@ -185,12 +186,11 @@ class MapViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
         table.translatesAutoresizingMaskIntoConstraints = false
+        table.backgroundColor = .white
         return table
     }()
     
     @objc private func done() {
-        closedTransform = CGAffineTransform(translationX: 0, y: self.view.bounds.height)
-        drawerView.transform = closedTransform
         drawerView.removeFromSuperview()
         mapView.deselectAnnotation(mapView.selectedAnnotations.first, animated: true)
     }
@@ -268,7 +268,7 @@ extension MapViewController: MKMapViewDelegate {
         drawerView.addSubview(tableView)
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: drawerNavigationBar.bottomAnchor),
+            tableView.topAnchor.constraint(equalTo: drawerNavigationBar.bottomAnchor, constant: 6),
             tableView.leadingAnchor.constraint(equalTo: drawerNavigationBar.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: drawerNavigationBar.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: drawerView.bottomAnchor)

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "833BEFA6F2E2AF8A2F7FDD3CB9E2994F"
+               BlueprintIdentifier = "60DF9503FC7E30094102DCAFDE9A7BAE"
                BuildableName = "Pods_Escape_Room_Finder.framework"
                BlueprintName = "Pods-Escape Room Finder"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "833BEFA6F2E2AF8A2F7FDD3CB9E2994F"
+            BlueprintIdentifier = "60DF9503FC7E30094102DCAFDE9A7BAE"
             BuildableName = "Pods_Escape_Room_Finder.framework"
             BlueprintName = "Pods-Escape Room Finder"
             ReferencedContainer = "container:Pods.xcodeproj">
