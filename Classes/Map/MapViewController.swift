@@ -9,33 +9,60 @@
 import UIKit
 import MapKit
 import CoreLocation
-import Firebase
+import FirebaseFirestore
 
 class MapViewController: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var userTrackingButtonContentView: UIView!
-    @IBOutlet weak var filterButtonContentView: UIView!
+    private var userTrackingButton: MKUserTrackingButton!
+    private let locationManager = CLLocationManager()
     
-    let locationManager = CLLocationManager()
-    let regionInMeters: Double = 6000
-    var directionsArray: [MKDirections] = []
+    let regionInMeters: Double = 15000
     var businesses: [Business] = []
     let tableController = BusinessDetailTableDelegate()
     
-    private var closedTransform = CGAffineTransform.identity
+    
+    
+    private func setupNavigationBar() {
+
+    }
+    
+    private func setupUserTrackingButton() {
+        mapView.showsUserLocation = true
+        
+        userTrackingButton = MKUserTrackingButton(mapView: mapView)
+        userTrackingButton.layer.backgroundColor = UIColor.translucentButtonColor?.cgColor
+        userTrackingButton.layer.borderColor = UIColor.white.cgColor
+        userTrackingButton.layer.borderWidth = 1
+        userTrackingButton.layer.cornerRadius = 5
+        userTrackingButton.isHidden = true // Unhides when location authorization is given.
+        view.addSubview(userTrackingButton)
+        
+        userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([userTrackingButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+                                     userTrackingButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10)])
+    }
+    
+    private func loadBusinesses() {
+//        FirebaseManager.getBusinesses { (businesses) in
+//            self.businesses = businesses
+//            self.setupAnnotations()
+//        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         mapView.delegate = self
-        setupLocateButton()
-        setupFilterButton()
-        checkLocationServices()
-        FirebaseManager.getBusinesses { (businesses) in
-            self.businesses = businesses
-            self.setupAnnotations()
-        }
-        navigationController?.tabBarController?.tabBar.isHidden = true
+        setupNavigationBar()
+        setupUserTrackingButton()
+        
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        
+        loadBusinesses()
+        
         
     }
     
@@ -53,90 +80,6 @@ class MapViewController: UIViewController {
         annotation.title = name
         annotation.coordinate = coordinate
         mapView.addAnnotation(annotation)
-    }
-    
-    private func setupLocateButton() {
-        let locationView = MKUserTrackingButton(mapView: mapView)
-        locationView.autoresizingMask = [.flexibleTopMargin, .flexibleLeftMargin]
-        locationView.frame = userTrackingButtonContentView.bounds
-        userTrackingButtonContentView.addSubview(locationView)
-        setupButtonContentView(for: userTrackingButtonContentView)
-
-    }
-    
-    private func setupFilterButton() {
-        let filterButton = UIButton(type: .infoLight)
-        filterButton.frame = filterButtonContentView.bounds
-        filterButtonContentView.addSubview(filterButton)
-        setupButtonContentView(for: filterButtonContentView)
-    }
-    
-    private func setupButtonContentView(for view: UIView) {
-        view.layer.borderColor = UIColor(white: 0.2, alpha: 0.2).cgColor
-        view.backgroundColor = UIColor(hue: 0.13, saturation: 0.03, brightness: 0.97, alpha: 1.0)
-        view.layer.borderWidth = 0.5
-        view.layer.cornerRadius = 8
-        view.layer.shadowOffset = CGSize(width: 0, height: 0)
-        view.layer.shadowRadius = 2
-        view.layer.shadowOpacity = 0.1
-    }
-    
-    @objc func onCenterLocationButton() {
-        centerViewOnUserLocation()
-    }
-    
-    
-    func setupLocationManager() {
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-    }
-    
-    func centerViewOnUserLocation() {
-        if let location = locationManager.location?.coordinate {
-            let region = MKCoordinateRegion.init(center: location, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
-            mapView.setRegion(region, animated: true)
-        }
-    }
-    
-    func checkLocationServices() {
-        if CLLocationManager.locationServicesEnabled() {
-            setupLocationManager()
-            checkLocationAuthorization()
-        } else {
-            showAlert(title: "Location permission", message: "The app needs location access allowed to function properly")
-        }
-    }
-    
-    func checkLocationAuthorization() {
-        switch CLLocationManager.authorizationStatus() {
-        case .authorizedWhenInUse:
-            startTrackingUserLocation()
-        case .denied:
-            
-            showAlert(title: "Location permission", message: "The app needs location access allowed to function properly")
-        case .notDetermined:
-            locationManager.requestWhenInUseAuthorization()
-        case .restricted:
-            showAlert(title: "Location permission", message: "The app needs location access allowed to function properly")
-        case .authorizedAlways:
-            break
-        }
-    }
-    
-    func getCenterLocation(for mapView: MKMapView) -> CLLocation {
-        let latitude = mapView.centerCoordinate.latitude
-        let longitude = mapView.centerCoordinate.longitude
-        return CLLocation(latitude: latitude, longitude: longitude)
-    }
-    
-    func startTrackingUserLocation() {
-        mapView.showsUserLocation = true
-        centerViewOnUserLocation()
-        locationManager.startUpdatingLocation()
-        
-//        getCoordinate(addressString: "Carrer de Casp, 9 08204 SABADELL") { (coordinate, error) in
-//            print(coordinate)
-//        }
     }
     
     func getCoordinate( addressString : String,
@@ -196,18 +139,6 @@ class MapViewController: UIViewController {
     }
 }
 
-extension MapViewController: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        guard let location = locations.last else { return }
-//        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-//        let region = MKCoordinateRegion.init(center: center, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
-//        mapView.setRegion(region, animated: true)
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        checkLocationAuthorization()
-    }
-}
 
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -289,9 +220,10 @@ extension MapViewController: MKMapViewDelegate {
     }
 }
 
-extension MapViewController: DrawerViewControllerDelegate {
-    func dismiss() {
-        presentedViewController?.dismiss(animated: true)
-        mapView.selectedAnnotations = []
+extension MapViewController: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        let locationAuthorized = status == .authorizedWhenInUse
+        userTrackingButton.isHidden = !locationAuthorized
     }
 }

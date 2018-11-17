@@ -30,6 +30,8 @@ class FirebaseManager {
     static func getBusinesses(completionHandler: @escaping([Business]) -> Void ) {
         var businesses: [Business] = []
         let ref = Database.database().reference(withPath: "business")
+        let test = Database.database().reference(withPath: "business")
+        
         ref.observeSingleEvent(of: .value, with: { snapshot in
             
             if !snapshot.exists() { return }
@@ -53,6 +55,8 @@ class FirebaseManager {
             completionHandler(business)
         })
     }
+    
+    static func getRooms(completionHanlder: @escaping([]) )
 }
 
 

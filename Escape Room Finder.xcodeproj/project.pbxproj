@@ -24,7 +24,6 @@
 		DBDC0982219C7CAE00DB26E6 /* EscapeRoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDC0981219C7CAE00DB26E6 /* EscapeRoomModel.swift */; };
 		DBDC0984219CBACE00DB26E6 /* UIColor+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDC0983219CBACE00DB26E6 /* UIColor+Theme.swift */; };
 		DBDC0986219CD54900DB26E6 /* BusinessDetailTableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDC0985219CD54900DB26E6 /* BusinessDetailTableDelegate.swift */; };
-		DBDC0988219DAF6800DB26E6 /* database.json in Resources */ = {isa = PBXBuildFile; fileRef = DBDC0987219DAF6800DB26E6 /* database.json */; };
 		DBFC158D219393430044B61D /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFC158C219393430044B61D /* UIViewController+Alerts.swift */; };
 /* End PBXBuildFile section */
 
@@ -49,7 +48,6 @@
 		DBDC0981219C7CAE00DB26E6 /* EscapeRoomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EscapeRoomModel.swift; sourceTree = "<group>"; };
 		DBDC0983219CBACE00DB26E6 /* UIColor+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Theme.swift"; sourceTree = "<group>"; };
 		DBDC0985219CD54900DB26E6 /* BusinessDetailTableDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessDetailTableDelegate.swift; sourceTree = "<group>"; };
-		DBDC0987219DAF6800DB26E6 /* database.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = database.json; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.json; };
 		DBFC158C219393430044B61D /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
 		EF23E55B17D84B2BD7843E51 /* Pods-Escape Room Finder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Escape Room Finder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Escape Room Finder/Pods-Escape Room Finder.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -146,7 +144,6 @@
 				DB7172762198CA1F008C785C /* RoomDetailViewController.swift */,
 				DB7172782198D61A008C785C /* RoomDetailViewController.xib */,
 				DBDC0985219CD54900DB26E6 /* BusinessDetailTableDelegate.swift */,
-				DBDC0987219DAF6800DB26E6 /* database.json */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -214,7 +211,6 @@
 				DB4A72762197820500ABA9A3 /* WelcomeViewController.xib in Resources */,
 				DB36CE4D219369A800772BF5 /* Assets.xcassets in Resources */,
 				DB4A727E219785E800ABA9A3 /* MapViewController.xib in Resources */,
-				DBDC0988219DAF6800DB26E6 /* database.json in Resources */,
 				DB7172792198D61A008C785C /* RoomDetailViewController.xib in Resources */,
 				DB25291A219EE487004D6A8C /* GoogleService-Info.plist in Resources */,
 			);
