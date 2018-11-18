@@ -14,49 +14,40 @@ struct Business {
     let mail: String
     let website: String
     let phone: Int
-    
-    init(json: [String:Any]) {
-        name = json["name"] as! String
-        address = json["address"] as! String
-        mail = json["mail"] as! String
-        phone = json["phone"] as! Int
-        website = json["website"] as! String
+}
+
+extension Business {
+    init?(dictionary: [String : Any]) {
+        
+        guard let name = dictionary["name"] as? String,
+            let address = dictionary["address"] as? String,
+            let mail = dictionary["mail"] as? String,
+            let phone = dictionary["phone"] as? Int,
+            let website = dictionary["website"] as? String else { return nil }
+        
+        self.init(name: name, address: address, mail: mail, website: website, phone: phone)
     }
 }
 
+struct Room {
+    let name: String
+    let businessId: String
+    let description: String
+    let coordinate: CLLocationCoordinate2D
+    let duration: Int
+}
 
-class FirebaseManager {
-    
-    static func getBusinesses(completionHandler: @escaping([Business]) -> Void ) {
-        var businesses: [Business] = []
-        let ref = Database.database().reference(withPath: "business")
-        let test = Database.database().reference(withPath: "business")
+extension Room {
+    init?(dictionary: [String : Any]) {
         
-        ref.observeSingleEvent(of: .value, with: { snapshot in
-            
-            if !snapshot.exists() { return }
-            let snapshotValue = snapshot.children.allObjects as! [DataSnapshot]
-            snapshotValue.forEach({
-                let snap = $0.value as! [String:Any]
-                let business = Business(json: snap)
-                businesses.append(business)
-            })
-            completionHandler(businesses)
-        })
+        guard let name = dictionary["name"] as? String,
+            let description = dictionary["description"] as? String,
+            let businessId = dictionary["businessId"] as? String,
+            let coordinate = dictionary["coordinate"] as? GeoPoint,
+            let duration = dictionary["duration"] as? Int else { return nil }
+        
+        self.init(name: name, businessId: businessId, description: description, coordinate: CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude), duration: duration)
     }
-    
-    static func getBusiness(withName name: String, completionHandler: @escaping(Business) -> Void ) {
-        let ref = Database.database().reference(withPath: "business").queryOrdered(byChild: "name").queryEqual(toValue: name)
-        ref.observeSingleEvent(of: .value, with: { snapshot in
-            
-            if !snapshot.exists() { return }
-            let snap = snapshot.children.allObjects.first as! DataSnapshot
-            let business = Business(json: snap.value as! [String:Any])
-            completionHandler(business)
-        })
-    }
-    
-    static func getRooms(completionHanlder: @escaping([]) )
 }
 
 

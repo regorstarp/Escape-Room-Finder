@@ -17,14 +17,74 @@ class MapViewController: UIViewController {
     private var userTrackingButton: MKUserTrackingButton!
     private let locationManager = CLLocationManager()
     
-    let regionInMeters: Double = 15000
-    var businesses: [Business] = []
-    let tableController = BusinessDetailTableDelegate()
+    private let regionInMeters: Double = 15000
+    private var businesses: [Business] = []
+    private let tableController = BusinessDetailTableDelegate()
     
+    private var rooms: [Room] = []
+    private var documents: [DocumentSnapshot] = []
     
+    fileprivate var query: Query? {
+        didSet {
+            if let listener = listener {
+                listener.remove()
+                observeQuery()
+            }
+        }
+    }
     
-    private func setupNavigationBar() {
-
+    private var listener: ListenerRegistration?
+    
+    fileprivate func observeQuery() {
+        guard let query = query else { return }
+        stopObserving()
+        
+        // Display data from Firestore, part one
+        listener = query.addSnapshotListener { [unowned self] (snapshot, error) in
+            guard let snapshot = snapshot else {
+                print("Error feching snapshot results: \(error!)")
+                return
+            }
+            let models = snapshot.documents.map { (document) -> Room in
+                if let model = Room(dictionary: document.data()) {
+                    return model
+                }
+                else {
+                    fatalError("Unable to initialize type \(Room.self) with dictionary \(document.data()) ")
+                }
+            }
+            self.rooms = models
+            self.documents = snapshot.documents
+            self.setupAnnotations()
+        }
+    }
+    
+    fileprivate func stopObserving() {
+        listener?.remove()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        observeQuery()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopObserving()
+    }
+    
+    deinit {
+        listener?.remove()
+    }
+    
+    fileprivate func baseQuery() -> Query {
+        // Firestore needs to use Timestamp type instead of Date type.
+        // https://firebase.google.com/docs/reference/swift/firebasefirestore/api/reference/Classes/FirestoreSettings
+        let firestore: Firestore = Firestore.firestore()
+        let settings = firestore.settings
+        settings.areTimestampsInSnapshotsEnabled = true
+        firestore.settings = settings
+        return firestore.collection("room")
     }
     
     private func setupUserTrackingButton() {
@@ -44,40 +104,44 @@ class MapViewController: UIViewController {
     }
     
     private func loadBusinesses() {
-//        FirebaseManager.getBusinesses { (businesses) in
-//            self.businesses = businesses
-//            self.setupAnnotations()
-//        }
+        //        FirebaseManager.getBusinesses { (businesses) in
+        //            self.businesses = businesses
+        //            self.setupAnnotations()
+        //        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        query = baseQuery()
+        
         mapView.delegate = self
-        setupNavigationBar()
         setupUserTrackingButton()
         
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         
-        loadBusinesses()
-        
+        if let coordinate = locationManager.location?.coordinate {
+            let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
+            mapView.setRegion(region, animated: true)
+        }
         
     }
     
     func setupAnnotations() {
-        for business in businesses {
-            getCoordinate(addressString: business.address) { (coordinate, error) in
-//                guard error != nil else { return } //to ignore wrong coordinate
-                self.addAnnotation(coordinate: coordinate, name: business.name)
+        for index in rooms.indices {
+            let room = rooms[index]
+            let coordinate = room.coordinate
+            if !mapView.annotations.contains(where: { $0.coordinate.latitude == coordinate.latitude && $0.coordinate.longitude == coordinate.longitude }) {
+                addAnnotation(coordinate: coordinate, index: index)
             }
         }
     }
     
-    func addAnnotation(coordinate: CLLocationCoordinate2D, name: String) {
-        let annotation = MKPointAnnotation()
-        annotation.title = name
+    func addAnnotation(coordinate: CLLocationCoordinate2D, index: Int) {
+        let annotation = CustomMKPointAnnotation()
+        annotation.index = index
         annotation.coordinate = coordinate
         mapView.addAnnotation(annotation)
     }
@@ -99,44 +163,6 @@ class MapViewController: UIViewController {
             completionHandler(kCLLocationCoordinate2DInvalid, error as NSError?)
         }
     }
-    
-    private lazy var drawerView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 8
-        return view
-        }()
-    
-    private lazy var drawerNavigationBar: UINavigationBar = {
-        let navBar = UINavigationBar()
-        navBar.translatesAutoresizingMaskIntoConstraints = false
-        navBar.layer.cornerRadius = 8
-        
-        let titleItem = UINavigationItem(title: "")
-        let doneButton = UIButton(type: .roundedRect)
-        doneButton.frame = CGRect(x: 0, y: 0, width: 60, height: 30)
-        doneButton.setTitle("Done", for: .normal)
-        doneButton.backgroundColor = #colorLiteral(red: 0.8521460295, green: 0.8940392137, blue: 0.9998423457, alpha: 1)
-        doneButton.layer.cornerRadius = 10
-        doneButton.addTarget(self, action: #selector(done), for: .touchUpInside)
-        titleItem.rightBarButtonItem = UIBarButtonItem(customView: doneButton)
-        navBar.setItems([titleItem], animated: false)
-        
-        return navBar
-    }()
-    
-    private lazy var tableView: UITableView = {
-        let table = UITableView(frame: .zero, style: .grouped)
-        table.translatesAutoresizingMaskIntoConstraints = false
-        table.backgroundColor = .white
-        return table
-    }()
-    
-    @objc private func done() {
-        drawerView.removeFromSuperview()
-        mapView.deselectAnnotation(mapView.selectedAnnotations.first, animated: true)
-    }
 }
 
 
@@ -149,7 +175,7 @@ extension MapViewController: MKMapViewDelegate {
         
         if annotationView == nil {
             let markerAnnotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-//            markerAnnotationView.glyphText = annotation.title ?? ""
+            //            markerAnnotationView.glyphText = annotation.title ?? ""
             annotationView = markerAnnotationView
             annotationView!.canShowCallout = true
         } else {
@@ -160,63 +186,44 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-
-//        guard let location = view.annotation?.coordinate else { return }
-//        mapView.setCenter(location, animated: true)
         
-        self.view.addSubview(drawerView)
-        
-        NSLayoutConstraint.activate([
-//            drawerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 80),
-            drawerView.heightAnchor.constraint(equalToConstant: self.view.bounds.height * 0.4),
-            drawerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 10),
-            drawerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            drawerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
-            ])
-        
-        drawerView.addSubview(drawerNavigationBar)
-        
-        NSLayoutConstraint.activate([
-            drawerNavigationBar.topAnchor.constraint(equalTo: drawerView.topAnchor),
-            drawerNavigationBar.leadingAnchor.constraint(equalTo: drawerView.leadingAnchor),
-            drawerNavigationBar.trailingAnchor.constraint(equalTo: drawerView.trailingAnchor)
-            ])
-        
-        
-        
-        if case let annotationTitle?? = view.annotation?.title {
-            drawerNavigationBar.topItem?.title = annotationTitle
-            FirebaseManager.getBusiness(withName: annotationTitle) { (business) in
-                self.setupTableView(forBusiness: business)
+        guard let annotation = view.annotation as? CustomMKPointAnnotation else { return }
+        let businessId = rooms[annotation.index].businessId
+        let ref = Firestore.firestore().collection("business").document(businessId)
+        ref.getDocument { [unowned self] (document, error) in
+            if let document = document, document.exists, let dict = document.data() , let business = Business(dictionary: dict) {
+                self.showBusiness(business, businessId: businessId)
+            } else {
+                print("Document does not exist")
             }
         }
         
-//        closedTransform = CGAffineTransform(translationX: 0, y: self.view.bounds.height * 0.4)
-//        drawerView.transform = closedTransform
+        guard let location = view.annotation?.coordinate else { return }
+        mapView.setCenter(location, animated: false)
     }
     
-    private func setupTableView(forBusiness business: Business) {
-        drawerView.addSubview(tableView)
-        
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: drawerNavigationBar.bottomAnchor, constant: 6),
-            tableView.leadingAnchor.constraint(equalTo: drawerNavigationBar.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: drawerNavigationBar.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: drawerView.bottomAnchor)
-            ])
-        
-        tableController.business = business
-        tableView.delegate = tableController
-        tableView.dataSource = tableController
-        DispatchQueue.main.async {
-          self.tableView.reloadData()
+    func showBusiness(_ business: Business, businessId: String) {
+        let business = business
+        let roomRef = Firestore.firestore().collection("room").whereField("businessId", isEqualTo: businessId)
+        roomRef.getDocuments { [unowned self] (snapshot, error) in
+            guard let snapshot = snapshot else {
+                print("Error feching snapshot results: \(error!)")
+                return
+            }
+            
+            let rooms = snapshot.documents.map { (document) -> Room in
+                if let model = Room(dictionary: document.data()) {
+                    return model
+                }
+                else {
+                    fatalError("Unable to initialize type \(Room.self) with dictionary \(document.data()) ")
+                }
+            }
+            let vc = BusinessDetailViewController()
+            vc.business = business
+            vc.rooms = rooms
+            self.navigationController?.pushViewController(vc, animated: true)
         }
-        
-    }
-    
-    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-        drawerNavigationBar.topItem?.title = ""
-        drawerView.removeFromSuperview()
     }
 }
 
@@ -226,4 +233,8 @@ extension MapViewController: CLLocationManagerDelegate {
         let locationAuthorized = status == .authorizedWhenInUse
         userTrackingButton.isHidden = !locationAuthorized
     }
+}
+
+class CustomMKPointAnnotation: MKPointAnnotation {
+    var index: Int!
 }

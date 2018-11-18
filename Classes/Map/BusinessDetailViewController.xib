@@ -10,10 +10,8 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RoomDetailViewController" customModule="Escape_Room_Finder" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BusinessDetailViewController" customModule="Escape_Room_Finder" customModuleProvider="target">
             <connections>
-                <outlet property="closeButton" destination="guj-Db-SrI" id="jrR-Qm-Q9X"/>
-                <outlet property="gripperView" destination="Btc-rS-Ha5" id="ZyX-0I-P96"/>
                 <outlet property="tableView" destination="3ed-5q-0fd" id="AK4-OJ-Rxb"/>
                 <outlet property="view" destination="sYM-oY-x7O" id="E63-oy-pec"/>
             </connections>
@@ -39,26 +37,6 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
                             </barButtonItem>
-                            <view key="titleView" contentMode="scaleToFill" id="QYG-MQ-QUZ">
-                                <rect key="frame" x="161" y="5.5" width="53" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Btc-rS-Ha5">
-                                        <rect key="frame" x="9" y="6" width="35" height="4"/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="4" id="Lqc-Z2-qVr"/>
-                                            <constraint firstAttribute="width" constant="35" id="Vnk-Ld-3lU"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstItem="Btc-rS-Ha5" firstAttribute="centerX" secondItem="QYG-MQ-QUZ" secondAttribute="centerX" id="7km-wY-ScH"/>
-                                    <constraint firstItem="Btc-rS-Ha5" firstAttribute="top" secondItem="QYG-MQ-QUZ" secondAttribute="top" constant="6" id="n8C-zi-d4E"/>
-                                </constraints>
-                            </view>
-                            <barButtonItem key="rightBarButtonItem" systemItem="stop" id="guj-Db-SrI"/>
                         </navigationItem>
                     </items>
                 </navigationBar>
@@ -74,7 +52,7 @@
                 <constraint firstItem="kx9-Zu-4Jm" firstAttribute="top" secondItem="sYM-oY-x7O" secondAttribute="top" id="xlo-1Q-xSl"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="RwG-dL-Lv6"/>
-            <point key="canvasLocation" x="538" y="-398"/>
+            <point key="canvasLocation" x="-95" y="-406"/>
         </view>
     </objects>
 </document>

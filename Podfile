@@ -10,5 +10,6 @@ target 'Escape Room Finder' do
   pod 'Firebase/Database'
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
+  pod 'Geofirestore'
 
 end

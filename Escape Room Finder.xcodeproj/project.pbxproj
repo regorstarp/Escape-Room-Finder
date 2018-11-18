@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		69843E216737DE9B29873722 /* Pods_Escape_Room_Finder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1E617AFC588768FBD49A608 /* Pods_Escape_Room_Finder.framework */; };
-		DB25291A219EE487004D6A8C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB252919219EE487004D6A8C /* GoogleService-Info.plist */; };
+		D0F87D7221A0B8E200184967 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F87D7121A0B8E200184967 /* FirebaseManager.swift */; };
+		D0F87D7421A0C72600184967 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0F87D7321A0C72600184967 /* GoogleService-Info.plist */; };
 		DB36CE46219369A800772BF5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB36CE45219369A800772BF5 /* AppDelegate.swift */; };
 		DB36CE4D219369A800772BF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB36CE4C219369A800772BF5 /* Assets.xcassets */; };
 		DB3E71002199DD1300C48A43 /* Drawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3E70FF2199DD1300C48A43 /* Drawer.swift */; };
@@ -19,8 +20,8 @@
 		DB4A727A219785A400ABA9A3 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4A7279219785A400ABA9A3 /* TabBarController.swift */; };
 		DB4A727D219785E800ABA9A3 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4A727B219785E800ABA9A3 /* MapViewController.swift */; };
 		DB4A727E219785E800ABA9A3 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB4A727C219785E800ABA9A3 /* MapViewController.xib */; };
-		DB7172772198CA20008C785C /* RoomDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7172762198CA1F008C785C /* RoomDetailViewController.swift */; };
-		DB7172792198D61A008C785C /* RoomDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB7172782198D61A008C785C /* RoomDetailViewController.xib */; };
+		DB7172772198CA20008C785C /* BusinessDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7172762198CA1F008C785C /* BusinessDetailViewController.swift */; };
+		DB7172792198D61A008C785C /* BusinessDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB7172782198D61A008C785C /* BusinessDetailViewController.xib */; };
 		DBDC0982219C7CAE00DB26E6 /* EscapeRoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDC0981219C7CAE00DB26E6 /* EscapeRoomModel.swift */; };
 		DBDC0984219CBACE00DB26E6 /* UIColor+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDC0983219CBACE00DB26E6 /* UIColor+Theme.swift */; };
 		DBDC0986219CD54900DB26E6 /* BusinessDetailTableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDC0985219CD54900DB26E6 /* BusinessDetailTableDelegate.swift */; };
@@ -29,8 +30,9 @@
 
 /* Begin PBXFileReference section */
 		66B11CC29D49DE1F0F797080 /* Pods-Escape Room Finder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Escape Room Finder.release.xcconfig"; path = "Pods/Target Support Files/Pods-Escape Room Finder/Pods-Escape Room Finder.release.xcconfig"; sourceTree = "<group>"; };
+		D0F87D7121A0B8E200184967 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FirebaseManager.swift; path = Classes/FirebaseManager.swift; sourceTree = SOURCE_ROOT; };
+		D0F87D7321A0C72600184967 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D1E617AFC588768FBD49A608 /* Pods_Escape_Room_Finder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Escape_Room_Finder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DB252919219EE487004D6A8C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DB36CE42219369A800772BF5 /* Escape Room Finder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Escape Room Finder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB36CE45219369A800772BF5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DB36CE4C219369A800772BF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -43,8 +45,8 @@
 		DB4A7279219785A400ABA9A3 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		DB4A727B219785E800ABA9A3 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		DB4A727C219785E800ABA9A3 /* MapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
-		DB7172762198CA1F008C785C /* RoomDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomDetailViewController.swift; sourceTree = "<group>"; };
-		DB7172782198D61A008C785C /* RoomDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoomDetailViewController.xib; sourceTree = "<group>"; };
+		DB7172762198CA1F008C785C /* BusinessDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessDetailViewController.swift; sourceTree = "<group>"; };
+		DB7172782198D61A008C785C /* BusinessDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BusinessDetailViewController.xib; sourceTree = "<group>"; };
 		DBDC0981219C7CAE00DB26E6 /* EscapeRoomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EscapeRoomModel.swift; sourceTree = "<group>"; };
 		DBDC0983219CBACE00DB26E6 /* UIColor+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Theme.swift"; sourceTree = "<group>"; };
 		DBDC0985219CD54900DB26E6 /* BusinessDetailTableDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessDetailTableDelegate.swift; sourceTree = "<group>"; };
@@ -119,7 +121,7 @@
 		DB4A7277219783C000ABA9A3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				DB252919219EE487004D6A8C /* GoogleService-Info.plist */,
+				D0F87D7321A0C72600184967 /* GoogleService-Info.plist */,
 				DB36CE51219369A800772BF5 /* Info.plist */,
 				DB36CE4C219369A800772BF5 /* Assets.xcassets */,
 			);
@@ -141,9 +143,10 @@
 				DB4A727B219785E800ABA9A3 /* MapViewController.swift */,
 				DBDC0981219C7CAE00DB26E6 /* EscapeRoomModel.swift */,
 				DB4A727C219785E800ABA9A3 /* MapViewController.xib */,
-				DB7172762198CA1F008C785C /* RoomDetailViewController.swift */,
-				DB7172782198D61A008C785C /* RoomDetailViewController.xib */,
+				DB7172762198CA1F008C785C /* BusinessDetailViewController.swift */,
+				DB7172782198D61A008C785C /* BusinessDetailViewController.xib */,
 				DBDC0985219CD54900DB26E6 /* BusinessDetailTableDelegate.swift */,
+				D0F87D7121A0B8E200184967 /* FirebaseManager.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -210,9 +213,9 @@
 			files = (
 				DB4A72762197820500ABA9A3 /* WelcomeViewController.xib in Resources */,
 				DB36CE4D219369A800772BF5 /* Assets.xcassets in Resources */,
+				D0F87D7421A0C72600184967 /* GoogleService-Info.plist in Resources */,
 				DB4A727E219785E800ABA9A3 /* MapViewController.xib in Resources */,
-				DB7172792198D61A008C785C /* RoomDetailViewController.xib in Resources */,
-				DB25291A219EE487004D6A8C /* GoogleService-Info.plist in Resources */,
+				DB7172792198D61A008C785C /* BusinessDetailViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,7 +285,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB7172772198CA20008C785C /* RoomDetailViewController.swift in Sources */,
+				D0F87D7221A0B8E200184967 /* FirebaseManager.swift in Sources */,
+				DB7172772198CA20008C785C /* BusinessDetailViewController.swift in Sources */,
 				DBDC0984219CBACE00DB26E6 /* UIColor+Theme.swift in Sources */,
 				DB4A72752197820500ABA9A3 /* WelcomeViewController.swift in Sources */,
 				DB4A727A219785A400ABA9A3 /* TabBarController.swift in Sources */,
