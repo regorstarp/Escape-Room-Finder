@@ -122,7 +122,7 @@ class WelcomeViewController: UIViewController {
                 if let err = error {
                     self.showAlert(title: "Sign In Error", message: err.localizedDescription)
                 } else {
-                    self.present(TabBarController(), animated: true)
+                    self.present(MapViewController(), animated: true)
                 }
             })
         }))

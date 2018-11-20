@@ -10,12 +10,15 @@ import UIKit
 import MapKit
 import CoreLocation
 import FirebaseFirestore
+import FirebaseAuth
+import FirebaseUI
 
 class MapViewController: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
     private var userTrackingButton: MKUserTrackingButton!
     private let locationManager = CLLocationManager()
+    private let authUI = FUIAuth.defaultAuthUI()!
     
     private let regionInMeters: Double = 15000
     private var businesses: [Business] = []

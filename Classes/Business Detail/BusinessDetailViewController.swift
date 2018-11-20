@@ -7,13 +7,15 @@
 //
 
 import UIKit
-
+import FirebaseFirestore
 
 class BusinessDetailViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var business: Business!
     var rooms: [Room] = []
+    var businessReference: DocumentReference?
+    
     
     enum State {
         case loading
