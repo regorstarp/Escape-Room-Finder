@@ -19,7 +19,6 @@ class MapViewController: UIViewController {
     
     private let regionInMeters: Double = 15000
     private var businesses: [Business] = []
-    private let tableController = BusinessDetailTableDelegate()
     
     private var rooms: [Room] = []
     private var documents: [DocumentSnapshot] = []
@@ -103,11 +102,9 @@ class MapViewController: UIViewController {
                                      userTrackingButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10)])
     }
     
-    private func loadBusinesses() {
-        //        FirebaseManager.getBusinesses { (businesses) in
-        //            self.businesses = businesses
-        //            self.setupAnnotations()
-        //        }
+    private func registerAnnotationViewClasses() {
+        mapView.register(RoomAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        mapView.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
     }
     
     override func viewDidLoad() {
@@ -117,6 +114,7 @@ class MapViewController: UIViewController {
         
         mapView.delegate = self
         setupUserTrackingButton()
+        registerAnnotationViewClasses()
         
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
@@ -170,19 +168,7 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is MKPointAnnotation else { return nil }
         
-        let identifier = "Annotation"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-        
-        if annotationView == nil {
-            let markerAnnotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            //            markerAnnotationView.glyphText = annotation.title ?? ""
-            annotationView = markerAnnotationView
-            annotationView!.canShowCallout = true
-        } else {
-            annotationView!.annotation = annotation
-        }
-        
-        return annotationView
+        return RoomAnnotationView(annotation: annotation, reuseIdentifier: RoomAnnotationView.ReuseID)
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {

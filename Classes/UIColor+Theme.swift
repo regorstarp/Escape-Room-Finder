@@ -10,4 +10,5 @@ import UIKit
 
 extension UIColor {
     static let translucentButtonColor = UIColor(named: "translucentButton")
+    static let roomButtonColor = UIColor(named: "roomColor")
 }

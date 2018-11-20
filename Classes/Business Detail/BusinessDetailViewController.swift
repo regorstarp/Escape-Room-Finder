@@ -26,7 +26,7 @@ class BusinessDetailViewController: UIViewController {
         title = business.name
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "id")
+//        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "id")
     }
 }
 
@@ -36,8 +36,9 @@ extension BusinessDetailViewController: UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "id", for: indexPath)
+        let cell = UITableViewCell(style: .value1, reuseIdentifier: "Identifier")
         cell.textLabel?.text = rooms[indexPath.row].name
+        cell.detailTextLabel?.text = "\(rooms[indexPath.row].duration)"
         return cell
     }
 }
