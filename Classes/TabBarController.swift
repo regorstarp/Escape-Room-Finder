@@ -13,28 +13,23 @@ class TabBarController: UITabBarController {
     
     override func viewDidLoad() {
         let mapViewController = MapViewController()
-        let mapTabBarItem = UITabBarItem(tabBarSystemItem: .mostViewed, tag: 0)
+        let mapTabBarItem = UITabBarItem(title: "Explore", image: UIImage(named: "room"), tag: 0)
         
         mapViewController.tabBarItem = mapTabBarItem
-        mapViewController.tabBarItem.title = "Explore"
         let mapNavigationController = UINavigationController(rootViewController: mapViewController)
         
-        let favoritesViewController = UIViewController()
-        let favoritesTabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 0)
-        favoritesTabBarItem.title = "Favorites"
-        favoritesViewController.tabBarItem = favoritesTabBarItem
-        let favoritesNavigationController = UINavigationController(rootViewController: favoritesViewController)
-        
-        let historyViewController = UIViewController()
-        let historyTabBarItem = UITabBarItem(tabBarSystemItem: .history, tag: 0)
-        historyTabBarItem.title = "Account"
+        let historyViewController = CompletedViewController()
+        let historyTabBarItem = UITabBarItem(title: "Completed", image: UIImage(named: "completed"), tag: 1)
         historyViewController.tabBarItem = historyTabBarItem
         let historyNavigationController = UINavigationController(rootViewController: historyViewController)
         
+        let favoritesViewController = SavedViewController()
+        let favoritesTabBarItem = UITabBarItem(title: "Saved", image: UIImage(named: "bookmark"), tag: 2)
+        favoritesViewController.tabBarItem = favoritesTabBarItem
+        let favoritesNavigationController = UINavigationController(rootViewController: favoritesViewController)
         
         let accountViewController = AccountViewController()
-        let accountTabBarItem = UITabBarItem(tabBarSystemItem: .contacts, tag: 0)
-        accountTabBarItem.title = "Account"
+        let accountTabBarItem = UITabBarItem(title: "Settings", image: UIImage(named: "settings"), tag: 3)
         accountViewController.tabBarItem = accountTabBarItem
         let accountNavigationController = UINavigationController(rootViewController: accountViewController)
         

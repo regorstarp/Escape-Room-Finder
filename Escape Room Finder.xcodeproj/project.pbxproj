@@ -14,6 +14,9 @@
 		D0F87D7421A0C72600184967 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0F87D7321A0C72600184967 /* GoogleService-Info.plist */; };
 		D0FBB57621A45BAF0026612F /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FBB57521A45BAF0026612F /* AccountViewController.swift */; };
 		D0FBB57821A45E1A0026612F /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FBB57721A45E1A0026612F /* TabBarController.swift */; };
+		D0FBB57C21A56D910026612F /* SavedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FBB57B21A56D910026612F /* SavedViewController.swift */; };
+		D0FBB57E21A56E2C0026612F /* CompletedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FBB57D21A56E2C0026612F /* CompletedViewController.swift */; };
+		D0FBB58021A56FA00026612F /* UserNotLoggedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FBB57F21A56FA00026612F /* UserNotLoggedViewController.swift */; };
 		DB36CE46219369A800772BF5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB36CE45219369A800772BF5 /* AppDelegate.swift */; };
 		DB4A72752197820500ABA9A3 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4A72732197820500ABA9A3 /* WelcomeViewController.swift */; };
 		DB4A72762197820500ABA9A3 /* WelcomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB4A72742197820500ABA9A3 /* WelcomeViewController.xib */; };
@@ -34,6 +37,9 @@
 		D0F87D7321A0C72600184967 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D0FBB57521A45BAF0026612F /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		D0FBB57721A45E1A0026612F /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		D0FBB57B21A56D910026612F /* SavedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SavedViewController.swift; path = Classes/Completed/SavedViewController.swift; sourceTree = SOURCE_ROOT; };
+		D0FBB57D21A56E2C0026612F /* CompletedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedViewController.swift; sourceTree = "<group>"; };
+		D0FBB57F21A56FA00026612F /* UserNotLoggedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotLoggedViewController.swift; sourceTree = "<group>"; };
 		D1E617AFC588768FBD49A608 /* Pods_Escape_Room_Finder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Escape_Room_Finder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB36CE42219369A800772BF5 /* Escape Room Finder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Escape Room Finder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB36CE45219369A800772BF5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -96,6 +102,22 @@
 			path = Account;
 			sourceTree = "<group>";
 		};
+		D0FBB57921A56D5A0026612F /* Completed */ = {
+			isa = PBXGroup;
+			children = (
+				D0FBB57D21A56E2C0026612F /* CompletedViewController.swift */,
+			);
+			path = Completed;
+			sourceTree = "<group>";
+		};
+		D0FBB57A21A56D680026612F /* Saved */ = {
+			isa = PBXGroup;
+			children = (
+				D0FBB57B21A56D910026612F /* SavedViewController.swift */,
+			);
+			path = Saved;
+			sourceTree = "<group>";
+		};
 		DB36CE39219369A700772BF5 = {
 			isa = PBXGroup;
 			children = (
@@ -119,6 +141,8 @@
 			isa = PBXGroup;
 			children = (
 				DB36CE45219369A800772BF5 /* AppDelegate.swift */,
+				D0FBB57A21A56D680026612F /* Saved */,
+				D0FBB57921A56D5A0026612F /* Completed */,
 				DBFC158C219393430044B61D /* UIViewController+Alerts.swift */,
 				D0FBB57421A45B900026612F /* Account */,
 				DB4A7278219783D400ABA9A3 /* Welcome */,
@@ -126,6 +150,7 @@
 				DB4A727F219785EF00ABA9A3 /* Map */,
 				DBDC0983219CBACE00DB26E6 /* UIColor+Theme.swift */,
 				D0FBB57721A45E1A0026612F /* TabBarController.swift */,
+				D0FBB57F21A56FA00026612F /* UserNotLoggedViewController.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -314,15 +339,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0FBB57C21A56D910026612F /* SavedViewController.swift in Sources */,
 				DB7172772198CA20008C785C /* BusinessDetailViewController.swift in Sources */,
 				DBDC0984219CBACE00DB26E6 /* UIColor+Theme.swift in Sources */,
 				D0FBB57821A45E1A0026612F /* TabBarController.swift in Sources */,
 				DB4A72752197820500ABA9A3 /* WelcomeViewController.swift in Sources */,
 				D0E84D6F21A41A2200657176 /* RoomAnnotationView.swift in Sources */,
 				DB36CE46219369A800772BF5 /* AppDelegate.swift in Sources */,
+				D0FBB57E21A56E2C0026612F /* CompletedViewController.swift in Sources */,
 				D0FBB57621A45BAF0026612F /* AccountViewController.swift in Sources */,
 				D0E84D7121A41AB800657176 /* ClusterAnnotationView.swift in Sources */,
 				DB4A727D219785E800ABA9A3 /* MapViewController.swift in Sources */,
+				D0FBB58021A56FA00026612F /* UserNotLoggedViewController.swift in Sources */,
 				DBFC158D219393430044B61D /* UIViewController+Alerts.swift in Sources */,
 				DBDC0982219C7CAE00DB26E6 /* EscapeRoomModel.swift in Sources */,
 			);
