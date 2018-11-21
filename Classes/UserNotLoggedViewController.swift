@@ -84,7 +84,7 @@ class UserNotLoggedViewController: UIViewController {
         NSLayoutConstraint.activate([
             contentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
             contentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
-            contentStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 50),
+            contentStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 100),
             signInButton.heightAnchor.constraint(equalToConstant: 42),
             logoImageView.heightAnchor.constraint(equalToConstant: 150),
             logoImageView.widthAnchor.constraint(equalToConstant: 150),

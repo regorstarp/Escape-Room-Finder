@@ -105,6 +105,14 @@ class MapViewController: UIViewController {
                                      userTrackingButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10)])
     }
     
+    private func setupNavigationBar() {
+        let segment: UISegmentedControl = UISegmentedControl(items: ["Map", "List"])
+        segment.sizeToFit()
+        segment.selectedSegmentIndex = 0
+        navigationItem.titleView = segment
+        
+    }
+    
     private func registerAnnotationViewClasses() {
         mapView.register(RoomAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         mapView.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
@@ -116,6 +124,7 @@ class MapViewController: UIViewController {
         query = baseQuery()
         
         mapView.delegate = self
+        setupNavigationBar()
         setupUserTrackingButton()
         registerAnnotationViewClasses()
         
@@ -175,20 +184,14 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        
-        guard let annotation = view.annotation as? CustomMKPointAnnotation else { return }
-        let businessId = rooms[annotation.index].businessId
-        let ref = Firestore.firestore().collection("business").document(businessId)
-        ref.getDocument { [unowned self] (document, error) in
-            if let document = document, document.exists, let dict = document.data() , let business = Business(dictionary: dict) {
-                self.showBusiness(business, businessId: businessId)
-            } else {
-                print("Document does not exist")
-            }
+        let coordinate = view.annotation!.coordinate
+        let sameCoordinateRooms = rooms.filter { (room) -> Bool in
+            return room.coordinate.latitude == coordinate.latitude && room.coordinate.longitude == coordinate.longitude
         }
         
-        guard let location = view.annotation?.coordinate else { return }
-        mapView.setCenter(location, animated: false)
+        let vc = BusinessDetailViewController()
+        vc.rooms = sameCoordinateRooms
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func showBusiness(_ business: Business, businessId: String) {
@@ -227,3 +230,4 @@ extension MapViewController: CLLocationManagerDelegate {
 class CustomMKPointAnnotation: MKPointAnnotation {
     var index: Int!
 }
+

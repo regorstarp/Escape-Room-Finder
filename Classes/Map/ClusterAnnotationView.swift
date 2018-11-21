@@ -46,15 +46,15 @@ class ClusterAnnotationView: MKAnnotationView {
             wholeColor?.setFill()
             UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 40, height: 40)).fill()
             
-            // Fill pie with fractionColor
-            fractionColor?.setFill()
-            let piePath = UIBezierPath()
-            piePath.addArc(withCenter: CGPoint(x: 20, y: 20), radius: 20,
-                           startAngle: 0, endAngle: (CGFloat.pi * 2.0 * CGFloat(fraction)) / CGFloat(whole),
-                           clockwise: true)
-            piePath.addLine(to: CGPoint(x: 20, y: 20))
-            piePath.close()
-            piePath.fill()
+//            // Fill pie with fractionColor
+//            fractionColor?.setFill()
+//            let piePath = UIBezierPath()
+//            piePath.addArc(withCenter: CGPoint(x: 20, y: 20), radius: 20,
+//                           startAngle: 0, endAngle: (CGFloat.pi * 2.0 * CGFloat(fraction)) / CGFloat(whole),
+//                           clockwise: true)
+//            piePath.addLine(to: CGPoint(x: 20, y: 20))
+//            piePath.close()
+//            piePath.fill()
             
             // Fill inner circle with white color
             UIColor.white.setFill()
