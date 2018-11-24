@@ -8,6 +8,8 @@
 
 import UIKit
 import FirebaseFirestore
+import SDWebImage
+import FirebaseStorage
 
 class BusinessDetailViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
@@ -42,6 +44,7 @@ class BusinessDetailViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.isHidden = true
+        tableView.register(EscapeRoomCell.self, forCellReuseIdentifier: EscapeRoomCell.identifier)
         showActivityIndicator()
         loadBusiness()
     }
@@ -91,9 +94,23 @@ extension BusinessDetailViewController: UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .value1, reuseIdentifier: "Identifier")
-        cell.textLabel?.text = rooms[indexPath.row].name
-        cell.detailTextLabel?.text = "\(rooms[indexPath.row].duration)"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: EscapeRoomCell.identifier, for: indexPath) as? EscapeRoomCell else { return UITableViewCell() }
+        cell.configure(room: rooms[indexPath.row])
+        cell.delegate = self
+//        cell.textLabel?.text = rooms[indexPath.row].name
+//        cell.detailTextLabel?.text = "\(rooms[indexPath.row].duration)"
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
+}
+
+extension BusinessDetailViewController: ThumbnailDelegate {
+    func onTap(image: UIImage?) {
+        let imageViewController = ImageViewController()
+        imageViewController.image = image
+        present(UINavigationController(rootViewController: imageViewController), animated: true)
     }
 }

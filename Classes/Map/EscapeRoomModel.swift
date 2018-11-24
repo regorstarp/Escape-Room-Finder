@@ -29,12 +29,23 @@ extension Business {
     }
 }
 
+enum Difficulty: Int {
+    case easy
+    case medium
+    case hard
+}
+
 struct Room {
     let name: String
     let businessId: String
     let description: String
     let coordinate: CLLocationCoordinate2D
     let duration: Int
+    let city: String
+    let categories: [String]
+    let difficulty: Difficulty
+    let maxPlayers: Int
+    let image: String
 }
 
 extension Room {
@@ -44,9 +55,17 @@ extension Room {
             let description = dictionary["description"] as? String,
             let businessId = dictionary["businessId"] as? String,
             let coordinate = dictionary["coordinate"] as? GeoPoint,
-            let duration = dictionary["duration"] as? Int else { return nil }
+            let duration = dictionary["duration"] as? Int,
+            let city = dictionary["city"] as? String,
+            let categories = dictionary["categories"] as? [String],
+            let difficulty = dictionary["difficulty"] as? Int,
+            let maxPlayers = dictionary["maxPlayers"] as? Int,
+            let diff = Difficulty(rawValue: difficulty),
+            let image = dictionary["image"] as? String else { return nil }
         
-        self.init(name: name, businessId: businessId, description: description, coordinate: CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude), duration: duration)
+        
+        
+        self.init(name: name, businessId: businessId, description: description, coordinate: CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude), duration: duration, city: city, categories: categories, difficulty: diff, maxPlayers: maxPlayers, image: image)
     }
 }
 

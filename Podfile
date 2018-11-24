@@ -7,10 +7,11 @@ target 'Escape Room Finder' do
 
   # Pods for Escape Room Finder
   pod 'Firebase/Core'
-  pod 'Firebase/Database'
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
   pod 'Geofirestore'
   pod 'FirebaseUI/Auth'
+  pod 'SDWebImage'
+  pod 'Firebase/Storage'
 
 end

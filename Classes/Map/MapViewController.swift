@@ -85,6 +85,7 @@ class MapViewController: UIViewController {
         let firestore: Firestore = Firestore.firestore()
         let settings = firestore.settings
         settings.areTimestampsInSnapshotsEnabled = true
+        settings.isPersistenceEnabled = false // cache
         firestore.settings = settings
         return firestore.collection("room")
     }
@@ -105,14 +106,6 @@ class MapViewController: UIViewController {
                                      userTrackingButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10)])
     }
     
-    private func setupNavigationBar() {
-        let segment: UISegmentedControl = UISegmentedControl(items: ["Map", "List"])
-        segment.sizeToFit()
-        segment.selectedSegmentIndex = 0
-        navigationItem.titleView = segment
-        
-    }
-    
     private func registerAnnotationViewClasses() {
         mapView.register(RoomAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         mapView.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
@@ -124,7 +117,6 @@ class MapViewController: UIViewController {
         query = baseQuery()
         
         mapView.delegate = self
-        setupNavigationBar()
         setupUserTrackingButton()
         registerAnnotationViewClasses()
         
