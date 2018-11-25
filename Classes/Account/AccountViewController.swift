@@ -10,7 +10,7 @@ import UIKit
 import FirebaseUI
 import FirebaseAuth
 
-class AccountViewController: UIViewController {
+class AccountViewController: BaseViewController {
     
     fileprivate enum SettingsRows: Int {
         case account = 0

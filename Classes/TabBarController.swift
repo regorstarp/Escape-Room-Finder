@@ -12,7 +12,7 @@ import FirebaseUI
 class TabBarController: UITabBarController {
     
     override func viewDidLoad() {
-        let mapViewController = MapViewController()
+        let mapViewController = EscapeRoomDetailViewController()
         let mapTabBarItem = UITabBarItem(title: "Explore", image: UIImage(named: "room"), tag: 0)
         
         mapViewController.tabBarItem = mapTabBarItem

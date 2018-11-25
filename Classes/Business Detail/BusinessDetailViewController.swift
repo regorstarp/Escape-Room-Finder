@@ -11,7 +11,7 @@ import FirebaseFirestore
 import SDWebImage
 import FirebaseStorage
 
-class BusinessDetailViewController: UIViewController {
+class BusinessDetailViewController: BaseViewController {
     @IBOutlet weak var tableView: UITableView!
     
     private lazy var activityIndicator: UIActivityIndicatorView = {
@@ -41,6 +41,8 @@ class BusinessDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        view.backgroundColor = UIColor.darkColor
+//        tableView.backgroundColor = UIColor.darkColor
         tableView.delegate = self
         tableView.dataSource = self
         tableView.isHidden = true
@@ -97,13 +99,15 @@ extension BusinessDetailViewController: UITableViewDelegate, UITableViewDataSour
         guard let cell = tableView.dequeueReusableCell(withIdentifier: EscapeRoomCell.identifier, for: indexPath) as? EscapeRoomCell else { return UITableViewCell() }
         cell.configure(room: rooms[indexPath.row])
         cell.delegate = self
-//        cell.textLabel?.text = rooms[indexPath.row].name
-//        cell.detailTextLabel?.text = "\(rooms[indexPath.row].duration)"
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 80
     }
 }
 

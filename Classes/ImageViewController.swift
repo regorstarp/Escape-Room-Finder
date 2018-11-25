@@ -43,7 +43,7 @@ class ImageViewController: UIViewController {
         NSLayoutConstraint.activate([
             imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -30)
             ])
     }
     

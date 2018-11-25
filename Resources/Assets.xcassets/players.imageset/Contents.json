@@ -2,12 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "lock.png",
+      "filename" : "players.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "lock@2x.png",
+      "filename" : "players@2x.png",
       "scale" : "2x"
     },
     {

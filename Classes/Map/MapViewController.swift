@@ -15,6 +15,10 @@ import FirebaseUI
 
 class MapViewController: UIViewController {
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
+    }
+    
     @IBOutlet weak var mapView: MKMapView!
     private var userTrackingButton: MKUserTrackingButton!
     private let locationManager = CLLocationManager()
@@ -67,11 +71,13 @@ class MapViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
         observeQuery()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
         stopObserving()
     }
     
@@ -176,6 +182,7 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard view is RoomAnnotationView else { return }
         let coordinate = view.annotation!.coordinate
         let sameCoordinateRooms = rooms.filter { (room) -> Bool in
             return room.coordinate.latitude == coordinate.latitude && room.coordinate.longitude == coordinate.longitude

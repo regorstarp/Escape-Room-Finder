@@ -11,4 +11,5 @@ import UIKit
 extension UIColor {
     static let translucentButtonColor = UIColor(named: "translucentButton")
     static let roomButtonColor = UIColor(named: "roomColor")
+    static let darkColor = #colorLiteral(red: 0.09275766462, green: 0.1083228365, blue: 0.1285616457, alpha: 1)
 }

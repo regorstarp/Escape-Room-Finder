@@ -20,6 +20,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = TabBarController()
         window?.makeKeyAndVisible()
+        
+//        UINavigationBar.appearance().barTintColor = UIColor.darkColor
+//        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+//        UINavigationBar.appearance().isTranslucent = false
+//        
+//        UITabBar.appearance().barTintColor = UIColor.darkColor
         return true
     }
 }

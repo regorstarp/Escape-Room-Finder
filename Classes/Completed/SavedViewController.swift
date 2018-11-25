@@ -10,7 +10,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseUI
 
-class SavedViewController: UIViewController {
+class SavedViewController: BaseViewController {
 
     private let authUI = FUIAuth.defaultAuthUI()!
     private var isUserLoggedIn : Bool {
