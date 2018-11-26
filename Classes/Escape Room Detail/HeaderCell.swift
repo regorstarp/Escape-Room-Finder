@@ -82,43 +82,15 @@ class HeaderCell: UITableViewCell {
         return label
     }()
     
-    private var separatorView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .gray
-        view.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
-        return view
-    }()
-    
-    private var rateButton: UIButton = {
-        let button = UIButton(type: UIButton.ButtonType.system)
-        button.setImage(UIImage(named: "filledStar"), for: .normal)
-        button.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        button.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        button.layer.cornerRadius = 4
-        button.imageEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-        return button
-    }()
-    
-    private var saveButton: UIButton = {
-        let button = UIButton(type: UIButton.ButtonType.system)
-        button.setImage(UIImage(named: "bookmark-button"), for: .normal)
+    private var callButton: UIButton = {
+        let button = UIButton(type: UIButton.ButtonType.roundedRect)
+        button.setTitle("Call", for: .normal)
+        button.setImage(UIImage(named: "directions"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        button.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        button.layer.cornerRadius = 4
-        button.imageEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-        return button
-    }()
-    
-    private var completeButton: UIButton = {
-        let button = UIButton(type: UIButton.ButtonType.system)
-        button.setImage(UIImage(named: "complete-button"), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        button.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        button.layer.cornerRadius = 4
-        button.imageEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        button.layer.cornerRadius = 10
+//        button.imageView?.contentMode = .scaleAspectFit
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
+        button.backgroundColor = #colorLiteral(red: 0.9178028703, green: 0.915073812, blue: 0.9110260606, alpha: 1)
         return button
     }()
     
@@ -148,7 +120,8 @@ class HeaderCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             ratingsImageView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8),
-            ratingsImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leadingMargin)
+            ratingsImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leadingMargin),
+//            ratingsImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
             ])
         
         addSubview(ratingsLabel)
@@ -191,56 +164,19 @@ class HeaderCell: UITableViewCell {
             numberOfPlayersLabel.bottomAnchor.constraint(equalTo: ratingsImageView.bottomAnchor)
             ])
         
-        addSubview(separatorView)
+        addSubview(callButton)
         
         NSLayoutConstraint.activate([
-            separatorView.topAnchor.constraint(equalTo: ratingsImageView.bottomAnchor, constant: 8),
-            separatorView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leadingMargin),
-            separatorView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -leadingMargin)
+            callButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.4),
+            callButton.heightAnchor.constraint(equalTo: callButton.widthAnchor, multiplier: 0.3),
+            callButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leadingMargin),
+            callButton.topAnchor.constraint(equalTo: ratingsImageView.bottomAnchor, constant: 8),
+            callButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
             ])
         
-        let stackView = UIStackView(arrangedSubviews: [rateButton, completeButton, saveButton])
-        stackView.axis = .horizontal
-        stackView.distribution = .equalSpacing
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        addSubview(stackView)
-        NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leadingMargin),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -leadingMargin),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-            stackView.topAnchor.constraint(equalTo: separatorView.bottomAnchor, constant: 4),
-            ])
-        
-        rateButton.addTarget(self, action: #selector(onRateButtonPressed), for: .touchUpInside)
-        completeButton.addTarget(self, action: #selector(onCompleteButtonPressed), for: .touchUpInside)
-        saveButton.addTarget(self, action: #selector(onSaveButtonPressed), for: .touchUpInside)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-    }
-    
-    //MARK: Button actions
-    
-    @objc func onRateButtonPressed() {
-        UIView.transition(with: rateButton, duration: 0.1, options: .transitionCrossDissolve, animations: {
-            self.rateButton.layer.backgroundColor =  #colorLiteral(red: 0.9411764706, green: 0.3176470588, blue: 0.03529411765, alpha: 1)
-            self.rateButton.tintColor = .white
-        }, completion: nil)
-    }
-    
-    @objc func onSaveButtonPressed() {
-        UIView.transition(with: saveButton, duration: 0.1, options: .transitionCrossDissolve, animations: {
-            self.saveButton.layer.backgroundColor =  #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
-            self.saveButton.tintColor = .white
-        }, completion: nil)
-    }
-    
-    @objc func onCompleteButtonPressed() {
-        UIView.transition(with: completeButton, duration: 0.1, options: .transitionCrossDissolve, animations: {
-            self.completeButton.layer.backgroundColor =  #colorLiteral(red: 0, green: 0.5603182912, blue: 0, alpha: 1)
-            self.completeButton.tintColor = .white
-        }, completion: nil)
     }
 }

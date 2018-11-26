@@ -2,16 +2,15 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "IMG_009AC2B83990-1.jpeg",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "emptyStar.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "emptyStar@2x.png",
       "scale" : "3x"
     }
   ],
