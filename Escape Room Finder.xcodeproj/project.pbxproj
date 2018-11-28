@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		69843E216737DE9B29873722 /* Pods_Escape_Room_Finder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1E617AFC588768FBD49A608 /* Pods_Escape_Room_Finder.framework */; };
+		D054939021AEEA13008FCEAF /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D054938F21AEEA13008FCEAF /* FilterViewController.swift */; };
+		D054939221AEEBDF008FCEAF /* PickerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D054939121AEEBDF008FCEAF /* PickerViewCell.swift */; };
 		D0A255B321A97A04007F11C8 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A255B221A97A04007F11C8 /* ImageViewController.swift */; };
 		D0A255B521A98472007F11C8 /* EscapeRoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A255B421A98472007F11C8 /* EscapeRoomCell.swift */; };
 		D0A255B721A9BE78007F11C8 /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A255B621A9BE78007F11C8 /* RatingControl.swift */; };
@@ -40,6 +42,8 @@
 
 /* Begin PBXFileReference section */
 		66B11CC29D49DE1F0F797080 /* Pods-Escape Room Finder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Escape Room Finder.release.xcconfig"; path = "Pods/Target Support Files/Pods-Escape Room Finder/Pods-Escape Room Finder.release.xcconfig"; sourceTree = "<group>"; };
+		D054938F21AEEA13008FCEAF /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
+		D054939121AEEBDF008FCEAF /* PickerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewCell.swift; sourceTree = "<group>"; };
 		D0A255B221A97A04007F11C8 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		D0A255B421A98472007F11C8 /* EscapeRoomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EscapeRoomCell.swift; sourceTree = "<group>"; };
 		D0A255B621A9BE78007F11C8 /* RatingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
@@ -101,6 +105,15 @@
 				66B11CC29D49DE1F0F797080 /* Pods-Escape Room Finder.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		D054938E21AEE5D9008FCEAF /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				D054938F21AEEA13008FCEAF /* FilterViewController.swift */,
+				D054939121AEEBDF008FCEAF /* PickerViewCell.swift */,
+			);
+			path = Filter;
 			sourceTree = "<group>";
 		};
 		D0FBB57321A444640026612F /* Business Detail */ = {
@@ -173,6 +186,7 @@
 		DB36CE44219369A800772BF5 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				D054938E21AEE5D9008FCEAF /* Filter */,
 				DB36CE45219369A800772BF5 /* AppDelegate.swift */,
 				D0FC561A21AB445000C55D4C /* Escape Room Detail */,
 				D0FBB57A21A56D680026612F /* Saved */,
@@ -382,6 +396,7 @@
 				D0FBB57821A45E1A0026612F /* TabBarController.swift in Sources */,
 				DB4A72752197820500ABA9A3 /* WelcomeViewController.swift in Sources */,
 				D0CABB5C21AB114D0098829C /* BaseViewController.swift in Sources */,
+				D054939221AEEBDF008FCEAF /* PickerViewCell.swift in Sources */,
 				D0E84D6F21A41A2200657176 /* RoomAnnotationView.swift in Sources */,
 				DB36CE46219369A800772BF5 /* AppDelegate.swift in Sources */,
 				D0FC561E21AB46EA00C55D4C /* ImageViewCell.swift in Sources */,
@@ -394,6 +409,7 @@
 				D0FBB58021A56FA00026612F /* UserNotLoggedViewController.swift in Sources */,
 				D0A255B521A98472007F11C8 /* EscapeRoomCell.swift in Sources */,
 				DBFC158D219393430044B61D /* UIViewController+Alerts.swift in Sources */,
+				D054939021AEEA13008FCEAF /* FilterViewController.swift in Sources */,
 				DBDC0982219C7CAE00DB26E6 /* EscapeRoomModel.swift in Sources */,
 				D0FC562421AC464200C55D4C /* ActionsCell.swift in Sources */,
 				D0FC561C21AB446D00C55D4C /* EscapeRoomDetailViewController.swift in Sources */,

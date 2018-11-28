@@ -169,6 +169,7 @@ class MapViewController: UIViewController {
         query = baseQuery()
         
         mapView.delegate = self
+        mapView.showsCompass = false
         setupButtonsStackView()
         registerAnnotationViewClasses()
         
@@ -184,18 +185,16 @@ class MapViewController: UIViewController {
     }
     
     func setupAnnotations() {
-        for index in rooms.indices {
-            let room = rooms[index]
+        for room in rooms {
             let coordinate = room.coordinate
             if !mapView.annotations.contains(where: { $0.coordinate.latitude == coordinate.latitude && $0.coordinate.longitude == coordinate.longitude }) {
-                addAnnotation(coordinate: coordinate, index: index)
+                addAnnotation(coordinate: coordinate)
             }
         }
     }
     
-    func addAnnotation(coordinate: CLLocationCoordinate2D, index: Int) {
-        let annotation = CustomMKPointAnnotation()
-        annotation.index = index
+    func addAnnotation(coordinate: CLLocationCoordinate2D) {
+        let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
         mapView.addAnnotation(annotation)
     }
@@ -261,8 +260,4 @@ extension MapViewController: CLLocationManagerDelegate {
         userTrackingButton.isHidden = !locationAuthorized
         separatorView.isHidden = !locationAuthorized
     }
-}
-
-class CustomMKPointAnnotation: MKPointAnnotation {
-    var index: Int!
 }
