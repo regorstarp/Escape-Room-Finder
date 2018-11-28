@@ -44,7 +44,7 @@ class RatingControl: UIStackView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupButtons()
-        spacing = 8
+        spacing = 2
     }
     
     required init(coder: NSCoder) {

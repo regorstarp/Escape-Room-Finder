@@ -24,8 +24,8 @@ class ImageViewCell: UITableViewCell {
         return imageView
     }()
     
-    func configure(imageName: String) {
-        roomImageView.image = UIImage(named: imageName)
+    func configure(image: UIImage?) {
+        roomImageView.image = image
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

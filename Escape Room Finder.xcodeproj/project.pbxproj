@@ -24,6 +24,8 @@
 		D0FC561C21AB446D00C55D4C /* EscapeRoomDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FC561B21AB446D00C55D4C /* EscapeRoomDetailViewController.swift */; };
 		D0FC561E21AB46EA00C55D4C /* ImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FC561D21AB46EA00C55D4C /* ImageViewCell.swift */; };
 		D0FC562021AB4A0600C55D4C /* HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FC561F21AB4A0600C55D4C /* HeaderCell.swift */; };
+		D0FC562221AC43A500C55D4C /* SubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FC562121AC43A500C55D4C /* SubtitleCell.swift */; };
+		D0FC562421AC464200C55D4C /* ActionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FC562321AC464200C55D4C /* ActionsCell.swift */; };
 		DB36CE46219369A800772BF5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB36CE45219369A800772BF5 /* AppDelegate.swift */; };
 		DB4A72752197820500ABA9A3 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4A72732197820500ABA9A3 /* WelcomeViewController.swift */; };
 		DB4A72762197820500ABA9A3 /* WelcomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB4A72742197820500ABA9A3 /* WelcomeViewController.xib */; };
@@ -54,6 +56,8 @@
 		D0FC561B21AB446D00C55D4C /* EscapeRoomDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EscapeRoomDetailViewController.swift; sourceTree = "<group>"; };
 		D0FC561D21AB46EA00C55D4C /* ImageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewCell.swift; sourceTree = "<group>"; };
 		D0FC561F21AB4A0600C55D4C /* HeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCell.swift; sourceTree = "<group>"; };
+		D0FC562121AC43A500C55D4C /* SubtitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleCell.swift; sourceTree = "<group>"; };
+		D0FC562321AC464200C55D4C /* ActionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsCell.swift; sourceTree = "<group>"; };
 		D1E617AFC588768FBD49A608 /* Pods_Escape_Room_Finder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Escape_Room_Finder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB36CE42219369A800772BF5 /* Escape Room Finder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Escape Room Finder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB36CE45219369A800772BF5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -105,7 +109,6 @@
 				DB7172762198CA1F008C785C /* BusinessDetailViewController.swift */,
 				D0A255B421A98472007F11C8 /* EscapeRoomCell.swift */,
 				DB7172782198D61A008C785C /* BusinessDetailViewController.xib */,
-				D0A255B621A9BE78007F11C8 /* RatingControl.swift */,
 			);
 			path = "Business Detail";
 			sourceTree = "<group>";
@@ -138,9 +141,12 @@
 		D0FC561A21AB445000C55D4C /* Escape Room Detail */ = {
 			isa = PBXGroup;
 			children = (
+				D0A255B621A9BE78007F11C8 /* RatingControl.swift */,
 				D0FC561B21AB446D00C55D4C /* EscapeRoomDetailViewController.swift */,
 				D0FC561D21AB46EA00C55D4C /* ImageViewCell.swift */,
 				D0FC561F21AB4A0600C55D4C /* HeaderCell.swift */,
+				D0FC562121AC43A500C55D4C /* SubtitleCell.swift */,
+				D0FC562321AC464200C55D4C /* ActionsCell.swift */,
 			);
 			path = "Escape Room Detail";
 			sourceTree = "<group>";
@@ -167,8 +173,8 @@
 		DB36CE44219369A800772BF5 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				D0FC561A21AB445000C55D4C /* Escape Room Detail */,
 				DB36CE45219369A800772BF5 /* AppDelegate.swift */,
+				D0FC561A21AB445000C55D4C /* Escape Room Detail */,
 				D0FBB57A21A56D680026612F /* Saved */,
 				D0FBB57921A56D5A0026612F /* Completed */,
 				DBFC158C219393430044B61D /* UIViewController+Alerts.swift */,
@@ -389,8 +395,10 @@
 				D0A255B521A98472007F11C8 /* EscapeRoomCell.swift in Sources */,
 				DBFC158D219393430044B61D /* UIViewController+Alerts.swift in Sources */,
 				DBDC0982219C7CAE00DB26E6 /* EscapeRoomModel.swift in Sources */,
+				D0FC562421AC464200C55D4C /* ActionsCell.swift in Sources */,
 				D0FC561C21AB446D00C55D4C /* EscapeRoomDetailViewController.swift in Sources */,
 				D0A255B721A9BE78007F11C8 /* RatingControl.swift in Sources */,
+				D0FC562221AC43A500C55D4C /* SubtitleCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

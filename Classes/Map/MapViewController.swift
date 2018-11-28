@@ -21,6 +21,8 @@ class MapViewController: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
     private var userTrackingButton: MKUserTrackingButton!
+    private var infoButton: UIButton!
+    private var separatorView: UIView!
     private let locationManager = CLLocationManager()
     private let authUI = FUIAuth.defaultAuthUI()!
     
@@ -52,7 +54,7 @@ class MapViewController: UIViewController {
                 return
             }
             let models = snapshot.documents.map { (document) -> Room in
-                if let model = Room(dictionary: document.data()) {
+                if let model = Room(dictionary: document.data(), documentId: document.documentID) {
                     return model
                 }
                 else {
@@ -96,21 +98,65 @@ class MapViewController: UIViewController {
         return firestore.collection("room")
     }
     
-    private func setupUserTrackingButton() {
+    private func setupButtonsStackView() {
         mapView.showsUserLocation = true
         
         userTrackingButton = MKUserTrackingButton(mapView: mapView)
-        userTrackingButton.layer.backgroundColor = UIColor.translucentButtonColor?.cgColor
-        userTrackingButton.layer.borderColor = UIColor.white.cgColor
-        userTrackingButton.layer.borderWidth = 1
-        userTrackingButton.layer.cornerRadius = 5
         userTrackingButton.isHidden = true // Unhides when location authorization is given.
-        view.addSubview(userTrackingButton)
         
-        userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([userTrackingButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-                                     userTrackingButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10)])
+        infoButton = UIButton(type: .infoLight)
+        infoButton.widthAnchor.constraint(equalToConstant: 36).isActive = true
+        infoButton.heightAnchor.constraint(equalToConstant: 36).isActive = true
+        
+        let contentView = UIView()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        
+        separatorView = UIView()
+        separatorView.isHidden = true
+        separatorView.translatesAutoresizingMaskIntoConstraints = false
+        separatorView.backgroundColor = .gray
+        separatorView.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
+        
+        let stackView = UIStackView(arrangedSubviews: [infoButton, separatorView, userTrackingButton])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.spacing = 5
+        
+        contentView.layer.backgroundColor = #colorLiteral(red: 0.9725075364, green: 0.9698851705, blue: 0.9590129256, alpha: 1)
+//        contentView.layer.borderWidth = 1
+        contentView.layer.cornerRadius = 5
+        
+        contentView.layer.shadowOffset = .zero
+        contentView.layer.shadowOpacity = 0.2
+        contentView.layer.shadowRadius = 10
+        contentView.layer.shadowColor = UIColor.black.cgColor
+        contentView.layer.masksToBounds = false
+        
+        view.addSubview(contentView)
+        contentView.addSubview(stackView)
+        
+        
+        NSLayoutConstraint.activate([
+            contentView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            contentView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10)
+            ])
+        
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            separatorView.widthAnchor.constraint(equalTo: stackView.widthAnchor)
+            ])
     }
+    
+//    private func configureButton(_ button: UIView) {
+//        button.layer.backgroundColor = UIColor.translucentButtonColor?.cgColor
+//        button.layer.borderColor = UIColor.white.cgColor
+//        button.layer.borderWidth = 1
+//        button.layer.cornerRadius = 5
+//    }
     
     private func registerAnnotationViewClasses() {
         mapView.register(RoomAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
@@ -123,7 +169,7 @@ class MapViewController: UIViewController {
         query = baseQuery()
         
         mapView.delegate = self
-        setupUserTrackingButton()
+        setupButtonsStackView()
         registerAnnotationViewClasses()
         
         locationManager.delegate = self
@@ -187,33 +233,23 @@ extension MapViewController: MKMapViewDelegate {
         let sameCoordinateRooms = rooms.filter { (room) -> Bool in
             return room.coordinate.latitude == coordinate.latitude && room.coordinate.longitude == coordinate.longitude
         }
+        pushDetailViewController(rooms: sameCoordinateRooms)
+        mapView.setCenter(coordinate, animated: false)
+//        mapView.deselectAnnotation(view.annotation, animated: false)
         
-        let vc = BusinessDetailViewController()
-        vc.rooms = sameCoordinateRooms
-        self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func showBusiness(_ business: Business, businessId: String) {
-        let business = business
-        let roomRef = Firestore.firestore().collection("room").whereField("businessId", isEqualTo: businessId)
-        roomRef.getDocuments { [unowned self] (snapshot, error) in
-            guard let snapshot = snapshot else {
-                print("Error feching snapshot results: \(error!)")
-                return
-            }
-            
-            let rooms = snapshot.documents.map { (document) -> Room in
-                if let model = Room(dictionary: document.data()) {
-                    return model
-                }
-                else {
-                    fatalError("Unable to initialize type \(Room.self) with dictionary \(document.data()) ")
-                }
-            }
+    func pushDetailViewController(rooms: [Room]) {
+        if rooms.count == 1 {
+            guard let room = rooms.first else { return }
+            let vc = EscapeRoomDetailViewController()
+            let documentIds = DocumentIds.init(business: room.businessId, room: room.documentId)
+            vc.documentIds = documentIds
+            navigationController?.pushViewController(vc, animated: true)
+        } else {
             let vc = BusinessDetailViewController()
-            vc.business = business
             vc.rooms = rooms
-            self.navigationController?.pushViewController(vc, animated: true)
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
 }
@@ -223,10 +259,10 @@ extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         let locationAuthorized = status == .authorizedWhenInUse
         userTrackingButton.isHidden = !locationAuthorized
+        separatorView.isHidden = !locationAuthorized
     }
 }
 
 class CustomMKPointAnnotation: MKPointAnnotation {
     var index: Int!
 }
-

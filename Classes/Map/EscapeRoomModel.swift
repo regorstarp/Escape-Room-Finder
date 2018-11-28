@@ -36,6 +36,7 @@ enum Difficulty: Int {
 }
 
 struct Room {
+    let documentId: String
     let name: String
     let businessId: String
     let description: String
@@ -49,7 +50,7 @@ struct Room {
 }
 
 extension Room {
-    init?(dictionary: [String : Any]) {
+    init?(dictionary: [String : Any], documentId: String) {
         
         guard let name = dictionary["name"] as? String,
             let description = dictionary["description"] as? String,
@@ -65,9 +66,12 @@ extension Room {
         
         
         
-        self.init(name: name, businessId: businessId, description: description, coordinate: CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude), duration: duration, city: city, categories: categories, difficulty: diff, maxPlayers: maxPlayers, image: image)
+        self.init(documentId: documentId, name: name, businessId: businessId, description: description, coordinate: CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude), duration: duration, city: city, categories: categories, difficulty: diff, maxPlayers: maxPlayers, image: image)
     }
 }
 
-
+struct DocumentIds {
+    let business: String
+    let room: String
+}
 
