@@ -9,12 +9,12 @@
 import UIKit
 import FirebaseUI
 import FirebaseAuth
+import CoreLocation
 
-class AccountViewController: BaseViewController {
+class SettingsViewController: BaseViewController {
     
-    fileprivate enum SettingsRows: Int {
-        case account = 0
-        case count
+    fileprivate enum SettingsRows: Int, CaseIterable {
+        case account
     }
     
     private let authUI = FUIAuth.defaultAuthUI()!
@@ -24,7 +24,7 @@ class AccountViewController: BaseViewController {
         }
     }
     
-    private lazy var tableView = UITableView()
+    private lazy var tableView = UITableView(frame: .zero, style: .grouped)
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -85,24 +85,21 @@ class AccountViewController: BaseViewController {
     }
 }
 
-extension AccountViewController: UITableViewDelegate, UITableViewDataSource {
+extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return SettingsRows.count.rawValue
+        return SettingsRows.allCases.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let settingsRows = SettingsRows(rawValue: indexPath.row) else { return UITableViewCell() }
-        
+        let cell = UITableViewCell(style: .value1, reuseIdentifier: "Identifier")
+        cell.accessoryType = .disclosureIndicator
         switch settingsRows {
         case .account:
-            let cell = UITableViewCell(style: .value1, reuseIdentifier: "Identifier")
-            cell.accessoryType = .disclosureIndicator
             cell.textLabel?.text = "Account"
             cell.detailTextLabel?.text = Auth.auth().currentUser?.displayName ?? "Add Account"
             return cell
-        default:
-            return UITableViewCell()
         }
     }
     
@@ -112,13 +109,11 @@ extension AccountViewController: UITableViewDelegate, UITableViewDataSource {
         switch settingsRows {
         case .account:
             accountRowSelected()
-        default:
-            break
         }
     }
 }
 
-extension AccountViewController: FUIAuthDelegate {
+extension SettingsViewController: FUIAuthDelegate {
     func authUI(_ authUI: FUIAuth, didSignInWith user: User?, error: Error?) {
         // handle user and error as necessary
         if let err = error {

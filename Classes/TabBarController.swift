@@ -28,7 +28,7 @@ class TabBarController: UITabBarController {
         favoritesViewController.tabBarItem = favoritesTabBarItem
         let favoritesNavigationController = UINavigationController(rootViewController: favoritesViewController)
         
-        let accountViewController = AccountViewController()
+        let accountViewController = SettingsViewController()
         let accountTabBarItem = UITabBarItem(title: "Settings", image: UIImage(named: "tab-settings"), tag: 3)
         accountViewController.tabBarItem = accountTabBarItem
         let accountNavigationController = UINavigationController(rootViewController: accountViewController)

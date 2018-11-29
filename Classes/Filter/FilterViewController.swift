@@ -39,12 +39,34 @@ class FilterViewController: UIViewController {
         navigationItem.rightBarButtonItem = doneButton
     }
     
+    private func difficulty(from string: String) -> Int? {
+        switch string {
+        case "Easy":
+            return 0
+        case "Medium":
+            return 1
+        case "Hard":
+            return 2
+            
+        case _:
+            return nil
+        }
+    }
+    
     @objc private func onCancelButtonPressed() {
         dismiss(animated: true)
     }
     
     @objc private func onDoneButtonPressed() {
         
+        let categoryIndexPath = IndexPath(row: FilterRows.category.rawValue, section: 0)
+        let cityIndexPath = IndexPath(row: FilterRows.city.rawValue, section: 0)
+        let difficultyIndexPath = IndexPath(row: FilterRows.difficulty.rawValue, section: 0)
+        guard let categoryCell = tableView.cellForRow(at: categoryIndexPath) as? PickerViewCell, let cityCell = tableView.cellForRow(at: cityIndexPath) as? PickerViewCell, let difficultyCell = tableView.cellForRow(at: difficultyIndexPath) as? PickerViewCell else { return }
+        
+        let difficulty = difficultyCell.textField.text.flatMap { self.difficulty(from: $0) }
+        delegate?.controller(self, didSelectCategory: categoryCell.textField.text, city: cityCell.textField.text, difficulty: difficulty)
+        navigationController?.dismiss(animated: true, completion: nil)
     }
 
     override func viewDidLoad() {
@@ -57,7 +79,7 @@ class FilterViewController: UIViewController {
 }
 
 protocol FilterViewControllerDelegate: NSObjectProtocol {
-    func controller(_ controller: FilterViewController, didSelectCategory category: String?, city: String?, numberOfPlayers: Int?, difficulty: Int?)
+    func controller(_ controller: FilterViewController, didSelectCategory category: String?, city: String?, difficulty: Int?)
 }
 
 extension FilterViewController: UITableViewDelegate, UITableViewDataSource {

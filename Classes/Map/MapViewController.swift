@@ -41,6 +41,12 @@ class MapViewController: UIViewController {
         }
     }
     
+    lazy private var filterViewController: FilterViewController = {
+        let vc = FilterViewController()
+        vc.delegate = self
+        return vc
+    }()
+    
     private var listener: ListenerRegistration?
     
     fileprivate func observeQuery() {
@@ -63,6 +69,7 @@ class MapViewController: UIViewController {
             }
             self.rooms = models
             self.documents = snapshot.documents
+            self.mapView.removeAnnotations(self.mapView.annotations)
             self.setupAnnotations()
         }
     }
@@ -73,13 +80,13 @@ class MapViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: false)
+//        navigationController?.setNavigationBarHidden(true, animated: false)
         observeQuery()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: false)
+//        navigationController?.setNavigationBarHidden(false, animated: false)
         stopObserving()
     }
     
@@ -105,6 +112,7 @@ class MapViewController: UIViewController {
         userTrackingButton.isHidden = true // Unhides when location authorization is given.
         
         infoButton = UIButton(type: .infoLight)
+        infoButton.addTarget(self, action: #selector(onFilterButtonPressed), for: .touchUpInside)
         infoButton.widthAnchor.constraint(equalToConstant: 36).isActive = true
         infoButton.heightAnchor.constraint(equalToConstant: 36).isActive = true
         
@@ -151,26 +159,29 @@ class MapViewController: UIViewController {
             ])
     }
     
-//    private func configureButton(_ button: UIView) {
-//        button.layer.backgroundColor = UIColor.translucentButtonColor?.cgColor
-//        button.layer.borderColor = UIColor.white.cgColor
-//        button.layer.borderWidth = 1
-//        button.layer.cornerRadius = 5
-//    }
+    @objc private func onFilterButtonPressed() {
+        present(UINavigationController(rootViewController: filterViewController), animated: true)
+    }
     
     private func registerAnnotationViewClasses() {
         mapView.register(RoomAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         mapView.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
     }
     
+    private func configureFilterButton() {
+        let filterButton = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(onFilterButtonPressed))
+        navigationItem.rightBarButtonItem = filterButton
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         query = baseQuery()
-        
+        title = "Escape Rooms"
         mapView.delegate = self
         mapView.showsCompass = false
         setupButtonsStackView()
+        configureFilterButton()
         registerAnnotationViewClasses()
         
         locationManager.delegate = self
@@ -185,17 +196,20 @@ class MapViewController: UIViewController {
     }
     
     func setupAnnotations() {
+        
         for room in rooms {
             let coordinate = room.coordinate
             if !mapView.annotations.contains(where: { $0.coordinate.latitude == coordinate.latitude && $0.coordinate.longitude == coordinate.longitude }) {
-                addAnnotation(coordinate: coordinate)
+                addAnnotation(coordinate: coordinate, title: room.name)
             }
+            addAnnotation(coordinate: coordinate, title: room.name)
         }
     }
     
-    func addAnnotation(coordinate: CLLocationCoordinate2D) {
+    func addAnnotation(coordinate: CLLocationCoordinate2D, title: String) {
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
+        annotation.title = title
         mapView.addAnnotation(annotation)
     }
     
@@ -223,20 +237,30 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is MKPointAnnotation else { return nil }
         
-        return RoomAnnotationView(annotation: annotation, reuseIdentifier: RoomAnnotationView.ReuseID)
+        let roomAnnotationView = RoomAnnotationView(annotation: annotation, reuseIdentifier: RoomAnnotationView.ReuseID)
+//        roomAnnotationView.canShowCallout = true
+//        let rightButton = UIButton(type: .detailDisclosure)
+//        roomAnnotationView.rightCalloutAccessoryView = rightButton
+        return roomAnnotationView
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        guard view is RoomAnnotationView else { return }
-        let coordinate = view.annotation!.coordinate
+        guard view is RoomAnnotationView, let coordinate = view.annotation?.coordinate else { return }
+        
         let sameCoordinateRooms = rooms.filter { (room) -> Bool in
             return room.coordinate.latitude == coordinate.latitude && room.coordinate.longitude == coordinate.longitude
         }
         pushDetailViewController(rooms: sameCoordinateRooms)
-        mapView.setCenter(coordinate, animated: false)
-//        mapView.deselectAnnotation(view.annotation, animated: false)
         
     }
+    
+//    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+//        guard let coordinate = view.annotation?.coordinate else { return }
+//        let sameCoordinateRooms = rooms.filter { (room) -> Bool in
+//            return room.coordinate.latitude == coordinate.latitude && room.coordinate.longitude == coordinate.longitude
+//        }
+//        pushDetailViewController(rooms: sameCoordinateRooms)
+//    }
     
     func pushDetailViewController(rooms: [Room]) {
         if rooms.count == 1 {
@@ -259,5 +283,39 @@ extension MapViewController: CLLocationManagerDelegate {
         let locationAuthorized = status == .authorizedWhenInUse
         userTrackingButton.isHidden = !locationAuthorized
         separatorView.isHidden = !locationAuthorized
+    }
+}
+
+extension MapViewController: FilterViewControllerDelegate {
+    
+    func query(withCategory category: String?, city: String?, difficulty: Int?) -> Query {
+        var filtered = baseQuery()
+        
+        if let category = category, !category.isEmpty {
+            filtered = filtered.whereField("categories", arrayContains: category)
+        }
+        
+        if let city = city, !city.isEmpty {
+            filtered = filtered.whereField("city", isEqualTo: city)
+        }
+        
+        if let difficulty = difficulty {
+            filtered = filtered.whereField("difficulty", isEqualTo: difficulty)
+        }
+        
+//        if let sortBy = sortBy, !sortBy.isEmpty {
+//            filtered = filtered.order(by: sortBy)
+//        }
+        
+        // Advanced queries
+        
+        return filtered
+    }
+    
+    func controller(_ controller: FilterViewController, didSelectCategory category: String?, city: String?, difficulty: Int?) {
+        let filtered = query(withCategory: category, city: city, difficulty: difficulty)
+        
+        query = filtered
+        observeQuery()
     }
 }

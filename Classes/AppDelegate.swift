@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = UINavigationController(rootViewController: FilterViewController())
+        window?.rootViewController = TabBarController()
         window?.makeKeyAndVisible()
         
 //        UINavigationBar.appearance().barTintColor = UIColor.darkColor

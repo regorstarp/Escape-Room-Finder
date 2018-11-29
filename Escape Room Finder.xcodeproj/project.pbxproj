@@ -18,7 +18,7 @@
 		D0E84D7121A41AB800657176 /* ClusterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E84D7021A41AB800657176 /* ClusterAnnotationView.swift */; };
 		D0E84D7321A41CF600657176 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0E84D7221A41CF600657176 /* Assets.xcassets */; };
 		D0F87D7421A0C72600184967 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0F87D7321A0C72600184967 /* GoogleService-Info.plist */; };
-		D0FBB57621A45BAF0026612F /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FBB57521A45BAF0026612F /* AccountViewController.swift */; };
+		D0FBB57621A45BAF0026612F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FBB57521A45BAF0026612F /* SettingsViewController.swift */; };
 		D0FBB57821A45E1A0026612F /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FBB57721A45E1A0026612F /* TabBarController.swift */; };
 		D0FBB57C21A56D910026612F /* SavedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FBB57B21A56D910026612F /* SavedViewController.swift */; };
 		D0FBB57E21A56E2C0026612F /* CompletedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FBB57D21A56E2C0026612F /* CompletedViewController.swift */; };
@@ -52,7 +52,7 @@
 		D0E84D7021A41AB800657176 /* ClusterAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterAnnotationView.swift; sourceTree = "<group>"; };
 		D0E84D7221A41CF600657176 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D0F87D7321A0C72600184967 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		D0FBB57521A45BAF0026612F /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		D0FBB57521A45BAF0026612F /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		D0FBB57721A45E1A0026612F /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		D0FBB57B21A56D910026612F /* SavedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SavedViewController.swift; path = Classes/Completed/SavedViewController.swift; sourceTree = SOURCE_ROOT; };
 		D0FBB57D21A56E2C0026612F /* CompletedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedViewController.swift; sourceTree = "<group>"; };
@@ -126,12 +126,12 @@
 			path = "Business Detail";
 			sourceTree = "<group>";
 		};
-		D0FBB57421A45B900026612F /* Account */ = {
+		D0FBB57421A45B900026612F /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				D0FBB57521A45BAF0026612F /* AccountViewController.swift */,
+				D0FBB57521A45BAF0026612F /* SettingsViewController.swift */,
 			);
-			path = Account;
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		D0FBB57921A56D5A0026612F /* Completed */ = {
@@ -192,7 +192,7 @@
 				D0FBB57A21A56D680026612F /* Saved */,
 				D0FBB57921A56D5A0026612F /* Completed */,
 				DBFC158C219393430044B61D /* UIViewController+Alerts.swift */,
-				D0FBB57421A45B900026612F /* Account */,
+				D0FBB57421A45B900026612F /* Settings */,
 				DB4A7278219783D400ABA9A3 /* Welcome */,
 				D0FBB57321A444640026612F /* Business Detail */,
 				DB4A727F219785EF00ABA9A3 /* Map */,
@@ -402,7 +402,7 @@
 				D0FC561E21AB46EA00C55D4C /* ImageViewCell.swift in Sources */,
 				D0A255B321A97A04007F11C8 /* ImageViewController.swift in Sources */,
 				D0FBB57E21A56E2C0026612F /* CompletedViewController.swift in Sources */,
-				D0FBB57621A45BAF0026612F /* AccountViewController.swift in Sources */,
+				D0FBB57621A45BAF0026612F /* SettingsViewController.swift in Sources */,
 				D0E84D7121A41AB800657176 /* ClusterAnnotationView.swift in Sources */,
 				D0FC562021AB4A0600C55D4C /* HeaderCell.swift in Sources */,
 				DB4A727D219785E800ABA9A3 /* MapViewController.swift in Sources */,
