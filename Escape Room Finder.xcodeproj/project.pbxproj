@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		69843E216737DE9B29873722 /* Pods_Escape_Room_Finder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1E617AFC588768FBD49A608 /* Pods_Escape_Room_Finder.framework */; };
+		D04DE9BA21B2F2440082037F /* RateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04DE9B921B2F2440082037F /* RateView.swift */; };
 		D054939021AEEA13008FCEAF /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D054938F21AEEA13008FCEAF /* FilterViewController.swift */; };
 		D054939221AEEBDF008FCEAF /* PickerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D054939121AEEBDF008FCEAF /* PickerViewCell.swift */; };
 		D0A255B321A97A04007F11C8 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A255B221A97A04007F11C8 /* ImageViewController.swift */; };
@@ -43,6 +44,7 @@
 
 /* Begin PBXFileReference section */
 		66B11CC29D49DE1F0F797080 /* Pods-Escape Room Finder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Escape Room Finder.release.xcconfig"; path = "Pods/Target Support Files/Pods-Escape Room Finder/Pods-Escape Room Finder.release.xcconfig"; sourceTree = "<group>"; };
+		D04DE9B921B2F2440082037F /* RateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateView.swift; sourceTree = "<group>"; };
 		D054938F21AEEA13008FCEAF /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		D054939121AEEBDF008FCEAF /* PickerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewCell.swift; sourceTree = "<group>"; };
 		D0A255B221A97A04007F11C8 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				D0FC562121AC43A500C55D4C /* SubtitleCell.swift */,
 				D0FC562321AC464200C55D4C /* ActionsCell.swift */,
 				D0FD21EE21B2D4690035CF27 /* CompletedRoom.swift */,
+				D04DE9B921B2F2440082037F /* RateView.swift */,
 			);
 			path = "Escape Room Detail";
 			sourceTree = "<group>";
@@ -413,6 +416,7 @@
 				D0FBB58021A56FA00026612F /* UserNotLoggedViewController.swift in Sources */,
 				D0A255B521A98472007F11C8 /* EscapeRoomCell.swift in Sources */,
 				DBFC158D219393430044B61D /* UIViewController+Alerts.swift in Sources */,
+				D04DE9BA21B2F2440082037F /* RateView.swift in Sources */,
 				D054939021AEEA13008FCEAF /* FilterViewController.swift in Sources */,
 				DBDC0982219C7CAE00DB26E6 /* EscapeRoomModel.swift in Sources */,
 				D0FC562421AC464200C55D4C /* ActionsCell.swift in Sources */,

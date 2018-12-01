@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseUI
 
 extension UIViewController {
     
@@ -14,6 +15,21 @@ extension UIViewController {
         let alert = UIAlertController.configured(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(action)
+        present(alert, animated: true)
+    }
+    
+    func showSignInAlert(forAction action: String) {
+        let alert = UIAlertController(title: "Sign In to \(action)", message: "You need to be signed in to \(action)", preferredStyle: .alert)
+        let signInAction = UIAlertAction(title: "Sign In", style: .default) { (action) in
+            self.present(FUIAuth.defaultAuthUI()!.authViewController(), animated: true)
+        }
+        alert.addAction(signInAction)
+        let createAccountAction = UIAlertAction(title: "Create Account", style: .default) { (action) in
+            self.present(FUIAuth.defaultAuthUI()!.authViewController(), animated: true)
+        }
+        alert.addAction(createAccountAction)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(cancelAction)
         present(alert, animated: true)
     }
     

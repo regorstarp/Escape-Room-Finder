@@ -32,6 +32,7 @@ class EscapeRoomDetailViewController: UIViewController {
     var savedDocumentId: String!
     var rated: Bool = false
     var ratedDocumentId: String!
+    var userId: String?
     
 //    private var expandedHeader = true
     private lazy var tableView = UITableView(frame: view.bounds, style: UITableView.Style.grouped)
@@ -57,15 +58,51 @@ class EscapeRoomDetailViewController: UIViewController {
     
     let dispatchGroup = DispatchGroup()
     
+    private func resetVariables() {
+        saved = false
+        rated = false
+        completed = false
+        savedDocumentId = ""
+        ratedDocumentId = ""
+        completedDocumentId = ""
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if userId != Auth.auth().currentUser?.uid {
+            //user changed account or signed out
+            userId = Auth.auth().currentUser?.uid
+            resetVariables()
+            
+            if userId == nil {
+                setupNavigationBar()
+            } else {
+                showActivityIndicator()
+                checkUserCompletedRoom()
+                checkUserRatedRoom()
+                checkUserSavedRoom()
+                dispatchGroup.notify(queue: DispatchQueue.main, execute: {
+                    self.setupNavigationBar()
+                    self.hideActivityIndicator()
+                })
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        userId = Auth.auth().currentUser?.uid
         showActivityIndicator()
         loadBusiness()
         loadRoom()
-        checkUserCompletedRoom()
-        checkUserRatedRoom()
-        checkUserSavedRoom()
+        
+        if Auth.auth().currentUser?.uid != nil {
+            checkUserCompletedRoom()
+            checkUserRatedRoom()
+            checkUserSavedRoom()
+        }
+        
         dispatchGroup.notify(queue: DispatchQueue.main, execute: {
             self.setupNavigationBar()
             self.configureTableView()
@@ -75,13 +112,16 @@ class EscapeRoomDetailViewController: UIViewController {
     
     //check if user has the completed the room
     private func checkUserCompletedRoom() {
+        guard let userId = userId else { return }
+        
         dispatchGroup.enter()
-        let ref = Firestore.firestore().collection("completed").whereField("roomId", isEqualTo: documentIds.room)
+        let ref = Firestore.firestore().collection("completed").whereField("roomId", isEqualTo: documentIds.room).whereField("userId", isEqualTo: userId)
         ref.getDocuments { [unowned self] (documents, error) in
             if let documents = documents, let document = documents.documents.first {
                 self.completedDocumentId = document.documentID
                 self.completed = true
             } else {
+                print("User doesn't have this room completed")
                 self.completed = false
             }
             self.dispatchGroup.leave()
@@ -90,13 +130,16 @@ class EscapeRoomDetailViewController: UIViewController {
     
     //check if user has saved the room
     private func checkUserSavedRoom() {
+        guard let userId = userId else { return }
+        
         dispatchGroup.enter()
-        let ref = Firestore.firestore().collection("saved").whereField("roomId", isEqualTo: documentIds.room)
+        let ref = Firestore.firestore().collection("saved").whereField("roomId", isEqualTo: documentIds.room).whereField("userId", isEqualTo: userId)
         ref.getDocuments { [unowned self] (documents, error) in
             if let documents = documents, let document = documents.documents.first {
                 self.savedDocumentId = document.documentID
                 self.saved = true
             } else {
+                print("User doesn't have this room saved")
                 self.saved = false
             }
             self.dispatchGroup.leave()
@@ -189,6 +232,12 @@ class EscapeRoomDetailViewController: UIViewController {
     }
     
     @objc private func addCompleted(sender: UIBarButtonItem) {
+        
+        guard userId != nil else {
+            showSignInAlert(forAction: "Complete")
+            return
+        }
+        
         sender.action = #selector(removeCompleted(sender:))
         sender.image = UIImage(named: "complete-button-selected")?.withRenderingMode(.alwaysTemplate)
         
@@ -220,6 +269,12 @@ class EscapeRoomDetailViewController: UIViewController {
     }
     
     @objc private func addBookmark(sender: UIBarButtonItem) {
+        
+        guard userId != nil else {
+            showSignInAlert(forAction: "Save")
+            return
+        }
+        
         sender.action = #selector(removeBookmark(sender:))
         sender.image = UIImage(named: "bookmark-filled")?.withRenderingMode(.alwaysTemplate)
         
