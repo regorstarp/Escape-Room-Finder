@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseFirestore
+import FirebaseAuth
 
 private enum RoomDetailRows: Int {
     case image
@@ -25,6 +26,8 @@ class EscapeRoomDetailViewController: UIViewController {
     var business: Business!
     var room: Room!
     var documentIds: DocumentIds!
+    var completed: Bool = false
+    var completedDocumentId: String!
     
 //    private var expandedHeader = true
     private lazy var tableView = UITableView(frame: view.bounds, style: UITableView.Style.grouped)
@@ -43,6 +46,11 @@ class EscapeRoomDetailViewController: UIViewController {
         return activityIndicatorView
     }()
     
+    var bookmarkItem: UIBarButtonItem!
+    var ratedItem: UIBarButtonItem!
+    var completedItem: UIBarButtonItem!
+    
+    
     let dispatchGroup = DispatchGroup()
     
     override func viewDidLoad() {
@@ -51,12 +59,35 @@ class EscapeRoomDetailViewController: UIViewController {
         showActivityIndicator()
         loadBusiness()
         loadRoom()
+        checkUserCompletedRoom()
         dispatchGroup.notify(queue: DispatchQueue.main, execute: {
+            
             self.setupNavigationBar()
             self.configureTableView()
             self.hideActivityIndicator()
         })
-        
+    }
+    
+    //placeholder name
+    private func setup() {
+        setupNavigationBar()
+        configureTableView()
+        hideActivityIndicator()
+    }
+    
+    //check if user has the completed the room
+    private func checkUserCompletedRoom() {
+        dispatchGroup.enter()
+        let ref = Firestore.firestore().collection("completed").whereField("roomId", isEqualTo: documentIds.room)
+        ref.getDocuments { [unowned self] (documents, error) in
+            if let documents = documents, let document = documents.documents.first {
+                self.completedDocumentId = document.documentID
+                self.completed = true
+            } else {
+                self.completed = false
+            }
+            self.dispatchGroup.leave()
+        }
     }
     
     private func loadBusiness() {
@@ -65,10 +96,10 @@ class EscapeRoomDetailViewController: UIViewController {
         ref.getDocument { [unowned self] (document, error) in
             if let document = document, document.exists, let dict = document.data() , let business = Business(dictionary: dict) {
                 self.business = business
-                self.dispatchGroup.leave()
             } else {
-                print("Document does not exist")
+                fatalError("Room with id: \(self.documentIds.room) doesn't exist")
             }
+            self.dispatchGroup.leave()
         }
     }
     
@@ -78,10 +109,10 @@ class EscapeRoomDetailViewController: UIViewController {
         ref.getDocument { [unowned self] (document, error) in
             if let document = document, document.exists, let dict = document.data() , let room = Room(dictionary: dict, documentId: document.documentID) {
                 self.room = room
-                self.dispatchGroup.leave()
             } else {
-                print("Document does not exist")
+                fatalError("Room with id: \(self.documentIds.room) doesn't exist")
             }
+            self.dispatchGroup.leave()
         }
     }
     
@@ -96,11 +127,16 @@ class EscapeRoomDetailViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        let bookmarkItem = UIBarButtonItem(image: UIImage(named: "bookmark"), style: .plain, target: self, action: #selector(addBookmark(sender:)))
+        bookmarkItem = UIBarButtonItem(image: UIImage(named: "bookmark"), style: .plain, target: self, action: #selector(addBookmark(sender:)))
         
-        let completedItem = UIBarButtonItem(image: UIImage(named: "complete-button"), style: .plain, target: self, action: #selector(addCompleted(sender:)))
+        if completed {
+            completedItem = UIBarButtonItem(image: UIImage(named: "complete-button-selected"), style: .plain, target: self, action: #selector(removeCompleted(sender:)))
+        } else {
+            completedItem = UIBarButtonItem(image: UIImage(named: "complete-button"), style: .plain, target: self, action: #selector(addCompleted(sender:)))
+        }
         
-        let ratedItem = UIBarButtonItem(image: UIImage(named: "emptyStar"), style: .plain, target: self, action: #selector(addRated(sender:)))
+        
+        ratedItem = UIBarButtonItem(image: UIImage(named: "emptyStar"), style: .plain, target: self, action: #selector(addRated(sender:)))
     
         navigationItem.rightBarButtonItems = [ratedItem ,completedItem, bookmarkItem]
     }
@@ -118,11 +154,32 @@ class EscapeRoomDetailViewController: UIViewController {
     @objc private func addCompleted(sender: UIBarButtonItem) {
         sender.action = #selector(removeCompleted(sender:))
         sender.image = UIImage(named: "complete-button-selected")?.withRenderingMode(.alwaysTemplate)
+        
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        let roomId = room.documentId
+        let ref = Firestore.firestore().collection("completed").document()
+        
+        let completedRoomModel = CompletedRoom(userId: userId, roomId: roomId)
+        ref.setData(completedRoomModel.documentData()) { error in
+            if let error = error {
+                print("Error saving room as completed: \(error)")
+            } else {
+                self.completedDocumentId = ref.documentID
+            }
+        }
     }
     
     @objc private func removeCompleted(sender: UIBarButtonItem) {
         sender.action = #selector(addCompleted(sender:))
         sender.image = UIImage(named: "complete-button")?.withRenderingMode(.alwaysTemplate)
+        
+        Firestore.firestore().collection("completed").document(completedDocumentId).delete() { err in
+            if let err = err {
+                print("Error removing document: \(err)")
+            } else {
+                print("Document successfully removed!")
+            }
+        }
     }
     
     @objc private func addBookmark(sender: UIBarButtonItem) {

@@ -21,8 +21,6 @@ class MapViewController: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
     private var userTrackingButton: MKUserTrackingButton!
-    private var infoButton: UIButton!
-    private var separatorView: UIView!
     private let locationManager = CLLocationManager()
     private let authUI = FUIAuth.defaultAuthUI()!
     
@@ -109,54 +107,16 @@ class MapViewController: UIViewController {
         mapView.showsUserLocation = true
         
         userTrackingButton = MKUserTrackingButton(mapView: mapView)
+        userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
+        userTrackingButton.layer.backgroundColor = UIColor.translucentButtonColor?.cgColor
+        userTrackingButton.layer.borderColor = UIColor.white.cgColor
+        userTrackingButton.layer.borderWidth = 1
+        userTrackingButton.layer.cornerRadius = 5
         userTrackingButton.isHidden = true // Unhides when location authorization is given.
+        view.addSubview(userTrackingButton)
         
-        infoButton = UIButton(type: .infoLight)
-        infoButton.addTarget(self, action: #selector(onFilterButtonPressed), for: .touchUpInside)
-        infoButton.widthAnchor.constraint(equalToConstant: 36).isActive = true
-        infoButton.heightAnchor.constraint(equalToConstant: 36).isActive = true
-        
-        let contentView = UIView()
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        
-        separatorView = UIView()
-        separatorView.isHidden = true
-        separatorView.translatesAutoresizingMaskIntoConstraints = false
-        separatorView.backgroundColor = .gray
-        separatorView.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
-        
-        let stackView = UIStackView(arrangedSubviews: [infoButton, separatorView, userTrackingButton])
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.alignment = .center
-        stackView.spacing = 5
-        
-        contentView.layer.backgroundColor = #colorLiteral(red: 0.9725075364, green: 0.9698851705, blue: 0.9590129256, alpha: 1)
-//        contentView.layer.borderWidth = 1
-        contentView.layer.cornerRadius = 5
-        
-        contentView.layer.shadowOffset = .zero
-        contentView.layer.shadowOpacity = 0.2
-        contentView.layer.shadowRadius = 10
-        contentView.layer.shadowColor = UIColor.black.cgColor
-        contentView.layer.masksToBounds = false
-        
-        view.addSubview(contentView)
-        contentView.addSubview(stackView)
-        
-        
-        NSLayoutConstraint.activate([
-            contentView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            contentView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10)
-            ])
-        
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            separatorView.widthAnchor.constraint(equalTo: stackView.widthAnchor)
-            ])
+        NSLayoutConstraint.activate([userTrackingButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+                                     userTrackingButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10)])
     }
     
     @objc private func onFilterButtonPressed() {
@@ -202,7 +162,6 @@ class MapViewController: UIViewController {
             if !mapView.annotations.contains(where: { $0.coordinate.latitude == coordinate.latitude && $0.coordinate.longitude == coordinate.longitude }) {
                 addAnnotation(coordinate: coordinate, title: room.name)
             }
-            addAnnotation(coordinate: coordinate, title: room.name)
         }
     }
     
@@ -282,7 +241,6 @@ extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         let locationAuthorized = status == .authorizedWhenInUse
         userTrackingButton.isHidden = !locationAuthorized
-        separatorView.isHidden = !locationAuthorized
     }
 }
 

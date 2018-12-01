@@ -28,6 +28,7 @@
 		D0FC562021AB4A0600C55D4C /* HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FC561F21AB4A0600C55D4C /* HeaderCell.swift */; };
 		D0FC562221AC43A500C55D4C /* SubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FC562121AC43A500C55D4C /* SubtitleCell.swift */; };
 		D0FC562421AC464200C55D4C /* ActionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FC562321AC464200C55D4C /* ActionsCell.swift */; };
+		D0FD21EF21B2D4690035CF27 /* CompletedRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FD21EE21B2D4690035CF27 /* CompletedRoom.swift */; };
 		DB36CE46219369A800772BF5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB36CE45219369A800772BF5 /* AppDelegate.swift */; };
 		DB4A72752197820500ABA9A3 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4A72732197820500ABA9A3 /* WelcomeViewController.swift */; };
 		DB4A72762197820500ABA9A3 /* WelcomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB4A72742197820500ABA9A3 /* WelcomeViewController.xib */; };
@@ -62,6 +63,7 @@
 		D0FC561F21AB4A0600C55D4C /* HeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCell.swift; sourceTree = "<group>"; };
 		D0FC562121AC43A500C55D4C /* SubtitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleCell.swift; sourceTree = "<group>"; };
 		D0FC562321AC464200C55D4C /* ActionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsCell.swift; sourceTree = "<group>"; };
+		D0FD21EE21B2D4690035CF27 /* CompletedRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedRoom.swift; sourceTree = "<group>"; };
 		D1E617AFC588768FBD49A608 /* Pods_Escape_Room_Finder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Escape_Room_Finder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB36CE42219369A800772BF5 /* Escape Room Finder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Escape Room Finder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB36CE45219369A800772BF5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				D0FC561F21AB4A0600C55D4C /* HeaderCell.swift */,
 				D0FC562121AC43A500C55D4C /* SubtitleCell.swift */,
 				D0FC562321AC464200C55D4C /* ActionsCell.swift */,
+				D0FD21EE21B2D4690035CF27 /* CompletedRoom.swift */,
 			);
 			path = "Escape Room Detail";
 			sourceTree = "<group>";
@@ -398,6 +401,7 @@
 				D0CABB5C21AB114D0098829C /* BaseViewController.swift in Sources */,
 				D054939221AEEBDF008FCEAF /* PickerViewCell.swift in Sources */,
 				D0E84D6F21A41A2200657176 /* RoomAnnotationView.swift in Sources */,
+				D0FD21EF21B2D4690035CF27 /* CompletedRoom.swift in Sources */,
 				DB36CE46219369A800772BF5 /* AppDelegate.swift in Sources */,
 				D0FC561E21AB46EA00C55D4C /* ImageViewCell.swift in Sources */,
 				D0A255B321A97A04007F11C8 /* ImageViewController.swift in Sources */,
