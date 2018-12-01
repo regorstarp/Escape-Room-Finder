@@ -28,6 +28,10 @@ class EscapeRoomDetailViewController: UIViewController {
     var documentIds: DocumentIds!
     var completed: Bool = false
     var completedDocumentId: String!
+    var saved: Bool = false
+    var savedDocumentId: String!
+    var rated: Bool = false
+    var ratedDocumentId: String!
     
 //    private var expandedHeader = true
     private lazy var tableView = UITableView(frame: view.bounds, style: UITableView.Style.grouped)
@@ -60,19 +64,13 @@ class EscapeRoomDetailViewController: UIViewController {
         loadBusiness()
         loadRoom()
         checkUserCompletedRoom()
+        checkUserRatedRoom()
+        checkUserSavedRoom()
         dispatchGroup.notify(queue: DispatchQueue.main, execute: {
-            
             self.setupNavigationBar()
             self.configureTableView()
             self.hideActivityIndicator()
         })
-    }
-    
-    //placeholder name
-    private func setup() {
-        setupNavigationBar()
-        configureTableView()
-        hideActivityIndicator()
     }
     
     //check if user has the completed the room
@@ -85,6 +83,36 @@ class EscapeRoomDetailViewController: UIViewController {
                 self.completed = true
             } else {
                 self.completed = false
+            }
+            self.dispatchGroup.leave()
+        }
+    }
+    
+    //check if user has saved the room
+    private func checkUserSavedRoom() {
+        dispatchGroup.enter()
+        let ref = Firestore.firestore().collection("saved").whereField("roomId", isEqualTo: documentIds.room)
+        ref.getDocuments { [unowned self] (documents, error) in
+            if let documents = documents, let document = documents.documents.first {
+                self.savedDocumentId = document.documentID
+                self.saved = true
+            } else {
+                self.saved = false
+            }
+            self.dispatchGroup.leave()
+        }
+    }
+    
+    //check if user has rated the room
+    private func checkUserRatedRoom() {
+        dispatchGroup.enter()
+        let ref = Firestore.firestore().collection("ratings").whereField("roomId", isEqualTo: documentIds.room)
+        ref.getDocuments { [unowned self] (documents, error) in
+            if let documents = documents, let document = documents.documents.first {
+                self.ratedDocumentId = document.documentID
+                self.rated = true
+            } else {
+                self.rated = false
             }
             self.dispatchGroup.leave()
         }
@@ -127,7 +155,13 @@ class EscapeRoomDetailViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        bookmarkItem = UIBarButtonItem(image: UIImage(named: "bookmark"), style: .plain, target: self, action: #selector(addBookmark(sender:)))
+        
+        if saved {
+            bookmarkItem = UIBarButtonItem(image: UIImage(named: "bookmark-filled"), style: .plain, target: self, action: #selector(removeBookmark(sender:)))
+        } else {
+            bookmarkItem = UIBarButtonItem(image: UIImage(named: "bookmark"), style: .plain, target: self, action: #selector(addBookmark(sender:)))
+        }
+        
         
         if completed {
             completedItem = UIBarButtonItem(image: UIImage(named: "complete-button-selected"), style: .plain, target: self, action: #selector(removeCompleted(sender:)))
@@ -135,8 +169,11 @@ class EscapeRoomDetailViewController: UIViewController {
             completedItem = UIBarButtonItem(image: UIImage(named: "complete-button"), style: .plain, target: self, action: #selector(addCompleted(sender:)))
         }
         
-        
-        ratedItem = UIBarButtonItem(image: UIImage(named: "emptyStar"), style: .plain, target: self, action: #selector(addRated(sender:)))
+        if rated {
+            ratedItem = UIBarButtonItem(image: UIImage(named: "filledStar"), style: .plain, target: self, action: #selector(removeRated(sender:)))
+        } else {
+          ratedItem = UIBarButtonItem(image: UIImage(named: "emptyStar"), style: .plain, target: self, action: #selector(addRated(sender:)))
+        }
     
         navigationItem.rightBarButtonItems = [ratedItem ,completedItem, bookmarkItem]
     }
@@ -185,11 +222,32 @@ class EscapeRoomDetailViewController: UIViewController {
     @objc private func addBookmark(sender: UIBarButtonItem) {
         sender.action = #selector(removeBookmark(sender:))
         sender.image = UIImage(named: "bookmark-filled")?.withRenderingMode(.alwaysTemplate)
+        
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        let roomId = room.documentId
+        let ref = Firestore.firestore().collection("saved").document()
+        
+        let completedRoomModel = CompletedRoom(userId: userId, roomId: roomId)
+        ref.setData(completedRoomModel.documentData()) { error in
+            if let error = error {
+                print("Error saving room as saved: \(error)")
+            } else {
+                self.savedDocumentId = ref.documentID
+            }
+        }
     }
     
     @objc private func removeBookmark(sender: UIBarButtonItem) {
         sender.action = #selector(addBookmark(sender:))
         sender.image = UIImage(named: "bookmark")?.withRenderingMode(.alwaysTemplate)
+        
+        Firestore.firestore().collection("saved").document(savedDocumentId).delete() { err in
+            if let err = err {
+                print("Error removing document: \(err)")
+            } else {
+                print("Document successfully removed!")
+            }
+        }
     }
     
     private func showActivityIndicator() {
