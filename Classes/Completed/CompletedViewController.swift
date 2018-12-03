@@ -12,19 +12,10 @@ import FirebaseUI
 import FirebaseFirestore
 
 class CompletedViewController: UIViewController {
-
-    private let authUI = FUIAuth.defaultAuthUI()!
     
     private lazy var tableView = UITableView(frame: view.frame, style: .grouped)
-    private var userId: String? = Auth.auth().currentUser?.uid
-    
+    private lazy var loadingView = LoadingView(frame: view.frame)
     private let userNotLoggedViewController: UIViewController = UserNotLoggedViewController(imageName: "completed-logo")
-    
-    private lazy var activityIndicator: UIActivityIndicatorView = {
-        let activityIndicatorView = UIActivityIndicatorView()
-        activityIndicatorView.style = UIActivityIndicatorView.Style.gray
-        return activityIndicatorView
-    }()
     
     private var rooms: [Room] = []
     private var completedRooms: [CompletedRoom] = []
@@ -42,7 +33,7 @@ class CompletedViewController: UIViewController {
     
     
     fileprivate func observeQuery() {
-        guard userId != nil, let query = query else { return }
+        guard let query = query else { return }
         stopObserving()
         
         // Display data from Firestore, part one
@@ -75,13 +66,13 @@ class CompletedViewController: UIViewController {
             ref.getDocument { (document, error) in
                 if let document = document, let data = document.data(), let room = Room(dictionary: data, documentId: document.documentID) {
                     self.rooms.append(room)
-                    self.dispatchGroup.leave()
                 }
+                self.dispatchGroup.leave()
             }
         }
         dispatchGroup.notify(queue: DispatchQueue.main, execute: {
             self.tableView.reloadData()
-            self.hideActivityIndicator()
+            self.loadingView.removeFromSuperview()
         })
     }
     
@@ -91,12 +82,18 @@ class CompletedViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        userId = Auth.auth().currentUser?.uid
-        if userId == nil && !children.contains(userNotLoggedViewController){
+
+        guard let userId = Auth.auth().currentUser?.uid else {
+            tableView.isHidden = true
             add(userNotLoggedViewController)
-        } else {
-            observeQuery()
+            view.bringSubviewToFront(userNotLoggedViewController.view)
+            return
         }
+        tableView.isHidden = false
+        view.addSubview(loadingView)
+        userNotLoggedViewController.remove()
+        query = Firestore.firestore().collection("completed").whereField("userId", isEqualTo: userId)
+        observeQuery()
     }
     
     deinit {
@@ -110,20 +107,6 @@ class CompletedViewController: UIViewController {
         
         view.addSubview(tableView)
         configureTableView()
-        
-        guard let userId = userId else { return }
-        showActivityIndicator()
-        query = Firestore.firestore().collection("completed").whereField("userId", isEqualTo: userId)
-    }
-    
-    private func showActivityIndicator() {
-        view.addSubview(activityIndicator)
-        activityIndicator.center = view.center
-        activityIndicator.startAnimating()
-    }
-    
-    private func hideActivityIndicator() {
-        activityIndicator.removeFromSuperview()
     }
     
     private func configureTableView() {
@@ -145,5 +128,11 @@ extension CompletedViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = EscapeRoomDetailViewController()
+        let room = rooms[indexPath.row]
+        vc.documentIds = DocumentIds(business: room.businessId, room: room.documentId)
+        navigationController?.pushViewController(vc, animated: true)
+    }
     
 }
