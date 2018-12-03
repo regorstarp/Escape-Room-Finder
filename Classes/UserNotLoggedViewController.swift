@@ -10,7 +10,7 @@ import UIKit
 import FirebaseUI
 import FirebaseAuth
 
-class UserNotLoggedViewController: BaseViewController {
+class UserNotLoggedViewController: UIViewController {
     
     enum ScreenType {
         case completed

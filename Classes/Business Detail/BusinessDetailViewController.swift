@@ -11,7 +11,7 @@ import FirebaseFirestore
 import SDWebImage
 import FirebaseStorage
 
-class BusinessDetailViewController: BaseViewController {
+class BusinessDetailViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     private lazy var activityIndicator: UIActivityIndicatorView = {

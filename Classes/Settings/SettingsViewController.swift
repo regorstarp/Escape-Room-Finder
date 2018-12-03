@@ -11,7 +11,7 @@ import FirebaseUI
 import FirebaseAuth
 import CoreLocation
 
-class SettingsViewController: BaseViewController {
+class SettingsViewController: UIViewController {
     
     fileprivate enum SettingsRows: Int, CaseIterable {
         case account

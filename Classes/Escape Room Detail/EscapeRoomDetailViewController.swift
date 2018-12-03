@@ -45,7 +45,6 @@ class EscapeRoomDetailViewController: UIViewController {
     
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicatorView = UIActivityIndicatorView()
-        activityIndicatorView.hidesWhenStopped = true
         activityIndicatorView.style = UIActivityIndicatorView.Style.gray
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         return activityIndicatorView

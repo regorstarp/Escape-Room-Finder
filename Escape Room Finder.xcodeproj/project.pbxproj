@@ -14,7 +14,6 @@
 		D0A255B321A97A04007F11C8 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A255B221A97A04007F11C8 /* ImageViewController.swift */; };
 		D0A255B521A98472007F11C8 /* EscapeRoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A255B421A98472007F11C8 /* EscapeRoomCell.swift */; };
 		D0A255B721A9BE78007F11C8 /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A255B621A9BE78007F11C8 /* RatingControl.swift */; };
-		D0CABB5C21AB114D0098829C /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CABB5B21AB114D0098829C /* BaseViewController.swift */; };
 		D0E84D6F21A41A2200657176 /* RoomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E84D6E21A41A2200657176 /* RoomAnnotationView.swift */; };
 		D0E84D7121A41AB800657176 /* ClusterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E84D7021A41AB800657176 /* ClusterAnnotationView.swift */; };
 		D0E84D7321A41CF600657176 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0E84D7221A41CF600657176 /* Assets.xcassets */; };
@@ -50,14 +49,13 @@
 		D0A255B221A97A04007F11C8 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		D0A255B421A98472007F11C8 /* EscapeRoomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EscapeRoomCell.swift; sourceTree = "<group>"; };
 		D0A255B621A9BE78007F11C8 /* RatingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
-		D0CABB5B21AB114D0098829C /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		D0E84D6E21A41A2200657176 /* RoomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomAnnotationView.swift; sourceTree = "<group>"; };
 		D0E84D7021A41AB800657176 /* ClusterAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterAnnotationView.swift; sourceTree = "<group>"; };
 		D0E84D7221A41CF600657176 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D0F87D7321A0C72600184967 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D0FBB57521A45BAF0026612F /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		D0FBB57721A45E1A0026612F /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		D0FBB57B21A56D910026612F /* SavedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SavedViewController.swift; path = Classes/Completed/SavedViewController.swift; sourceTree = SOURCE_ROOT; };
+		D0FBB57B21A56D910026612F /* SavedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SavedViewController.swift; path = Classes/Saved/SavedViewController.swift; sourceTree = SOURCE_ROOT; };
 		D0FBB57D21A56E2C0026612F /* CompletedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedViewController.swift; sourceTree = "<group>"; };
 		D0FBB57F21A56FA00026612F /* UserNotLoggedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotLoggedViewController.swift; sourceTree = "<group>"; };
 		D0FC561B21AB446D00C55D4C /* EscapeRoomDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EscapeRoomDetailViewController.swift; sourceTree = "<group>"; };
@@ -142,7 +140,6 @@
 			isa = PBXGroup;
 			children = (
 				D0FBB57D21A56E2C0026612F /* CompletedViewController.swift */,
-				D0CABB5B21AB114D0098829C /* BaseViewController.swift */,
 			);
 			path = Completed;
 			sourceTree = "<group>";
@@ -320,10 +317,12 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Escape Room Finder/Pods-Escape Room Finder-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseFirestore/gRPCCertificates.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseUI/FirebaseAuthUI.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gRPCCertificates.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FirebaseAuthUI.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -343,11 +342,8 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -358,11 +354,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -401,7 +394,6 @@
 				DBDC0984219CBACE00DB26E6 /* UIColor+Theme.swift in Sources */,
 				D0FBB57821A45E1A0026612F /* TabBarController.swift in Sources */,
 				DB4A72752197820500ABA9A3 /* WelcomeViewController.swift in Sources */,
-				D0CABB5C21AB114D0098829C /* BaseViewController.swift in Sources */,
 				D054939221AEEBDF008FCEAF /* PickerViewCell.swift in Sources */,
 				D0E84D6F21A41A2200657176 /* RoomAnnotationView.swift in Sources */,
 				D0FD21EF21B2D4690035CF27 /* CompletedRoom.swift in Sources */,
@@ -553,10 +545,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HJMS9Y3CPZ;
 				INFOPLIST_FILE = Resources/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.roger.tfg.Escape-Room-Finder";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -572,10 +561,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HJMS9Y3CPZ;
 				INFOPLIST_FILE = Resources/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.roger.tfg.Escape-Room-Finder";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;

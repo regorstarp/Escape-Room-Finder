@@ -10,7 +10,7 @@ import UIKit
 import FirebaseAuth
 import Firebase
 
-class WelcomeViewController: BaseViewController {
+class WelcomeViewController: UIViewController {
 
     @IBOutlet weak var signInButton: UIButton!
     
