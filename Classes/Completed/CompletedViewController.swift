@@ -102,9 +102,8 @@ class CompletedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         title = "Completed"
-        
+        view.backgroundColor = .white
         view.addSubview(tableView)
         configureTableView()
     }
