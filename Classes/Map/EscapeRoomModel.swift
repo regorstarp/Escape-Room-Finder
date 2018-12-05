@@ -47,6 +47,8 @@ struct Room {
     let difficulty: Difficulty
     let maxPlayers: Int
     let image: String
+    var ratingCount: Int
+    var averageRating: Float
 }
 
 extension Room {
@@ -62,11 +64,13 @@ extension Room {
             let difficulty = dictionary["difficulty"] as? Int,
             let maxPlayers = dictionary["maxPlayers"] as? Int,
             let diff = Difficulty(rawValue: difficulty),
-            let image = dictionary["image"] as? String else { return nil }
+            let image = dictionary["image"] as? String,
+            let ratingCount = dictionary["ratingCount"] as? Int,
+            let averageRating = dictionary["averageRating"] as? Float else { return nil }
         
         
         
-        self.init(documentId: documentId, name: name, businessId: businessId, description: description, coordinate: CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude), duration: duration, city: city, categories: categories, difficulty: diff, maxPlayers: maxPlayers, image: image)
+        self.init(documentId: documentId, name: name, businessId: businessId, description: description, coordinate: CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude), duration: duration, city: city, categories: categories, difficulty: diff, maxPlayers: maxPlayers, image: image, ratingCount: ratingCount, averageRating: averageRating)
     }
 }
 
@@ -75,3 +79,35 @@ struct DocumentIds {
     let room: String
 }
 
+struct Review {
+    
+    var rating: Int // Can also be enum
+    var userId: String
+    var roomId: String
+    var documentId: String
+    
+    var dictionary: [String: Any] {
+        return [
+            "rating": rating,
+            "userId": userId,
+            "roomId": roomId
+        ]
+    }
+    
+}
+
+extension Review {
+    
+    init?(dictionary: [String : Any], documentId: String) {
+        guard let rating = dictionary["rating"] as? Int,
+            let userId = dictionary["userId"] as? String,
+            let roomId = dictionary["roomId"] as? String else { return nil }
+        
+        self.init(rating: rating, userId: userId, roomId: roomId, documentId: documentId)
+    }
+    
+}
+
+protocol DocumentSerializable {
+    init?(dictionary: [String: Any])
+}

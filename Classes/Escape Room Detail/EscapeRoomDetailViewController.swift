@@ -32,23 +32,12 @@ class EscapeRoomDetailViewController: UIViewController {
     var savedDocumentId: String!
     var rated: Bool = false
     var ratedDocumentId: String!
-    var userId: String?
+    var userReview: Review?
     
-//    private var expandedHeader = true
+    var roomReference: DocumentReference?
+    
     private lazy var tableView = UITableView(frame: view.bounds, style: UITableView.Style.grouped)
-    
-    private lazy var activityIndicatorContentView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private lazy var activityIndicator: UIActivityIndicatorView = {
-        let activityIndicatorView = UIActivityIndicatorView()
-        activityIndicatorView.style = UIActivityIndicatorView.Style.gray
-        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
-        return activityIndicatorView
-    }()
+    private lazy var loadingView = LoadingView(frame: view.frame)
     
     var bookmarkItem: UIBarButtonItem!
     var ratedItem: UIBarButtonItem!
@@ -68,50 +57,53 @@ class EscapeRoomDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if userId != Auth.auth().currentUser?.uid {
-            //user changed account or signed out
-            userId = Auth.auth().currentUser?.uid
-            resetVariables()
-            
-            if userId == nil {
-                setupNavigationBar()
-            } else {
-                showActivityIndicator()
-                checkUserCompletedRoom()
-                checkUserRatedRoom()
-                checkUserSavedRoom()
-                dispatchGroup.notify(queue: DispatchQueue.main, execute: {
-                    self.setupNavigationBar()
-                    self.hideActivityIndicator()
-                })
-            }
+    
+        view.addSubview(loadingView)
+        resetVariables()
+        
+        if Auth.auth().currentUser?.uid == nil {
+            setupNavigationBar()
+        } else {
+            view.addSubview(loadingView)
+            loadBusiness()
+            loadRoom()
+            checkUserCompletedRoom()
+            checkUserRatedRoom()
+            checkUserSavedRoom()
+            dispatchGroup.notify(queue: DispatchQueue.main, execute: {
+                self.setupNavigationBar()
+                self.tableView.reloadData()
+                self.loadingView.removeFromSuperview()
+            })
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        userId = Auth.auth().currentUser?.uid
-        showActivityIndicator()
-        loadBusiness()
-        loadRoom()
+        view.addSubview(tableView)
+        configureTableView()
         
-        if Auth.auth().currentUser?.uid != nil {
+        if Auth.auth().currentUser?.uid == nil {
+            setupNavigationBar()
+        } else {
+            view.addSubview(loadingView)
+            loadBusiness()
+            loadRoom()
             checkUserCompletedRoom()
             checkUserRatedRoom()
             checkUserSavedRoom()
+            dispatchGroup.notify(queue: DispatchQueue.main, execute: {
+                self.setupNavigationBar()
+                self.tableView.reloadData()
+                self.loadingView.removeFromSuperview()
+            })
         }
-        
-        dispatchGroup.notify(queue: DispatchQueue.main, execute: {
-            self.setupNavigationBar()
-            self.configureTableView()
-            self.hideActivityIndicator()
-        })
     }
     
     //check if user has the completed the room
     private func checkUserCompletedRoom() {
-        guard let userId = userId else { return }
+        guard let userId = Auth.auth().currentUser?.uid else { return }
         
         dispatchGroup.enter()
         let ref = Firestore.firestore().collection("completed").whereField("roomId", isEqualTo: documentIds.room).whereField("userId", isEqualTo: userId)
@@ -129,7 +121,7 @@ class EscapeRoomDetailViewController: UIViewController {
     
     //check if user has saved the room
     private func checkUserSavedRoom() {
-        guard let userId = userId else { return }
+        guard let userId = Auth.auth().currentUser?.uid else { return }
         
         dispatchGroup.enter()
         let ref = Firestore.firestore().collection("saved").whereField("roomId", isEqualTo: documentIds.room).whereField("userId", isEqualTo: userId)
@@ -147,10 +139,12 @@ class EscapeRoomDetailViewController: UIViewController {
     
     //check if user has rated the room
     private func checkUserRatedRoom() {
+        guard let userId = Auth.auth().currentUser?.uid else { return }
         dispatchGroup.enter()
-        let ref = Firestore.firestore().collection("ratings").whereField("roomId", isEqualTo: documentIds.room)
+        let ref = Firestore.firestore().collection("ratings").whereField("roomId", isEqualTo: documentIds.room).whereField("userId", isEqualTo: userId)
         ref.getDocuments { [unowned self] (documents, error) in
-            if let documents = documents, let document = documents.documents.first {
+            if let documents = documents, let document = documents.documents.first, let review = Review(dictionary: document.data(), documentId: document.documentID) {
+                self.userReview = review
                 self.ratedDocumentId = document.documentID
                 self.rated = true
             } else {
@@ -175,8 +169,8 @@ class EscapeRoomDetailViewController: UIViewController {
     
     private func loadRoom() {
         dispatchGroup.enter()
-        let ref = Firestore.firestore().collection("room").document(documentIds.room)
-        ref.getDocument { [unowned self] (document, error) in
+        roomReference = Firestore.firestore().collection("room").document(documentIds.room)
+        roomReference?.getDocument { [unowned self] (document, error) in
             if let document = document, document.exists, let dict = document.data() , let room = Room(dictionary: dict, documentId: document.documentID) {
                 self.room = room
             } else {
@@ -187,7 +181,6 @@ class EscapeRoomDetailViewController: UIViewController {
     }
     
     private func configureTableView() {
-        view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(ImageViewCell.self, forCellReuseIdentifier: ImageViewCell.identifier)
@@ -212,7 +205,9 @@ class EscapeRoomDetailViewController: UIViewController {
         }
         
         if rated {
-            ratedItem = UIBarButtonItem(image: UIImage(named: "filledStar"), style: .plain, target: self, action: #selector(removeRated(sender:)))
+            ratedItem = UIBarButtonItem()
+            ratedItem.image = UIImage(named: "filledStar")
+            ratedItem.isEnabled = false
         } else {
           ratedItem = UIBarButtonItem(image: UIImage(named: "emptyStar"), style: .plain, target: self, action: #selector(addRated(sender:)))
         }
@@ -221,8 +216,77 @@ class EscapeRoomDetailViewController: UIViewController {
     }
     
     @objc private func addRated(sender: UIBarButtonItem) {
-        sender.action = #selector(removeRated(sender:))
-        sender.image = UIImage(named: "filledStar")?.withRenderingMode(.alwaysTemplate)
+        
+        let rating = RatingView(frame: CGRect(x: 0, y: 0, width: view.bounds.width * 0.85, height: 150))
+        view.addSubview(rating)
+        rating.center = view.center
+        rating.delegate = self
+        
+//        sender.action = #selector(removeRated(sender:))
+//        sender.image = UIImage(named: "filledStar")?.withRenderingMode(.alwaysTemplate)
+        
+
+    }
+    
+    private func addRatingTransaction(withRating rating: Int) {
+        guard let reference = roomReference, let userId = Auth.auth().currentUser?.uid else { return }
+        
+        let review = Review.init(rating: rating, userId: userId, roomId: room.documentId, documentId: userReview?.documentId ?? "")
+        
+        let reviewsCollection = Firestore.firestore().collection("ratings")
+        let reviewReference: DocumentReference
+        if let userReview = userReview {
+            reviewReference = reviewsCollection.document(userReview.documentId)
+        } else {
+            reviewReference = reviewsCollection.document()
+        }
+        
+    
+        let firestore = Firestore.firestore()
+        firestore.runTransaction({ (transaction, errorPointer) -> Any? in
+
+            // Read data from Firestore inside the transaction, so we don't accidentally
+            // update using stale client data. Error if we're unable to read here.
+            let roomSnapshot: DocumentSnapshot
+            do {
+                try roomSnapshot = transaction.getDocument(Firestore.firestore().collection("room").document(self.room.documentId))
+            } catch let error as NSError {
+                errorPointer?.pointee = error
+                return nil
+            }
+
+            // Error if the restaurant data in Firestore has somehow changed or is malformed.
+            guard let data = roomSnapshot.data(),
+                let room = Room(dictionary: data, documentId: roomSnapshot.documentID) else {
+
+                    let error = NSError(domain: "EscapeRoomFinderErrorDomain", code: 0, userInfo: [
+                        NSLocalizedDescriptionKey: "Unable to write to room at Firestore path: \(reference.path)"
+                        ])
+                    errorPointer?.pointee = error
+                    return nil
+            }
+            
+            // Update the restaurant's rating and rating count and post the new review at the
+            // same time.
+            let newAverage = (Float(room.ratingCount) * room.averageRating + Float(review.rating))
+                / Float(room.ratingCount + 1)
+
+            transaction.setData(review.dictionary, forDocument: reviewReference)
+            transaction.updateData([
+                "ratingCount": room.ratingCount + 1,
+                "averageRating": newAverage
+                ], forDocument: reference)
+            return nil
+        }) { (object, error) in
+            if let error = error {
+                print(error)
+            } else {
+                self.ratedItem.action = nil
+                self.ratedItem.image = UIImage(named: "filledStar")?.withRenderingMode(.alwaysTemplate)
+                self.ratedItem.isEnabled = false
+            }
+
+        }
     }
     
     @objc private func removeRated(sender: UIBarButtonItem) {
@@ -232,15 +296,14 @@ class EscapeRoomDetailViewController: UIViewController {
     
     @objc private func addCompleted(sender: UIBarButtonItem) {
         
-        guard userId != nil else {
+        guard let userId = Auth.auth().currentUser?.uid else {
             showSignInAlert(forAction: "Complete")
             return
         }
         
         sender.action = #selector(removeCompleted(sender:))
         sender.image = UIImage(named: "complete-button-selected")?.withRenderingMode(.alwaysTemplate)
-        
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+
         let roomId = room.documentId
         let ref = Firestore.firestore().collection("completed").document()
         
@@ -269,15 +332,14 @@ class EscapeRoomDetailViewController: UIViewController {
     
     @objc private func addBookmark(sender: UIBarButtonItem) {
         
-        guard userId != nil else {
+        guard let userId = Auth.auth().currentUser?.uid else {
             showSignInAlert(forAction: "Save")
             return
         }
         
         sender.action = #selector(removeBookmark(sender:))
         sender.image = UIImage(named: "bookmark-filled")?.withRenderingMode(.alwaysTemplate)
-        
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+    
         let roomId = room.documentId
         let ref = Firestore.firestore().collection("saved").document()
         
@@ -303,29 +365,13 @@ class EscapeRoomDetailViewController: UIViewController {
             }
         }
     }
-    
-    private func showActivityIndicator() {
-        view.addSubview(activityIndicatorContentView)
-        activityIndicatorContentView.addSubview(activityIndicator)
-        let margins = view.layoutMarginsGuide
-        NSLayoutConstraint.activate([
-            activityIndicatorContentView.topAnchor.constraint(equalTo: margins.topAnchor),
-            activityIndicatorContentView.bottomAnchor.constraint(equalTo: margins.bottomAnchor),
-            activityIndicatorContentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            activityIndicatorContentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            activityIndicator.centerXAnchor.constraint(equalTo: activityIndicatorContentView.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: activityIndicatorContentView.centerYAnchor)
-            ])
-        activityIndicator.startAnimating()
-    }
-    
-    private func hideActivityIndicator() {
-        activityIndicatorContentView.removeFromSuperview()
-    }
 }
 
 extension EscapeRoomDetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        guard room != nil else { return 0 }
+        
         return RoomDetailRows.count.rawValue
     }
     
@@ -397,5 +443,11 @@ extension EscapeRoomDetailViewController: ThumbnailDelegate {
         let imageViewController = ImageViewController()
         imageViewController.image = image
         present(UINavigationController(rootViewController: imageViewController), animated: true)
+    }
+}
+
+extension EscapeRoomDetailViewController: RatingViewDelegate {
+    func ratingView(_ ratingView: RatingView, didSendRating rating: Int) {
+        addRatingTransaction(withRating: rating)
     }
 }

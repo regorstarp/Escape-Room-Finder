@@ -19,7 +19,6 @@ class RatingControl: UIStackView {
         }
     }
     var starCount = 5
-    
     //MARK: Initialization
     
     //MARK: Button Action
@@ -44,7 +43,7 @@ class RatingControl: UIStackView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupButtons()
-        spacing = 2
+        spacing = 8
     }
     
     required init(coder: NSCoder) {

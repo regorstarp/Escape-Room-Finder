@@ -128,7 +128,7 @@ extension SettingsViewController: FUIAuthDelegate {
         guard error == nil else { return }
         
         if operation == .deleteAccount || operation == .signOut {
-            navigationController?.popViewController(animated: true)
+            tabBarController?.viewDidLoad() // reset viewControllers
         }
     }
     
