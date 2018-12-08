@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseFirestore
 import FirebaseAuth
+import MapKit
 
 private enum RoomDetailRows: Int {
     case image
@@ -112,7 +113,6 @@ class EscapeRoomDetailViewController: UIViewController {
                 self.completedDocumentId = document.documentID
                 self.completed = true
             } else {
-                print("User doesn't have this room completed")
                 self.completed = false
             }
             self.dispatchGroup.leave()
@@ -130,7 +130,6 @@ class EscapeRoomDetailViewController: UIViewController {
                 self.savedDocumentId = document.documentID
                 self.saved = true
             } else {
-                print("User doesn't have this room saved")
                 self.saved = false
             }
             self.dispatchGroup.leave()
@@ -190,14 +189,12 @@ class EscapeRoomDetailViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        
         if saved {
             bookmarkItem = UIBarButtonItem(image: UIImage(named: "bookmark-filled"), style: .plain, target: self, action: #selector(removeBookmark(sender:)))
         } else {
             bookmarkItem = UIBarButtonItem(image: UIImage(named: "bookmark"), style: .plain, target: self, action: #selector(addBookmark(sender:)))
         }
-        
-        
+
         if completed {
             completedItem = UIBarButtonItem(image: UIImage(named: "complete-button-selected"), style: .plain, target: self, action: #selector(removeCompleted(sender:)))
         } else {
@@ -211,7 +208,6 @@ class EscapeRoomDetailViewController: UIViewController {
         } else {
           ratedItem = UIBarButtonItem(image: UIImage(named: "emptyStar"), style: .plain, target: self, action: #selector(addRated(sender:)))
         }
-    
         navigationItem.rightBarButtonItems = [ratedItem ,completedItem, bookmarkItem]
     }
     
@@ -221,13 +217,9 @@ class EscapeRoomDetailViewController: UIViewController {
         view.addSubview(rating)
         rating.center = view.center
         rating.delegate = self
-        
-//        sender.action = #selector(removeRated(sender:))
-//        sender.image = UIImage(named: "filledStar")?.withRenderingMode(.alwaysTemplate)
-        
-
     }
     
+//    refactor to other class
     private func addRatingTransaction(withRating rating: Int) {
         guard let reference = roomReference, let userId = Auth.auth().currentUser?.uid else { return }
         
@@ -369,9 +361,7 @@ class EscapeRoomDetailViewController: UIViewController {
 
 extension EscapeRoomDetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         guard room != nil else { return 0 }
-        
         return RoomDetailRows.count.rawValue
     }
     
@@ -391,7 +381,7 @@ extension EscapeRoomDetailViewController: UITableViewDelegate, UITableViewDataSo
             return cell
         case .actions:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ActionsCell.identifier, for: indexPath) as? ActionsCell else { return UITableViewCell() }
-            cell.configure(room: room)
+            cell.configure(name: room.name, phone: business.phone, mail: business.mail, coordinate: room.coordinate, website: business.website)
             return cell
         case .address:
             let cell = tableView.dequeueReusableCell(withIdentifier: SubtitleCell.identifier, for: indexPath)
@@ -420,22 +410,35 @@ extension EscapeRoomDetailViewController: UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-//        if indexPath.row == RoomDetailRows.header.rawValue {
-//            tableView.beginUpdates()
-//            expandedHeader = !expandedHeader
-//            tableView.endUpdates()
-//        }
+        guard let row = RoomDetailRows(rawValue: indexPath.row) else { return }
+        // refactor to helper class
+        switch row {
+        case .mail:
+            let email = business.mail
+            if let url = URL(string: "mailto:\(email)") {
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
+            }
+        case .website:
+            guard let url = URL(string: business.website) else { return }
+            UIApplication.shared.open(url)
+        case .address:
+            let coordinate = CLLocationCoordinate2DMake(room.coordinate.latitude,room.coordinate.longitude)
+            let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary:nil))
+            mapItem.name = room.name
+            mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
+        case .phone:
+            if let url = URL(string: "tel://\(business.phone)"),
+                UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url)
+            }
+        default:
+            break
+        }
     }
-//
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        guard indexPath.row == RoomDetailRows.header.rawValue else { return UITableView.automaticDimension }
-//        if expandedHeader {
-//            return UITableView.automaticDimension
-//        } else {
-//            return 100
-//        }
-//    }
-    
 }
 
 extension EscapeRoomDetailViewController: ThumbnailDelegate {

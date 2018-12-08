@@ -7,10 +7,17 @@
 //
 
 import UIKit
+import MapKit
 
 class ActionsCell: UITableViewCell {
     
     static let identifier = "ActionsCell"
+    
+    private var phoneNumber: Int?
+    private var mailAddress: String?
+    private var coordinate: CLLocationCoordinate2D?
+    private var website: String?
+    private var name: String?
     
     private var callButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.roundedRect)
@@ -18,7 +25,6 @@ class ActionsCell: UITableViewCell {
         button.setImage(UIImage(named: "phone"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 10
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
         button.backgroundColor = #colorLiteral(red: 0.9178028703, green: 0.915073812, blue: 0.9110260606, alpha: 1)
         return button
     }()
@@ -29,7 +35,6 @@ class ActionsCell: UITableViewCell {
         button.setImage(UIImage(named: "mail"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 10
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
         button.backgroundColor = #colorLiteral(red: 0.9178028703, green: 0.915073812, blue: 0.9110260606, alpha: 1)
         return button
     }()
@@ -40,7 +45,6 @@ class ActionsCell: UITableViewCell {
         button.setImage(UIImage(named: "website"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 10
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
         button.backgroundColor = #colorLiteral(red: 0.9178028703, green: 0.915073812, blue: 0.9110260606, alpha: 1)
         return button
     }()
@@ -56,13 +60,25 @@ class ActionsCell: UITableViewCell {
         return button
     }()
     
-    func configure(room: Room) {
-        
+    func configure(name: String, phone: Int, mail: String, coordinate: CLLocationCoordinate2D, website: String) {
+        self.name = name
+        phoneNumber = phone
+        mailAddress = mail
+        self.coordinate = coordinate
+        self.website = website
+    }
+    
+    private func configureButtons() {
+        directionsButton.addTarget(self, action: #selector(onDirectionsButtonPressed), for: .touchUpInside)
+        websiteButton.addTarget(self, action: #selector(onWebsiteButtonPressed), for: .touchUpInside)
+        mailButton.addTarget(self, action: #selector(onMailButtonPressed), for: .touchUpInside)
+        callButton.addTarget(self, action: #selector(onCallButtonPressed), for: .touchUpInside)
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
+        configureButtons()
         addSubview(directionsButton)
         
         NSLayoutConstraint.activate([
@@ -70,6 +86,7 @@ class ActionsCell: UITableViewCell {
             directionsButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             directionsButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
             ])
+        
         
         let actionsStackView = UIStackView(arrangedSubviews: [callButton, mailButton, websiteButton])
         actionsStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -91,5 +108,36 @@ class ActionsCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    
+    @objc func onMailButtonPressed() {
+        guard let email = mailAddress else { return }
+        if let url = URL(string: "mailto:\(email)") {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
+    }
+    
+    @objc func onWebsiteButtonPressed() {
+        guard let website = website, let url = URL(string: website) else { return }
+        UIApplication.shared.open(url)
+    }
+    
+    @objc func onCallButtonPressed() {
+        guard let phoneNumber = phoneNumber,
+            let url = URL(string: "tel://\(phoneNumber)"),
+            UIApplication.shared.canOpenURL(url) else { return }
+        UIApplication.shared.open(url)
+    }
+    
+    @objc func onDirectionsButtonPressed() {
+        guard let coordinate = coordinate else { return }
+        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary:nil))
+        mapItem.name = name
+        mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
+    }
+    
     
 }
