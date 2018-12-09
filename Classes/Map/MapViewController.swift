@@ -28,6 +28,7 @@ class MapViewController: UIViewController {
     private var businesses: [Business] = []
     
     private var rooms: [Room] = []
+    private var filteredRooms = [Room]()
     private var documents: [DocumentSnapshot] = []
     
     fileprivate var query: Query? {
@@ -66,6 +67,7 @@ class MapViewController: UIViewController {
                 }
             }
             self.rooms = models
+            self.configureNavigationItems()
             self.documents = snapshot.documents
             self.mapView.removeAnnotations(self.mapView.annotations)
             self.setupAnnotations()
@@ -128,9 +130,18 @@ class MapViewController: UIViewController {
         mapView.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
     }
     
-    private func configureFilterButton() {
+    private func configureNavigationItems() {
         let filterButton = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(onFilterButtonPressed))
         navigationItem.rightBarButtonItem = filterButton
+        
+        let searchResultsViewController = SearchResultsViewController()
+        searchResultsViewController.rooms = rooms
+        let searchController = UISearchController(searchResultsController: searchResultsViewController)
+        searchController.searchResultsUpdater = searchResultsViewController
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
     }
     
     override func viewDidLoad() {
@@ -141,7 +152,7 @@ class MapViewController: UIViewController {
         mapView.delegate = self
         mapView.showsCompass = false
         setupButtonsStackView()
-        configureFilterButton()
+//        configureNavigationItems()
         registerAnnotationViewClasses()
         
         locationManager.delegate = self
