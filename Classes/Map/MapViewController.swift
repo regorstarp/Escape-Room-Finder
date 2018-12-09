@@ -30,6 +30,7 @@ class MapViewController: UIViewController {
     private var rooms: [Room] = []
     private var filteredRooms = [Room]()
     private var documents: [DocumentSnapshot] = []
+    private let searchResultsViewController = SearchResultsViewController()
     
     fileprivate var query: Query? {
         didSet {
@@ -67,7 +68,7 @@ class MapViewController: UIViewController {
                 }
             }
             self.rooms = models
-            self.configureNavigationItems()
+            self.searchResultsViewController.rooms = self.rooms
             self.documents = snapshot.documents
             self.mapView.removeAnnotations(self.mapView.annotations)
             self.setupAnnotations()
@@ -134,8 +135,6 @@ class MapViewController: UIViewController {
         let filterButton = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(onFilterButtonPressed))
         navigationItem.rightBarButtonItem = filterButton
         
-        let searchResultsViewController = SearchResultsViewController()
-        searchResultsViewController.rooms = rooms
         let searchController = UISearchController(searchResultsController: searchResultsViewController)
         searchController.searchResultsUpdater = searchResultsViewController
         searchController.obscuresBackgroundDuringPresentation = false
@@ -152,7 +151,7 @@ class MapViewController: UIViewController {
         mapView.delegate = self
         mapView.showsCompass = false
         setupButtonsStackView()
-//        configureNavigationItems()
+        configureNavigationItems()
         registerAnnotationViewClasses()
         
         locationManager.delegate = self
