@@ -9,7 +9,9 @@
 import UIKit
 import FirebaseFirestore
 import FirebaseAuth
+import FirebaseStorage
 import MapKit
+import SDWebImage
 
 private enum RoomDetailRows: Int {
     case image
@@ -34,6 +36,7 @@ class EscapeRoomDetailViewController: UIViewController {
     var rated: Bool = false
     var ratedDocumentId: String!
     var userReview: Review?
+    var imageURL: URL?
     
     var roomReference: DocumentReference?
     
@@ -56,28 +59,28 @@ class EscapeRoomDetailViewController: UIViewController {
         completedDocumentId = ""
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    
-        view.addSubview(loadingView)
-        resetVariables()
-        
-        if Auth.auth().currentUser?.uid == nil {
-            setupNavigationBar()
-        } else {
-            view.addSubview(loadingView)
-            loadBusiness()
-            loadRoom()
-            checkUserCompletedRoom()
-            checkUserRatedRoom()
-            checkUserSavedRoom()
-            dispatchGroup.notify(queue: DispatchQueue.main, execute: {
-                self.setupNavigationBar()
-                self.tableView.reloadData()
-                self.loadingView.removeFromSuperview()
-            })
-        }
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//
+//        view.addSubview(loadingView)
+//        resetVariables()
+//
+//        if Auth.auth().currentUser?.uid == nil {
+//            setupNavigationBar()
+//        } else {
+//            view.addSubview(loadingView)
+//            loadBusiness()
+//            loadRoom()
+//            checkUserCompletedRoom()
+//            checkUserRatedRoom()
+//            checkUserSavedRoom()
+//            dispatchGroup.notify(queue: DispatchQueue.main, execute: {
+//                self.setupNavigationBar()
+//                self.tableView.reloadData()
+//                self.loadingView.removeFromSuperview()
+//            })
+//        }
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -153,6 +156,22 @@ class EscapeRoomDetailViewController: UIViewController {
         }
     }
     
+    private func loadImage() {
+        dispatchGroup.enter()
+        let imageRef = Storage.storage().reference(withPath: "\(room.image).jpg")
+        
+        imageRef.downloadURL { (url, error) in
+            if let error = error {
+                
+            } else {
+                if let url = url {
+                    self.imageURL = url
+                }
+            }
+            self.dispatchGroup.leave()
+        }
+    }
+    
     private func loadBusiness() {
         dispatchGroup.enter()
         let ref = Firestore.firestore().collection("business").document(documentIds.business)
@@ -175,6 +194,7 @@ class EscapeRoomDetailViewController: UIViewController {
             } else {
                 fatalError("Room with id: \(self.documentIds.room) doesn't exist")
             }
+            self.loadImage()
             self.dispatchGroup.leave()
         }
     }
@@ -372,7 +392,7 @@ extension EscapeRoomDetailViewController: UITableViewDelegate, UITableViewDataSo
         switch roomDetailRow {
         case .image:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ImageViewCell.identifier, for: indexPath) as? ImageViewCell else { return UITableViewCell() }
-            cell.configure(image: UIImage(named: room.image))
+            cell.configure(imageURL: imageURL)
             cell.delegate = self
             return cell
         case .header:
@@ -445,7 +465,8 @@ extension EscapeRoomDetailViewController: ThumbnailDelegate {
     func onTap(image: UIImage?) {
         let imageViewController = ImageViewController()
         imageViewController.image = image
-        present(UINavigationController(rootViewController: imageViewController), animated: true)
+        let navigationController = UINavigationController(rootViewController: imageViewController)
+        present(navigationController, animated: true)
     }
 }
 

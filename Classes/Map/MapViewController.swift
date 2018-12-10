@@ -61,6 +61,7 @@ class MapViewController: UIViewController {
             }
             let models = snapshot.documents.map { (document) -> Room in
                 if let model = Room(dictionary: document.data(), documentId: document.documentID) {
+                    self.setupRoomAnnotation(model)
                     return model
                 }
                 else {
@@ -70,8 +71,8 @@ class MapViewController: UIViewController {
             self.rooms = models
             self.searchResultsViewController.rooms = self.rooms
             self.documents = snapshot.documents
-            self.mapView.removeAnnotations(self.mapView.annotations)
-            self.setupAnnotations()
+//            self.mapView.removeAnnotations(self.mapView.annotations)
+//            self.setupAnnotations()
         }
     }
     
@@ -163,6 +164,13 @@ class MapViewController: UIViewController {
             mapView.setRegion(region, animated: true)
         }
         
+    }
+    
+    func setupRoomAnnotation(_ room: Room) {
+        let coordinate = room.coordinate
+        if !mapView.annotations.contains(where: { $0.coordinate.latitude == coordinate.latitude && $0.coordinate.longitude == coordinate.longitude }) {
+            addAnnotation(coordinate: coordinate, title: room.name)
+        }
     }
     
     func setupAnnotations() {

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import SDWebImage
 
 
 class ImageViewCell: UITableViewCell {
@@ -24,8 +24,21 @@ class ImageViewCell: UITableViewCell {
         return imageView
     }()
     
+    func configure(imageURL: URL?) {
+        if let url = imageURL {
+            roomImageView.sd_setImage(with: imageURL)
+        }
+    }
+    
     func configure(image: UIImage?) {
         roomImageView.image = image
+    }
+    
+    private func imageURL(from string: String) -> URL {
+        let number = (abs(string.hashValue) % 22) + 1
+        let URLString =
+        "https://storage.googleapis.com/firestorequickstarts.appspot.com/food_\(number).png"
+        return URL(string: URLString)!
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -38,7 +51,8 @@ class ImageViewCell: UITableViewCell {
             roomImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
             roomImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             roomImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            roomImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 300)
+            roomImageView.heightAnchor.constraint(equalToConstant: 300)
+//            roomImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 300)
             ])
     }
     
@@ -48,6 +62,11 @@ class ImageViewCell: UITableViewCell {
     
     @objc func onImageTap() {
         delegate?.onTap(image: roomImageView.image)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        roomImageView.sd_cancelCurrentImageLoad()
     }
     
 }
