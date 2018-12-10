@@ -80,21 +80,21 @@ class CompletedViewController: UIViewController {
         listener?.remove()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        guard let userId = Auth.auth().currentUser?.uid else {
-            tableView.isHidden = true
-            add(userNotLoggedViewController)
-            view.bringSubviewToFront(userNotLoggedViewController.view)
-            return
-        }
-        tableView.isHidden = false
-        view.addSubview(loadingView)
-        userNotLoggedViewController.remove()
-        query = Firestore.firestore().collection("completed").whereField("userId", isEqualTo: userId)
-        observeQuery()
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//
+//        guard let userId = Auth.auth().currentUser?.uid else {
+//            tableView.isHidden = true
+//            add(userNotLoggedViewController)
+//            view.bringSubviewToFront(userNotLoggedViewController.view)
+//            return
+//        }
+//        tableView.isHidden = false
+//        view.addSubview(loadingView)
+//        userNotLoggedViewController.remove()
+//        query = Firestore.firestore().collection("completed").whereField("userId", isEqualTo: userId)
+//        observeQuery()
+//    }
     
     deinit {
         listener?.remove()
@@ -106,6 +106,18 @@ class CompletedViewController: UIViewController {
         view.backgroundColor = .white
         view.addSubview(tableView)
         configureTableView()
+        
+        guard let userId = Auth.auth().currentUser?.uid else {
+            tableView.isHidden = true
+            add(userNotLoggedViewController)
+            view.bringSubviewToFront(userNotLoggedViewController.view)
+            return
+        }
+        tableView.isHidden = false
+        view.addSubview(loadingView)
+        userNotLoggedViewController.remove()
+        query = Firestore.firestore().collection("completed").whereField("userId", isEqualTo: userId)
+        observeQuery()
     }
     
     private func configureTableView() {
@@ -128,6 +140,7 @@ extension CompletedViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         let vc = EscapeRoomDetailViewController()
         let room = rooms[indexPath.row]
         vc.documentIds = DocumentIds(business: room.businessId, room: room.documentId)

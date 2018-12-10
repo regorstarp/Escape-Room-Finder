@@ -80,8 +80,32 @@ class SavedViewController: UIViewController {
         listener?.remove()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        
+//        guard let userId = Auth.auth().currentUser?.uid else {
+//            tableView.isHidden = true
+//            add(userNotLoggedViewController)
+//            view.bringSubviewToFront(userNotLoggedViewController.view)
+//            return
+//        }
+//        tableView.isHidden = false
+//        view.addSubview(loadingView)
+//        userNotLoggedViewController.remove()
+//        query = Firestore.firestore().collection("saved").whereField("userId", isEqualTo: userId)
+//        observeQuery()
+//    }
+    
+    deinit {
+        listener?.remove()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "Saved"
+        view.backgroundColor = .white
+        view.addSubview(tableView)
+        configureTableView()
         
         guard let userId = Auth.auth().currentUser?.uid else {
             tableView.isHidden = true
@@ -94,18 +118,6 @@ class SavedViewController: UIViewController {
         userNotLoggedViewController.remove()
         query = Firestore.firestore().collection("saved").whereField("userId", isEqualTo: userId)
         observeQuery()
-    }
-    
-    deinit {
-        listener?.remove()
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        title = "Saved"
-        view.backgroundColor = .white
-        view.addSubview(tableView)
-        configureTableView()
     }
     
     private func configureTableView() {
@@ -127,6 +139,7 @@ extension SavedViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         let vc = EscapeRoomDetailViewController()
         let room = rooms[indexPath.row]
         vc.documentIds = DocumentIds(business: room.businessId, room: room.documentId)
