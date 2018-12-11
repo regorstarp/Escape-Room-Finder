@@ -17,19 +17,18 @@ enum FilterRows: Int, CaseIterable {
 class FilterViewController: UIViewController {
     
     weak var delegate: FilterViewControllerDelegate?
+    private var filterManager = FilterManager()
     
-    private lazy var tableView = UITableView(frame: view.bounds, style: UITableView.Style.grouped)
+    private lazy var filterTableView = UITableView(frame: view.bounds, style: .grouped)
     
-//    private let sortByOptions = ["name", "category", "city", "price", "avgRating"]
-    private let difficultyOptions = ["Easy", "Medium", "Hard"]
-    private let cityOptions = ["Barcelona","Sabadell"]
-    private let categoryOptions = ["Adventure", "Investigation"]
+    private var selectedRowIndexPath: IndexPath?
     
     private func configureTableView() {
-        view.addSubview(tableView)
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(PickerViewCell.self, forCellReuseIdentifier: PickerViewCell.identifier)
+        view.addSubview(filterTableView)
+        filterTableView.delegate = self
+        filterTableView.dataSource = self
+        filterTableView.register(DetailCell.self, forCellReuseIdentifier: DetailCell.identifier)
+        filterTableView.register(Test.self, forCellReuseIdentifier: Test.identifier)
     }
     
     private func configureNavigationBarButtons() {
@@ -58,49 +57,88 @@ class FilterViewController: UIViewController {
     }
     
     @objc private func onDoneButtonPressed() {
-        
-        let categoryIndexPath = IndexPath(row: FilterRows.category.rawValue, section: 0)
-        let cityIndexPath = IndexPath(row: FilterRows.city.rawValue, section: 0)
-        let difficultyIndexPath = IndexPath(row: FilterRows.difficulty.rawValue, section: 0)
-        guard let categoryCell = tableView.cellForRow(at: categoryIndexPath) as? PickerViewCell, let cityCell = tableView.cellForRow(at: cityIndexPath) as? PickerViewCell, let difficultyCell = tableView.cellForRow(at: difficultyIndexPath) as? PickerViewCell else { return }
-        
-        let difficulty = difficultyCell.textField.text.flatMap { self.difficulty(from: $0) }
-        delegate?.controller(self, didSelectCategory: categoryCell.textField.text, city: cityCell.textField.text, difficulty: difficulty)
-        navigationController?.dismiss(animated: true, completion: nil)
+        updateFilters()
+        navigationController?.dismiss(animated: true)
     }
-
+    
+    private func updateFilters() {
+        var difficultyFilter: Int?
+        if let filter = filterManager.difficulty.getFilter() {
+            difficultyFilter = difficulty(from: filter)
+        }
+        
+        delegate?.controller(self, didSelectCategory: filterManager.category.getFilter(), city: filterManager.city.getFilter(), difficulty: difficultyFilter)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Filter"
         configureNavigationBarButtons()
         configureTableView()
     }
+}
+
+extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return FilterRows.allCases.count
+        }
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell: UITableViewCell
+        if indexPath.section == 1 {
+            cell = tableView.dequeueReusableCell(withIdentifier: Test.identifier, for: indexPath)
+            cell.textLabel?.text = "Clear All"
+        } else {
+            cell = tableView.dequeueReusableCell(withIdentifier: DetailCell.identifier, for: indexPath)
+            cell.accessoryType = .disclosureIndicator
+            
+            cell.textLabel?.text = filterManager.getName(forFilter: indexPath.row)
+            cell.detailTextLabel?.text = filterManager.getSelectedOption(forFilter: indexPath.row)
+        }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath.section == 1 {
+            selectedRowIndexPath = nil
+            filterManager.resetFilters()
+            updateFilters()
+            navigationController?.dismiss(animated: true)
+            return
+        }
+        
+        selectedRowIndexPath = indexPath
+        
+        guard let filter = filterManager.getFilter(indexPath.row) else { return }
+        
+        let filterOptionsViewController = FilterOptionsTableViewController()
+        filterOptionsViewController.filter = filter
+        filterOptionsViewController.delegate = self
+        navigationController?.pushViewController(filterOptionsViewController, animated: true)
+    }
 }
 
 protocol FilterViewControllerDelegate: NSObjectProtocol {
     func controller(_ controller: FilterViewController, didSelectCategory category: String?, city: String?, difficulty: Int?)
 }
 
-extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return FilterRows.allCases.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: PickerViewCell.identifier, for: indexPath) as? PickerViewCell, let filterRows = FilterRows(rawValue: indexPath.row) else { return UITableViewCell() }
+extension FilterViewController: FilterOptionDelegate {
+    func filterOptionSelected(_ option: Int) {
+
+        guard let indexPath = selectedRowIndexPath else { return }
         
-        switch filterRows {
-        case .category:
-            cell.configure(options: categoryOptions, title: "Category")
-        case .city:
-            cell.configure(options: cityOptions, title: "City")
-        case .difficulty:
-            cell.configure(options: difficultyOptions, title: "Difficulty")
-        }
+        filterManager.updateSelectedOption(option, forFilter: indexPath.row)
         
-        return cell
+        filterTableView.reloadRows(at: [indexPath], with: .automatic)
     }
-    
-    
 }
