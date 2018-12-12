@@ -52,7 +52,7 @@ class MapViewController: UIViewController {
     fileprivate func observeQuery() {
         guard let query = query else { return }
         stopObserving()
-        
+        let tempRooms = rooms
         // Display data from Firestore, part one
         listener = query.addSnapshotListener { [unowned self] (snapshot, error) in
             guard let snapshot = snapshot else {
@@ -175,6 +175,7 @@ class MapViewController: UIViewController {
     
     func setupAnnotations() {
         
+        
         for room in rooms {
             let coordinate = room.coordinate
             if !mapView.annotations.contains(where: { $0.coordinate.latitude == coordinate.latitude && $0.coordinate.longitude == coordinate.longitude }) {
@@ -225,12 +226,34 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        guard view is RoomAnnotationView, let coordinate = view.annotation?.coordinate else { return }
         
-        let sameCoordinateRooms = rooms.filter { (room) -> Bool in
-            return room.coordinate.latitude == coordinate.latitude && room.coordinate.longitude == coordinate.longitude
+        if view is RoomAnnotationView, let coordinate = view.annotation?.coordinate {
+            let sameCoordinateRooms = rooms.filter { (room) -> Bool in
+                return room.coordinate.latitude == coordinate.latitude && room.coordinate.longitude == coordinate.longitude
+            }
+            pushDetailViewController(rooms: sameCoordinateRooms)
+        } else if let clusterView = view as? ClusterAnnotationView, let clusterAnnotation = clusterView.annotation as? MKClusterAnnotation{
+            let alert = UIAlertController(title: "Choose a escape room", message: nil, preferredStyle: .actionSheet)
+            for annotation in clusterAnnotation.memberAnnotations {
+                let action = UIAlertAction(title: annotation.title!, style: .default) { (action) in
+                                        if let room = self.rooms.first(where: { (room) -> Bool in
+                        return room.name == annotation.title
+                    }) {
+                        self.pushDetailViewController(room: room)
+                    }
+                   
+                }
+                alert.addAction(action)
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+                mapView.deselectAnnotation(mapView.selectedAnnotations.first, animated: true)
+            }
+            alert.addAction(cancelAction)
+            present(alert, animated: true)
         }
-        pushDetailViewController(rooms: sameCoordinateRooms)
+        
+        
+        
         
     }
     
@@ -245,15 +268,19 @@ extension MapViewController: MKMapViewDelegate {
     func pushDetailViewController(rooms: [Room]) {
         if rooms.count == 1 {
             guard let room = rooms.first else { return }
-            let vc = EscapeRoomDetailViewController()
-            let documentIds = DocumentIds.init(business: room.businessId, room: room.documentId)
-            vc.documentIds = documentIds
-            navigationController?.pushViewController(vc, animated: true)
+            pushDetailViewController(room: room)
         } else {
             let vc = BusinessDetailViewController()
             vc.rooms = rooms
             navigationController?.pushViewController(vc, animated: true)
         }
+    }
+    
+    func pushDetailViewController(room: Room) {
+        let vc = EscapeRoomDetailViewController()
+        let documentIds = DocumentIds.init(business: room.businessId, room: room.documentId)
+        vc.documentIds = documentIds
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -267,7 +294,7 @@ extension MapViewController: CLLocationManagerDelegate {
 
 extension MapViewController: FilterViewControllerDelegate {
     
-    func query(withCategory category: String?, city: String?, difficulty: Int?) -> Query {
+    func query(withCategory category: String?, city: String?, difficulty: Int?, players: Int?) -> Query {
         var filtered = baseQuery()
         
         if let category = category, !category.isEmpty {
@@ -282,6 +309,10 @@ extension MapViewController: FilterViewControllerDelegate {
             filtered = filtered.whereField("difficulty", isEqualTo: difficulty)
         }
         
+        if let players = players {
+            filtered = filtered.whereField("maxPlayers", isGreaterThanOrEqualTo: players)
+        }
+        
 //        if let sortBy = sortBy, !sortBy.isEmpty {
 //            filtered = filtered.order(by: sortBy)
 //        }
@@ -291,8 +322,8 @@ extension MapViewController: FilterViewControllerDelegate {
         return filtered
     }
     
-    func controller(_ controller: FilterViewController, didSelectCategory category: String?, city: String?, difficulty: Int?) {
-        let filtered = query(withCategory: category, city: city, difficulty: difficulty)
+    func controller(_ controller: FilterViewController, didSelectCategory category: String?, city: String?, difficulty: Int?, players: Int?) {
+        let filtered = query(withCategory: category, city: city, difficulty: difficulty, players: players)
         
         query = filtered
         observeQuery()

@@ -113,6 +113,7 @@ extension BusinessDetailViewController: UITableViewDelegate, UITableViewDataSour
 
 extension BusinessDetailViewController: ThumbnailDelegate {
     func onTap(image: UIImage?) {
+        guard image != nil else { return }
         let imageViewController = ImageViewController()
         imageViewController.image = image
         present(UINavigationController(rootViewController: imageViewController), animated: true)

@@ -8,8 +8,14 @@
 
 import MapKit
 
+protocol ClusterAnnotationDelegate {
+    func mapView(didSelect annotation: MKAnnotation)
+}
+
 /// - Tag: ClusterAnnotationView
 class ClusterAnnotationView: MKAnnotationView {
+    
+    var delegate: ClusterAnnotationDelegate?
     
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
@@ -68,5 +74,23 @@ class ClusterAnnotationView: MKAnnotationView {
             let rect = CGRect(x: 20 - size.width / 2, y: 20 - size.height / 2, width: size.width, height: size.height)
             text.draw(in: rect, withAttributes: attributes)
         }
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: true)
+//        guard selected, let cluster = annotation as? MKClusterAnnotation else { return }
+//        
+//        let alert = UIAlertController(title: "Choose escape room", message: nil, preferredStyle: .actionSheet)
+//        for annotation in cluster.memberAnnotations {
+//            let action = UIAlertAction(title: annotation.title!, style: .default) { (action) in
+//                self.delegate?.mapView(didSelect: annotation)
+//            }
+//            alert.addAction(action)
+//        }
+//        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+//            
+//        }))
+//        UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
+        
     }
 }

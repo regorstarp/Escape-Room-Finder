@@ -64,13 +64,16 @@ class SavedViewController: UIViewController {
             let roomId = completedRooms[index].roomId
             let ref = Firestore.firestore().collection("room").document(roomId)
             ref.getDocument { (document, error) in
-                if let document = document, let data = document.data(), let room = Room(dictionary: data, documentId: document.documentID) {
+                if let document = document, let data = document.data(), var room = Room(dictionary: data, documentId: document.documentID) {
+                    //to keep the list ordered by most recent
+                    room.date = self.completedRooms[index].date
                     self.rooms.append(room)
                 }
                 self.dispatchGroup.leave()
             }
         }
         dispatchGroup.notify(queue: DispatchQueue.main, execute: {
+            self.rooms = self.rooms.sorted { $0.date > $1.date }
             self.tableView.reloadData()
             self.loadingView.removeFromSuperview()
         })
@@ -80,21 +83,18 @@ class SavedViewController: UIViewController {
         listener?.remove()
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        
-//        guard let userId = Auth.auth().currentUser?.uid else {
-//            tableView.isHidden = true
-//            add(userNotLoggedViewController)
-//            view.bringSubviewToFront(userNotLoggedViewController.view)
-//            return
-//        }
-//        tableView.isHidden = false
-//        view.addSubview(loadingView)
-//        userNotLoggedViewController.remove()
-//        query = Firestore.firestore().collection("saved").whereField("userId", isEqualTo: userId)
-//        observeQuery()
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if Auth.auth().currentUser?.uid != nil {
+            observeQuery()
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopObserving()
+    }
     
     deinit {
         listener?.remove()

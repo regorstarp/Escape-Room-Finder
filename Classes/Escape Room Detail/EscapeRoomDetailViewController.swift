@@ -221,6 +221,7 @@ class EscapeRoomDetailViewController: UIViewController {
             completedItem = UIBarButtonItem(image: UIImage(named: "complete-button"), style: .plain, target: self, action: #selector(addCompleted(sender:)))
         }
         
+        
         if rated {
             ratedItem = UIBarButtonItem()
             ratedItem.image = UIImage(named: "filledStar")
@@ -228,7 +229,8 @@ class EscapeRoomDetailViewController: UIViewController {
         } else {
           ratedItem = UIBarButtonItem(image: UIImage(named: "emptyStar"), style: .plain, target: self, action: #selector(addRated(sender:)))
         }
-        navigationItem.rightBarButtonItems = [ratedItem ,completedItem, bookmarkItem]
+        
+        navigationItem.rightBarButtonItems = [ratedItem, completedItem, bookmarkItem]
     }
     
     @objc private func addRated(sender: UIBarButtonItem) {
@@ -282,7 +284,7 @@ class EscapeRoomDetailViewController: UIViewController {
             // same time.
             let newAverage = (Float(room.ratingCount) * room.averageRating + Float(review.rating))
                 / Float(room.ratingCount + 1)
-
+            
             transaction.setData(review.dictionary, forDocument: reviewReference)
             transaction.updateData([
                 "ratingCount": room.ratingCount + 1,
@@ -295,15 +297,11 @@ class EscapeRoomDetailViewController: UIViewController {
             } else {
                 self.ratedItem.action = nil
                 self.ratedItem.image = UIImage(named: "filledStar")?.withRenderingMode(.alwaysTemplate)
+                self.rated = true
                 self.ratedItem.isEnabled = false
             }
 
         }
-    }
-    
-    @objc private func removeRated(sender: UIBarButtonItem) {
-        sender.action = #selector(addRated(sender:))
-        sender.image = UIImage(named: "emptyStar")?.withRenderingMode(.alwaysTemplate)
     }
     
     @objc private func addCompleted(sender: UIBarButtonItem) {
@@ -319,12 +317,13 @@ class EscapeRoomDetailViewController: UIViewController {
         let roomId = room.documentId
         let ref = Firestore.firestore().collection("completed").document()
         
-        let completedRoomModel = CompletedRoom(userId: userId, roomId: roomId)
+        let completedRoomModel = CompletedRoom(userId: userId, roomId: roomId, date: Date())
         ref.setData(completedRoomModel.documentData()) { error in
             if let error = error {
                 print("Error saving room as completed: \(error)")
             } else {
                 self.completedDocumentId = ref.documentID
+                self.completed = true
             }
         }
     }
@@ -337,7 +336,7 @@ class EscapeRoomDetailViewController: UIViewController {
             if let err = err {
                 print("Error removing document: \(err)")
             } else {
-                print("Document successfully removed!")
+                self.completed = false
             }
         }
     }
@@ -355,11 +354,12 @@ class EscapeRoomDetailViewController: UIViewController {
         let roomId = room.documentId
         let ref = Firestore.firestore().collection("saved").document()
         
-        let completedRoomModel = CompletedRoom(userId: userId, roomId: roomId)
+        let completedRoomModel = CompletedRoom(userId: userId, roomId: roomId, date: Date())
         ref.setData(completedRoomModel.documentData()) { error in
             if let error = error {
                 print("Error saving room as saved: \(error)")
             } else {
+                self.saved = true
                 self.savedDocumentId = ref.documentID
             }
         }
@@ -373,7 +373,7 @@ class EscapeRoomDetailViewController: UIViewController {
             if let err = err {
                 print("Error removing document: \(err)")
             } else {
-                print("Document successfully removed!")
+                self.saved = false
             }
         }
     }
@@ -463,6 +463,7 @@ extension EscapeRoomDetailViewController: UITableViewDelegate, UITableViewDataSo
 
 extension EscapeRoomDetailViewController: ThumbnailDelegate {
     func onTap(image: UIImage?) {
+        guard image != nil else { return }
         let imageViewController = ImageViewController()
         imageViewController.image = image
         let navigationController = UINavigationController(rootViewController: imageViewController)

@@ -26,19 +26,12 @@ class ImageViewCell: UITableViewCell {
     
     func configure(imageURL: URL?) {
         if let url = imageURL {
-            roomImageView.sd_setImage(with: imageURL)
+            roomImageView.sd_setImage(with: url)
         }
     }
     
     func configure(image: UIImage?) {
         roomImageView.image = image
-    }
-    
-    private func imageURL(from string: String) -> URL {
-        let number = (abs(string.hashValue) % 22) + 1
-        let URLString =
-        "https://storage.googleapis.com/firestorequickstarts.appspot.com/food_\(number).png"
-        return URL(string: URLString)!
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

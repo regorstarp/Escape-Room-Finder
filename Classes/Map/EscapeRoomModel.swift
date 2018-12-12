@@ -49,6 +49,7 @@ struct Room {
     let image: String
     var ratingCount: Int
     var averageRating: Float
+    var date: Date
 }
 
 extension Room {
@@ -70,7 +71,19 @@ extension Room {
         
         
         
-        self.init(documentId: documentId, name: name, businessId: businessId, description: description, coordinate: CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude), duration: duration, city: city, categories: categories, difficulty: diff, maxPlayers: maxPlayers, image: image, ratingCount: ratingCount, averageRating: averageRating)
+        self.init(documentId: documentId,
+                  name: name,
+                  businessId: businessId,
+                  description: description,
+                  coordinate: CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude),
+                  duration: duration,
+                  city: city,
+                  categories: categories,
+                  difficulty: diff,
+                  maxPlayers: maxPlayers,
+                  image: image,
+                  ratingCount: ratingCount,
+                  averageRating: averageRating, date: Date())
     }
 }
 

@@ -12,6 +12,7 @@ enum FilterRows: Int, CaseIterable {
     case category
     case city
     case difficulty
+    case players
 }
 
 class FilterViewController: UIViewController {
@@ -66,8 +67,12 @@ class FilterViewController: UIViewController {
         if let filter = filterManager.difficulty.getFilter() {
             difficultyFilter = difficulty(from: filter)
         }
+        var playersFilter: Int?
+        if let playersString = filterManager.players.getFilter(), let players = Int(playersString) {
+            playersFilter = players
+        }
         
-        delegate?.controller(self, didSelectCategory: filterManager.category.getFilter(), city: filterManager.city.getFilter(), difficulty: difficultyFilter)
+        delegate?.controller(self, didSelectCategory: filterManager.category.getFilter(), city: filterManager.city.getFilter(), difficulty: difficultyFilter, players: playersFilter)
     }
     
     override func viewDidLoad() {
@@ -113,6 +118,7 @@ extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
             selectedRowIndexPath = nil
             filterManager.resetFilters()
             updateFilters()
+            tableView.reloadData()
             navigationController?.dismiss(animated: true)
             return
         }
@@ -129,7 +135,7 @@ extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 protocol FilterViewControllerDelegate: NSObjectProtocol {
-    func controller(_ controller: FilterViewController, didSelectCategory category: String?, city: String?, difficulty: Int?)
+    func controller(_ controller: FilterViewController, didSelectCategory category: String?, city: String?, difficulty: Int?, players: Int?)
 }
 
 extension FilterViewController: FilterOptionDelegate {
