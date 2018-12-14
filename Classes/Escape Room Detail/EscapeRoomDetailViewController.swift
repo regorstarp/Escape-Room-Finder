@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseFirestore
 import FirebaseAuth
+import FirebaseUI
 import FirebaseStorage
 import MapKit
 import SDWebImage
@@ -59,28 +60,15 @@ class EscapeRoomDetailViewController: UIViewController {
         completedDocumentId = ""
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//
-//        view.addSubview(loadingView)
-//        resetVariables()
-//
-//        if Auth.auth().currentUser?.uid == nil {
-//            setupNavigationBar()
-//        } else {
-//            view.addSubview(loadingView)
-//            loadBusiness()
-//            loadRoom()
-//            checkUserCompletedRoom()
-//            checkUserRatedRoom()
-//            checkUserSavedRoom()
-//            dispatchGroup.notify(queue: DispatchQueue.main, execute: {
-//                self.setupNavigationBar()
-//                self.tableView.reloadData()
-//                self.loadingView.removeFromSuperview()
-//            })
-//        }
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        checkUserCompletedRoom()
+        checkUserRatedRoom()
+        checkUserSavedRoom()
+        dispatchGroup.notify(queue: DispatchQueue.main, execute: {
+            self.setupNavigationBar()
+        })
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,26 +76,29 @@ class EscapeRoomDetailViewController: UIViewController {
         view.addSubview(tableView)
         configureTableView()
         
-        if Auth.auth().currentUser?.uid == nil {
-            setupNavigationBar()
-        } else {
-            view.addSubview(loadingView)
-            loadBusiness()
-            loadRoom()
-            checkUserCompletedRoom()
-            checkUserRatedRoom()
-            checkUserSavedRoom()
-            dispatchGroup.notify(queue: DispatchQueue.main, execute: {
-                self.setupNavigationBar()
-                self.tableView.reloadData()
-                self.loadingView.removeFromSuperview()
-            })
-        }
+        view.addSubview(loadingView)
+        
+    
+        checkUserCompletedRoom()
+        checkUserRatedRoom()
+        checkUserSavedRoom()
+        loadBusiness()
+        loadRoom()
+        dispatchGroup.notify(queue: DispatchQueue.main, execute: {
+            self.setupNavigationBar()
+            self.tableView.reloadData()
+            self.loadingView.removeFromSuperview()
+        })
+        
+        
     }
     
     //check if user has the completed the room
     private func checkUserCompletedRoom() {
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+        guard let userId = Auth.auth().currentUser?.uid else {
+            completed = false
+            return
+        }
         
         dispatchGroup.enter()
         let ref = Firestore.firestore().collection("completed").whereField("roomId", isEqualTo: documentIds.room).whereField("userId", isEqualTo: userId)
@@ -124,7 +115,10 @@ class EscapeRoomDetailViewController: UIViewController {
     
     //check if user has saved the room
     private func checkUserSavedRoom() {
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+        guard let userId = Auth.auth().currentUser?.uid else {
+            saved = false
+            return
+        }
         
         dispatchGroup.enter()
         let ref = Firestore.firestore().collection("saved").whereField("roomId", isEqualTo: documentIds.room).whereField("userId", isEqualTo: userId)
@@ -141,7 +135,10 @@ class EscapeRoomDetailViewController: UIViewController {
     
     //check if user has rated the room
     private func checkUserRatedRoom() {
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+        guard let userId = Auth.auth().currentUser?.uid else {
+            rated = false
+            return
+        }
         dispatchGroup.enter()
         let ref = Firestore.firestore().collection("ratings").whereField("roomId", isEqualTo: documentIds.room).whereField("userId", isEqualTo: userId)
         ref.getDocuments { [unowned self] (documents, error) in
@@ -377,6 +374,23 @@ class EscapeRoomDetailViewController: UIViewController {
             }
         }
     }
+    
+    func showSignInAlert(forAction action: String) {
+        let alert = UIAlertController(title: "Sign In to \(action)", message: "You need to be signed in to \(action)", preferredStyle: .alert)
+        let signInAction = UIAlertAction(title: "Sign In", style: .default) { (action) in
+            self.present(FUIAuth.defaultAuthUI()!.authViewController(), animated: true)
+        }
+        alert.addAction(signInAction)
+        let createAccountAction = UIAlertAction(title: "Create Account", style: .default) { (action) in
+            let authUI = FUIAuth.defaultAuthUI()!
+            authUI.delegate = self
+            self.present(authUI.authViewController(), animated: true)
+        }
+        alert.addAction(createAccountAction)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
+    }
 }
 
 extension EscapeRoomDetailViewController: UITableViewDelegate, UITableViewDataSource {
@@ -475,4 +489,22 @@ extension EscapeRoomDetailViewController: RatingViewDelegate {
     func ratingView(_ ratingView: RatingView, didSendRating rating: Int) {
         addRatingTransaction(withRating: rating)
     }
+}
+
+extension EscapeRoomDetailViewController: FUIAuthDelegate {
+    func authUI(_ authUI: FUIAuth, didSignInWith user: User?, error: Error?) {
+        // handle user and error as necessary
+        if let err = error {
+            print(err.localizedDescription)
+        } else {
+            checkUserCompletedRoom()
+            checkUserRatedRoom()
+            checkUserSavedRoom()
+            dispatchGroup.notify(queue: DispatchQueue.main, execute: {
+                self.setupNavigationBar()
+                self.loadingView.removeFromSuperview()
+            })
+        }
+    }
+
 }

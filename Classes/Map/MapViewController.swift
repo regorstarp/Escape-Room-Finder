@@ -24,7 +24,7 @@ class MapViewController: UIViewController {
     private let locationManager = CLLocationManager()
     private let authUI = FUIAuth.defaultAuthUI()!
     
-    private let regionInMeters: Double = 15000
+    private let regionInMeters: Double = 9000
     private var businesses: [Business] = []
     
     private var rooms: [Room] = []

@@ -86,8 +86,14 @@ class SavedViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if Auth.auth().currentUser?.uid != nil {
-            observeQuery()
+        if let userId = Auth.auth().currentUser?.uid {
+            query = Firestore.firestore().collection("saved").whereField("userId", isEqualTo: userId)
+            userNotLoggedViewController.remove()
+            tableView.isHidden = false
+        } else {
+            tableView.isHidden = true
+            add(userNotLoggedViewController)
+            view.bringSubviewToFront(userNotLoggedViewController.view)
         }
     }
     
@@ -115,7 +121,6 @@ class SavedViewController: UIViewController {
         }
         tableView.isHidden = false
         view.addSubview(loadingView)
-        userNotLoggedViewController.remove()
         query = Firestore.firestore().collection("saved").whereField("userId", isEqualTo: userId)
         observeQuery()
     }
@@ -134,6 +139,7 @@ extension SavedViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CompletedCell", for: indexPath)
+        cell.accessoryType = .disclosureIndicator
         cell.textLabel?.text = rooms[indexPath.row].name
         return cell
     }

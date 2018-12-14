@@ -50,6 +50,7 @@ struct Room {
     var ratingCount: Int
     var averageRating: Float
     var date: Date
+    var price: String
 }
 
 extension Room {
@@ -67,8 +68,9 @@ extension Room {
             let diff = Difficulty(rawValue: difficulty),
             let image = dictionary["image"] as? String,
             let ratingCount = dictionary["ratingCount"] as? Int,
-            let averageRating = dictionary["averageRating"] as? Float else { return nil }
-        
+            let averageRating = dictionary["averageRating"] as? Float ,
+            var price = dictionary["price"] as? String else { return nil }
+            price.append(" €")
         
         
         self.init(documentId: documentId,
@@ -83,7 +85,9 @@ extension Room {
                   maxPlayers: maxPlayers,
                   image: image,
                   ratingCount: ratingCount,
-                  averageRating: averageRating, date: Date())
+                  averageRating: averageRating,
+                  date: Date(),
+                  price: price)
     }
 }
 

@@ -9,7 +9,6 @@
 import UIKit
 import FirebaseUI
 import FirebaseAuth
-import CoreLocation
 
 class SettingsViewController: UIViewController {
     
@@ -61,27 +60,28 @@ class SettingsViewController: UIViewController {
             let accountViewController = FUIAccountSettingsViewController.init(authUI: authUI)
             navigationController?.pushViewController(accountViewController, animated: true)
         } else {
-            presentAccountRowSelectedAlert()
+            presentAuthViewController()
         }
     }
     
-    func presentAccountRowSelectedAlert() {
-        let alert = UIAlertController(title: "Add Account", message: "Add an account to access many more features of Escape Room Finder", preferredStyle: .alert)
-        let signInAction = UIAlertAction(title: "Sign In", style: .default) { (action) in
-            self.presentAuthViewController()
-        }
-        alert.addAction(signInAction)
-        let createAccountAction = UIAlertAction(title: "Create Account", style: .default) { (action) in
-            self.presentAuthViewController()
-        }
-        alert.addAction(createAccountAction)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        alert.addAction(cancelAction)
-        present(alert, animated: true)
-    }
+//    func presentAccountRowSelectedAlert() {
+//        let alert = UIAlertController(title: "Add Account", message: "Add an account to access many more features of Escape Room Finder", preferredStyle: .alert)
+//        let signInAction = UIAlertAction(title: "Sign In", style: .default) { (action) in
+//            self.presentAuthViewController()
+//        }
+//        alert.addAction(signInAction)
+//        let createAccountAction = UIAlertAction(title: "Create Account", style: .default) { (action) in
+//            self.presentAuthViewController()
+//        }
+//        alert.addAction(createAccountAction)
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+//        alert.addAction(cancelAction)
+//        present(alert, animated: true)
+//    }
     
     private func presentAuthViewController() {
         present(authUI.authViewController(), animated: true)
+        
     }
 }
 
@@ -119,7 +119,7 @@ extension SettingsViewController: FUIAuthDelegate {
         if let err = error {
             print(err.localizedDescription)
         } else {
-            tableView.reloadRows(at: [IndexPath(row: SettingsRows.account.rawValue, section: 0)], with: .automatic)
+            tableView.reloadData()
         }
     }
     
@@ -128,7 +128,9 @@ extension SettingsViewController: FUIAuthDelegate {
         guard error == nil else { return }
         
         if operation == .deleteAccount || operation == .signOut {
-            tabBarController?.viewDidLoad() // reset viewControllers
+            
+            navigationController?.popViewController(animated: true)
+            tableView.reloadData()
         }
     }
     

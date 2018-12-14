@@ -84,6 +84,14 @@ class HeaderCell: UITableViewCell {
         return label
     }()
     
+    private var priceLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.gray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        return label
+    }()
+    
     private var ratingsStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -99,6 +107,7 @@ class HeaderCell: UITableViewCell {
         descriptionLabel.text = room.description
         titleLabel.text = room.name
         configureRatings(forRating: room.averageRating)
+        priceLabel.text = room.price
     }
     
     private func configureRatings(forRating rating: Float) {
@@ -129,10 +138,18 @@ class HeaderCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         addSubview(titleLabel)
+        addSubview(priceLabel)
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leadingMargin)
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leadingMargin),
+            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: priceLabel.leadingAnchor)
+            ])
+        
+        NSLayoutConstraint.activate([
+            priceLabel.topAnchor.constraint(equalTo: titleLabel.topAnchor),
+            priceLabel.bottomAnchor.constraint(equalTo: titleLabel.bottomAnchor),
+            priceLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
             ])
         
         addSubview(descriptionLabel)
@@ -190,7 +207,6 @@ class HeaderCell: UITableViewCell {
             numberOfPlayersLabel.leadingAnchor.constraint(equalTo: numberOfPlayersImageView.trailingAnchor, constant: 4),
             numberOfPlayersLabel.bottomAnchor.constraint(equalTo: ratingsStackView.bottomAnchor)
             ])
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
