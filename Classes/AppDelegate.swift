@@ -21,6 +21,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = TabBarController()
         window?.makeKeyAndVisible()
         
+        UINavigationBar.appearance().tintColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+        UINavigationBar.appearance().barTintColor = #colorLiteral(red: 0.05882352941, green: 0.09019607843, blue: 0.1098039216, alpha: 1)
+        UINavigationBar.appearance().shadowImage = #imageLiteral(resourceName: "barShadow")
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.white]
+        UITextField.appearance().keyboardAppearance = .dark
+        
+        
 //        UINavigationBar.appearance().barTintColor = UIColor.darkColor
 //        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
 //        UINavigationBar.appearance().isTranslucent = false

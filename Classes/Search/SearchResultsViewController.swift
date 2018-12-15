@@ -17,16 +17,12 @@ class SearchResultsViewController: UITableViewController {
     }
     var filteredRooms = [Room]()
     private let identifier = "SearchResultCell"
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        
+        tableView.backgroundColor = UIColor.appBackgroundColor
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: identifier)
     }
 
@@ -39,9 +35,10 @@ class SearchResultsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
-
-         cell.textLabel?.text = filteredRooms[indexPath.row].name
-
+        cell.textLabel?.text = filteredRooms[indexPath.row].name
+        cell.backgroundColor = UIColor.cellBackgroundColor
+        cell.accessoryType = .disclosureIndicator
+        cell.textLabel?.textColor = .white
         return cell
     }
     
@@ -56,6 +53,7 @@ class SearchResultsViewController: UITableViewController {
 
 extension SearchResultsViewController: UISearchResultsUpdating {
     // MARK: - UISearchResultsUpdating Delegate
+    
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchController.searchBar.text!)
     }
@@ -74,3 +72,9 @@ extension SearchResultsViewController: UISearchResultsUpdating {
         tableView.reloadData()
     }
 }
+
+//extension SearchResultsViewController: UISearchBarDelegate {
+//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+//        searchBar.
+//    }
+//}

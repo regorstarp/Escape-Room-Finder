@@ -109,7 +109,7 @@ class SavedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Saved"
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor.appBackgroundColor
         view.addSubview(tableView)
         configureTableView()
         
@@ -128,6 +128,7 @@ class SavedViewController: UIViewController {
     private func configureTableView() {
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.backgroundColor = UIColor.appBackgroundColor
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "CompletedCell")
     }
 }
@@ -141,6 +142,9 @@ extension SavedViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CompletedCell", for: indexPath)
         cell.accessoryType = .disclosureIndicator
         cell.textLabel?.text = rooms[indexPath.row].name
+        cell.backgroundColor = UIColor.cellBackgroundColor
+        cell.textLabel?.textColor = .white
+        cell.selectionStyle = .gray
         return cell
     }
     

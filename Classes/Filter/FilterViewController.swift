@@ -26,10 +26,11 @@ class FilterViewController: UIViewController {
     
     private func configureTableView() {
         view.addSubview(filterTableView)
+        filterTableView.backgroundColor = UIColor.appBackgroundColor
         filterTableView.delegate = self
         filterTableView.dataSource = self
         filterTableView.register(DetailCell.self, forCellReuseIdentifier: DetailCell.identifier)
-        filterTableView.register(Test.self, forCellReuseIdentifier: Test.identifier)
+        filterTableView.register(ClearAllCell.self, forCellReuseIdentifier: ClearAllCell.identifier)
     }
     
     private func configureNavigationBarButtons() {
@@ -99,11 +100,13 @@ extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell
         if indexPath.section == 1 {
-            cell = tableView.dequeueReusableCell(withIdentifier: Test.identifier, for: indexPath)
+            cell = tableView.dequeueReusableCell(withIdentifier: ClearAllCell.identifier, for: indexPath)
             cell.textLabel?.text = "Clear All"
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: DetailCell.identifier, for: indexPath)
             cell.accessoryType = .disclosureIndicator
+            cell.backgroundColor = UIColor.cellBackgroundColor
+            cell.textLabel?.textColor = .white
             
             cell.textLabel?.text = filterManager.getName(forFilter: indexPath.row)
             cell.detailTextLabel?.text = filterManager.getSelectedOption(forFilter: indexPath.row)

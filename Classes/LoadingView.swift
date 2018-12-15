@@ -12,13 +12,13 @@ class LoadingView: UIView {
     
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicatorView = UIActivityIndicatorView()
-        activityIndicatorView.style = UIActivityIndicatorView.Style.gray
+        activityIndicatorView.style = UIActivityIndicatorView.Style.whiteLarge
         return activityIndicatorView
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .white
+        backgroundColor = UIColor.appBackgroundColor
         addSubview(activityIndicator)
         activityIndicator.center = center
         activityIndicator.startAnimating()

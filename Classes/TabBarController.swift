@@ -34,5 +34,11 @@ class TabBarController: UITabBarController {
         let accountNavigationController = UINavigationController(rootViewController: accountViewController)
         
         viewControllers = [mapNavigationController, historyNavigationController, favoritesNavigationController, accountNavigationController]
+        
+        tabBar.tintColor = UIColor.white
+        tabBar.barTintColor = #colorLiteral(red: 0.05882352941, green: 0.09019607843, blue: 0.1098039216, alpha: 1)
+        tabBar.tintColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+//        tabBar.ti
+//        tabBar.titleTextAttributes = [.foregroundColor: UIColor.white]
     }
 }

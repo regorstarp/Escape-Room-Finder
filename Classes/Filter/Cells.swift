@@ -12,6 +12,9 @@ class DetailCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .value1, reuseIdentifier: reuseIdentifier)
+        backgroundColor = UIColor.cellBackgroundColor
+        textLabel?.textColor = .white
+        selectionStyle = .gray
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -19,13 +22,17 @@ class DetailCell: UITableViewCell {
     }
 }
 
-class Test: UITableViewCell {
-    static let identifier = "TestCell"
+class ClearAllCell: UITableViewCell {
+    static let identifier = "ClearAllCell"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         textLabel?.textAlignment = .center
+        backgroundColor = UIColor.cellBackgroundColor
         textLabel?.textColor = #colorLiteral(red: 0.03921568627, green: 0.5176470588, blue: 1, alpha: 1)
+        let backgroundView = UIView(frame: bounds)
+        backgroundView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        selectedBackgroundView = backgroundView
     }
     
     required init?(coder aDecoder: NSCoder) {

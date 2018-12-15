@@ -36,6 +36,7 @@ enum Difficulty: Int {
 }
 
 struct Room {
+    
     let documentId: String
     let name: String
     let businessId: String

@@ -19,6 +19,7 @@ class FilterOptionsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.backgroundColor = UIColor.appBackgroundColor
         tableView.register(DetailCell.self, forCellReuseIdentifier: DetailCell.identifier)
     }
 
@@ -39,6 +40,8 @@ class FilterOptionsTableViewController: UITableViewController {
         if indexPath.row == filter.selectedOption {
             cell.accessoryType = .checkmark
         }
+        cell.backgroundColor = UIColor.cellBackgroundColor
+        cell.textLabel?.textColor = .white
         cell.textLabel?.text = filter.options[indexPath.row]
 
         return cell

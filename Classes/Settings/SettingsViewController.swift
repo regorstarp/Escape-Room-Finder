@@ -34,14 +34,14 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
         title = "Settings"
         authUI.delegate = self
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor.appBackgroundColor
         setupTableView()
     }
     
     private func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        
+        tableView.backgroundColor = UIColor.appBackgroundColor
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -97,8 +97,11 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.accessoryType = .disclosureIndicator
         switch settingsRows {
         case .account:
+            cell.backgroundColor = UIColor.cellBackgroundColor
+            cell.textLabel?.textColor = .white
             cell.textLabel?.text = "Account"
             cell.detailTextLabel?.text = Auth.auth().currentUser?.displayName ?? "Add Account"
+            cell.selectionStyle = .gray
             return cell
         }
     }

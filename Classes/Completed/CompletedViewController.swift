@@ -16,6 +16,7 @@ class CompletedViewController: UIViewController {
     private lazy var tableView = UITableView(frame: view.frame, style: .grouped)
     private lazy var loadingView = LoadingView(frame: view.frame)
     private let userNotLoggedViewController: UIViewController = UserNotLoggedViewController(imageName: "completed-logo")
+    private var userID: String? = Auth.auth().currentUser?.uid
     
     private var rooms: [Room] = []
     private var completedRooms: [CompletedRoom] = []
@@ -24,7 +25,7 @@ class CompletedViewController: UIViewController {
         didSet {
             if let listener = listener {
                 listener.remove()
-                observeQuery()
+//                observeQuery()
             }
         }
     }
@@ -38,12 +39,12 @@ class CompletedViewController: UIViewController {
         
         // Display data from Firestore, part one
         
-        listener = query.addSnapshotListener { [unowned self] (snapshot, error) in
+        listener = query.addSnapshotListener { (snapshot, error) in
             guard let snapshot = snapshot else {
                 print("Error feching snapshot results: \(error!)")
                 return
             }
-        
+            print(snapshot.documentChanges.count)
             let models = snapshot.documents.map { (document) -> CompletedRoom in
                 if let model = CompletedRoom(dictionary: document.data()) {
                     return model
@@ -55,6 +56,7 @@ class CompletedViewController: UIViewController {
             }
             self.completedRooms = models
             self.fetchRooms()
+            print("fetch")
         }
     }
     
@@ -67,14 +69,15 @@ class CompletedViewController: UIViewController {
         for index in 0..<completedRooms.count {
             dispatchGroup.enter()
             let roomId = completedRooms[index].roomId
+//            print(index)
             let ref = Firestore.firestore().collection("room").document(roomId)
             ref.getDocument { (document, error) in
                 if let document = document, let data = document.data(), var room = Room(dictionary: data, documentId: document.documentID) {
                     //to keep the list ordered by most recent
                     room.date = self.completedRooms[index].date
                     self.rooms.append(room)
+                    self.dispatchGroup.leave()
                 }
-                self.dispatchGroup.leave()
             }
         }
         dispatchGroup.notify(queue: DispatchQueue.main, execute: {
@@ -90,9 +93,20 @@ class CompletedViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        let currentId = Auth.auth().currentUser?.uid
+        
+        
+        if userID != currentId, let id = currentId {
+            userID = id
+            query = Firestore.firestore().collection("completed").whereField("userId", isEqualTo: id)
+        } else if userID != currentId, currentId == nil {
+            userID = nil
+            query = nil
+        }
+        
+        observeQuery()
 
         if let userId = Auth.auth().currentUser?.uid {
-            query = Firestore.firestore().collection("completed").whereField("userId", isEqualTo: userId)
             userNotLoggedViewController.remove()
             tableView.isHidden = false
         } else {
@@ -114,7 +128,7 @@ class CompletedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Completed"
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor.appBackgroundColor
         view.addSubview(tableView)
         configureTableView()
         
@@ -127,12 +141,12 @@ class CompletedViewController: UIViewController {
         tableView.isHidden = false
         view.addSubview(loadingView)
         query = Firestore.firestore().collection("completed").whereField("userId", isEqualTo: userId)
-        observeQuery()
     }
     
     private func configureTableView() {
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.backgroundColor = UIColor.appBackgroundColor
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "CompletedCell")
     }
 }
@@ -145,8 +159,11 @@ extension CompletedViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CompletedCell", for: indexPath)
+        cell.backgroundColor = UIColor.cellBackgroundColor
+        cell.textLabel?.textColor = .white
         cell.accessoryType = .disclosureIndicator
         cell.textLabel?.text = rooms[indexPath.row].name
+        cell.selectionStyle = .gray
         return cell
     }
     

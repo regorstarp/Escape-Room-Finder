@@ -52,7 +52,7 @@ class MapViewController: UIViewController {
     fileprivate func observeQuery() {
         guard let query = query else { return }
         stopObserving()
-        let tempRooms = rooms
+        
         // Display data from Firestore, part one
         listener = query.addSnapshotListener { [unowned self] (snapshot, error) in
             guard let snapshot = snapshot else {
@@ -68,7 +68,9 @@ class MapViewController: UIViewController {
                     fatalError("Unable to initialize type \(Room.self) with dictionary \(document.data()) ")
                 }
             }
+            
             self.rooms = models
+            self.listVC.rooms = self.rooms
             self.searchResultsViewController.rooms = self.rooms
             self.documents = snapshot.documents
             self.mapView.removeAnnotations(self.mapView.annotations)
@@ -102,7 +104,7 @@ class MapViewController: UIViewController {
         let firestore: Firestore = Firestore.firestore()
         let settings = firestore.settings
         settings.areTimestampsInSnapshotsEnabled = true
-        settings.isPersistenceEnabled = false // cache
+//        settings.isPersistenceEnabled = false // cache
         firestore.settings = settings
         return firestore.collection("room")
     }
@@ -136,19 +138,48 @@ class MapViewController: UIViewController {
         let filterButton = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(onFilterButtonPressed))
         navigationItem.rightBarButtonItem = filterButton
         
+//        let searchController = UISearchController(searchResultsController: searchResultsViewController)
+//        searchController.searchResultsUpdater = searchResultsViewController
+//        searchController.obscuresBackgroundDuringPresentation = false
+//        searchController.searchBar.placeholder = "Search"
+//        navigationItem.searchController = searchController
+//        definesPresentationContext = true
+        
+        let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchAction))
+        navigationItem.leftBarButtonItem = searchButton
+    }
+    
+    @objc func searchAction() {
         let searchController = UISearchController(searchResultsController: searchResultsViewController)
         searchController.searchResultsUpdater = searchResultsViewController
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search"
+        searchController.searchBar.barStyle = .black
+//        searchController.searchBar.delegate = searchResultsViewController
         navigationItem.searchController = searchController
+//        searchController.delegate = self
         definesPresentationContext = true
+        present(searchController, animated: true)
+        DispatchQueue.main.async {
+            searchController.searchBar.becomeFirstResponder()
+        }
+        
+    
     }
+    
+    private let listVC = RoomsViewController(collectionViewLayout: ColumnFlowLayout())
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         query = baseQuery()
-        title = "Escape Rooms"
+//        title = "Escape Rooms"
+        let segmentedControl = UISegmentedControl(items: ["Map", "List"])
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.addTarget(self, action: #selector(segmentedControlChanged(_:)), for: .valueChanged)
+        segmentedControl.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
+        navigationItem.titleView = segmentedControl
+        
         mapView.delegate = self
         mapView.showsCompass = false
         setupButtonsStackView()
@@ -163,7 +194,27 @@ class MapViewController: UIViewController {
             let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
             mapView.setRegion(region, animated: true)
         }
+        listVC.view.frame = view.bounds
+        listVC.view.isHidden = true
+        add(listVC)
         
+        navigationController?.navigationBar.tintColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.05882352941, green: 0.09019607843, blue: 0.1098039216, alpha: 1)
+        navigationController?.navigationBar.shadowImage = #imageLiteral(resourceName: "barShadow")
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+
+    }
+    
+    @objc func segmentedControlChanged(_ segmentedControl: UISegmentedControl) {
+        if segmentedControl.selectedSegmentIndex == 0 {
+            //Map
+            listVC.view.isHidden = true
+            mapView.isHidden = false
+        } else {
+            //List
+            listVC.view.isHidden = false
+            mapView.isHidden = true
+        }
     }
     
     func setupRoomAnnotation(_ room: Room) {
@@ -234,6 +285,7 @@ extension MapViewController: MKMapViewDelegate {
             pushDetailViewController(rooms: sameCoordinateRooms)
         } else if let clusterView = view as? ClusterAnnotationView, let clusterAnnotation = clusterView.annotation as? MKClusterAnnotation{
             let alert = UIAlertController(title: "Choose a escape room", message: nil, preferredStyle: .actionSheet)
+//            alert.view.tintColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
             for annotation in clusterAnnotation.memberAnnotations {
                 let action = UIAlertAction(title: annotation.title!, style: .default) { (action) in
                                         if let room = self.rooms.first(where: { (room) -> Bool in
