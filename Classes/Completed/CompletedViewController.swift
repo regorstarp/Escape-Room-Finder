@@ -31,12 +31,12 @@ class CompletedViewController: UIViewController {
     }
     private var listener: ListenerRegistration?
     private let dispatchGroup = DispatchGroup()
-    
+    private var firstTime = true
     
     fileprivate func observeQuery() {
+        firstTime = true
         guard let query = query else { return }
         stopObserving()
-        
         // Display data from Firestore, part one
         
         listener = query.addSnapshotListener { (snapshot, error) in
@@ -44,7 +44,7 @@ class CompletedViewController: UIViewController {
                 print("Error feching snapshot results: \(error!)")
                 return
             }
-            print(snapshot.documentChanges.count)
+            
             let models = snapshot.documents.map { (document) -> CompletedRoom in
                 if let model = CompletedRoom(dictionary: document.data()) {
                     return model
@@ -56,7 +56,6 @@ class CompletedViewController: UIViewController {
             }
             self.completedRooms = models
             self.fetchRooms()
-            print("fetch")
         }
     }
     
@@ -65,6 +64,8 @@ class CompletedViewController: UIViewController {
     }
     
     fileprivate func fetchRooms() {
+        guard firstTime == true else { return }
+        firstTime = false
         rooms = []
         for index in 0..<completedRooms.count {
             dispatchGroup.enter()

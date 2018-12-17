@@ -31,6 +31,7 @@ class MapViewController: UIViewController {
     private var filteredRooms = [Room]()
     private var documents: [DocumentSnapshot] = []
     private let searchResultsViewController = SearchResultsViewController()
+    private let listVC = RoomsViewController(collectionViewLayout: ColumnFlowLayout())
     
     fileprivate var query: Query? {
         didSet {
@@ -59,6 +60,7 @@ class MapViewController: UIViewController {
                 print("Error feching snapshot results: \(error!)")
                 return
             }
+            
             let models = snapshot.documents.map { (document) -> Room in
                 if let model = Room(dictionary: document.data(), documentId: document.documentID) {
 //                    self.setupRoomAnnotation(model)
@@ -138,36 +140,25 @@ class MapViewController: UIViewController {
         let filterButton = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(onFilterButtonPressed))
         navigationItem.rightBarButtonItem = filterButton
         
-//        let searchController = UISearchController(searchResultsController: searchResultsViewController)
-//        searchController.searchResultsUpdater = searchResultsViewController
-//        searchController.obscuresBackgroundDuringPresentation = false
-//        searchController.searchBar.placeholder = "Search"
-//        navigationItem.searchController = searchController
-//        definesPresentationContext = true
-        
-        let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchAction))
-        navigationItem.leftBarButtonItem = searchButton
-    }
-    
-    @objc func searchAction() {
         let searchController = UISearchController(searchResultsController: searchResultsViewController)
         searchController.searchResultsUpdater = searchResultsViewController
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search"
         searchController.searchBar.barStyle = .black
-//        searchController.searchBar.delegate = searchResultsViewController
         navigationItem.searchController = searchController
-//        searchController.delegate = self
+//        searchController.searchBar.isHidden = true
+//        searchController.searchBar.delegate = self
         definesPresentationContext = true
-        present(searchController, animated: true)
-        DispatchQueue.main.async {
-            searchController.searchBar.becomeFirstResponder()
-        }
         
-    
+//        let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchAction))
+//        navigationItem.leftBarButtonItem = searchButton
     }
     
-    private let listVC = RoomsViewController(collectionViewLayout: ColumnFlowLayout())
+//    @objc func searchAction() {
+//
+//        navigationItem.searchController?.searchBar.isHidden = false
+//
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -379,5 +370,12 @@ extension MapViewController: FilterViewControllerDelegate {
         
         query = filtered
         observeQuery()
+    }
+}
+
+
+extension MapViewController: UISearchBarDelegate {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        navigationItem.searchController?.searchBar.isHidden = true
     }
 }

@@ -30,12 +30,13 @@ class SavedViewController: UIViewController {
     }
     private var listener: ListenerRegistration?
     private let dispatchGroup = DispatchGroup()
+    private var firstTime = true
     
     
     fileprivate func observeQuery() {
         guard let query = query else { return }
         stopObserving()
-        
+        firstTime = true
         // Display data from Firestore, part one
         
         listener = query.addSnapshotListener { [unowned self] (snapshot, error) in
@@ -58,6 +59,8 @@ class SavedViewController: UIViewController {
     }
     
     fileprivate func fetchRooms() {
+        guard firstTime == true else { return }
+        firstTime = false
         rooms = []
         for index in 0..<completedRooms.count {
             dispatchGroup.enter()
