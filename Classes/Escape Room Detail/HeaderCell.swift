@@ -18,13 +18,25 @@ class HeaderCell: UITableViewCell {
     
     private var titleLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .white
         label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private var categoryLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .gray
+//        label.backgroundColor = UIColor(white: 1, alpha: 0.8)
+        label.layer.cornerRadius = 3
+        label.layer.masksToBounds = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private var descriptionLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         return label
@@ -92,6 +104,14 @@ class HeaderCell: UITableViewCell {
         return label
     }()
     
+    private var ratingCountLabel: UILabel = {
+       let label = UILabel()
+        label.textColor = UIColor.gray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        return label
+    }()
+    
     private var ratingsStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -108,6 +128,13 @@ class HeaderCell: UITableViewCell {
         titleLabel.text = room.name
         configureRatings(forRating: room.averageRating)
         priceLabel.text = room.price
+        if room.ratingCount > 1 {
+            ratingCountLabel.text = "\(room.ratingCount) Ratings"
+        } else {
+            ratingCountLabel.text = "\(room.ratingCount) Rating"
+        }
+        
+        categoryLabel.text = room.categories.joined(separator: " ")
     }
     
     private func configureRatings(forRating rating: Float) {
@@ -136,15 +163,21 @@ class HeaderCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+        backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.1019638271)
         addSubview(titleLabel)
         addSubview(priceLabel)
+        addSubview(categoryLabel)
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leadingMargin),
-            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: priceLabel.leadingAnchor)
+//            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: priceLabel.leadingAnchor),
+            
+            categoryLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            categoryLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+            categoryLabel.trailingAnchor.constraint(equalTo: priceLabel.trailingAnchor)
             ])
+        
         
         NSLayoutConstraint.activate([
             priceLabel.topAnchor.constraint(equalTo: titleLabel.topAnchor),
@@ -155,7 +188,7 @@ class HeaderCell: UITableViewCell {
         addSubview(descriptionLabel)
         
         NSLayoutConstraint.activate([
-            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
+            descriptionLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 8),
             descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leadingMargin),
             descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -leadingMargin)
             ])
@@ -164,8 +197,7 @@ class HeaderCell: UITableViewCell {
 
         NSLayoutConstraint.activate([
             ratingsStackView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8),
-            ratingsStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leadingMargin),
-            ratingsStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
+            ratingsStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leadingMargin)
             ])
         
         addSubview(ratingsLabel)
@@ -205,8 +237,16 @@ class HeaderCell: UITableViewCell {
         NSLayoutConstraint.activate([
             numberOfPlayersLabel.topAnchor.constraint(equalTo: ratingsStackView.topAnchor),
             numberOfPlayersLabel.leadingAnchor.constraint(equalTo: numberOfPlayersImageView.trailingAnchor, constant: 4),
-            numberOfPlayersLabel.bottomAnchor.constraint(equalTo: ratingsStackView.bottomAnchor)
             ])
+        
+        addSubview(ratingCountLabel)
+        
+        NSLayoutConstraint.activate([
+            ratingCountLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            ratingCountLabel.leadingAnchor.constraint(equalTo: ratingsStackView.leadingAnchor),
+            ratingCountLabel.topAnchor.constraint(equalTo: ratingsStackView.bottomAnchor, constant: 4)
+            ])
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

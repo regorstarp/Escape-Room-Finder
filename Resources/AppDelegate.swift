@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.white]
         UITextField.appearance().keyboardAppearance = .dark
         
-        
+//        UIApplication.shared.statusBarStyle = .lightContent
 //        UINavigationBar.appearance().barTintColor = UIColor.darkColor
 //        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
 //        UINavigationBar.appearance().isTranslucent = false

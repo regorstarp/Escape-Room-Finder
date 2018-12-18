@@ -81,7 +81,6 @@ class SettingsViewController: UIViewController {
     
     private func presentAuthViewController() {
         present(authUI.authViewController(), animated: true)
-        
     }
 }
 
@@ -93,20 +92,21 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let settingsRows = SettingsRows(rawValue: indexPath.row) else { return UITableViewCell() }
+        
         let cell = UITableViewCell(style: .value1, reuseIdentifier: "Identifier")
         cell.accessoryType = .disclosureIndicator
+        cell.backgroundColor = UIColor.cellBackgroundColor
+        cell.textLabel?.textColor = .white
         switch settingsRows {
         case .account:
-            cell.backgroundColor = UIColor.cellBackgroundColor
-            cell.textLabel?.textColor = .white
             cell.textLabel?.text = "Account"
             cell.detailTextLabel?.text = Auth.auth().currentUser?.displayName ?? "Add Account"
-            cell.selectionStyle = .gray
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         guard let settingsRows = SettingsRows(rawValue: indexPath.row) else { return }
         
         switch settingsRows {

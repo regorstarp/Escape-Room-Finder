@@ -36,6 +36,7 @@ class ImageViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(onImageTap))
         roomImageView.addGestureRecognizer(tapRecognizer)
         addSubview(roomImageView)

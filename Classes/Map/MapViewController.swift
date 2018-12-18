@@ -86,7 +86,6 @@ class MapViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        navigationController?.setNavigationBarHidden(true, animated: false)
         observeQuery()
     }
     
@@ -106,7 +105,7 @@ class MapViewController: UIViewController {
         let firestore: Firestore = Firestore.firestore()
         let settings = firestore.settings
         settings.areTimestampsInSnapshotsEnabled = true
-//        settings.isPersistenceEnabled = false // cache
+        settings.isPersistenceEnabled = false // cache
         firestore.settings = settings
         return firestore.collection("room")
     }
@@ -149,9 +148,9 @@ class MapViewController: UIViewController {
 //        searchController.searchBar.isHidden = true
 //        searchController.searchBar.delegate = self
         definesPresentationContext = true
-        
-//        let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchAction))
-//        navigationItem.leftBarButtonItem = searchButton
+
+        segmentedControl.addTarget(self, action: #selector(segmentedControlChanged(_:)), for: .valueChanged)
+        navigationItem.titleView = segmentedControl
     }
     
 //    @objc func searchAction() {
@@ -160,16 +159,24 @@ class MapViewController: UIViewController {
 //
 //    }
     
+    private let segmentedControl: UISegmentedControl = {
+        let segmented = UISegmentedControl(items: ["Map", "List"])
+        if UserDefaults.standard.bool(forKey: "exploreListDefault") {
+            segmented.selectedSegmentIndex = 1
+        } else {
+            segmented.selectedSegmentIndex = 0
+        }
+        segmented.selectedSegmentIndex = 0
+        segmented.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
+        return segmented
+    }()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         query = baseQuery()
 //        title = "Escape Rooms"
-        let segmentedControl = UISegmentedControl(items: ["Map", "List"])
-        segmentedControl.selectedSegmentIndex = 0
-        segmentedControl.addTarget(self, action: #selector(segmentedControlChanged(_:)), for: .valueChanged)
-        segmentedControl.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
-        navigationItem.titleView = segmentedControl
         
         mapView.delegate = self
         mapView.showsCompass = false

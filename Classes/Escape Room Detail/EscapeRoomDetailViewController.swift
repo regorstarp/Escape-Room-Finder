@@ -72,7 +72,7 @@ class EscapeRoomDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor.appBackgroundColor
         view.addSubview(tableView)
         configureTableView()
         
@@ -197,6 +197,7 @@ class EscapeRoomDetailViewController: UIViewController {
     }
     
     private func configureTableView() {
+        tableView.backgroundColor = UIColor.appBackgroundColor
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(ImageViewCell.self, forCellReuseIdentifier: ImageViewCell.identifier)

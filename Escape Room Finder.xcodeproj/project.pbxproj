@@ -17,7 +17,6 @@
 		D0A255B321A97A04007F11C8 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A255B221A97A04007F11C8 /* ImageViewController.swift */; };
 		D0A255B521A98472007F11C8 /* EscapeRoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A255B421A98472007F11C8 /* EscapeRoomCell.swift */; };
 		D0A255B721A9BE78007F11C8 /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A255B621A9BE78007F11C8 /* RatingControl.swift */; };
-		D0CC3E3B21C45AFA001877BC /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CC3E3A21C45AFA001877BC /* ListTableViewController.swift */; };
 		D0CC3E3D21C46821001877BC /* ColumnFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CC3E3C21C46821001877BC /* ColumnFlowLayout.swift */; };
 		D0CC3E3F21C4686C001877BC /* RoomsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CC3E3E21C4686C001877BC /* RoomsViewController.swift */; };
 		D0D59B5A21BD2C85004D2DE0 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D59B5921BD2C85004D2DE0 /* SearchResultsViewController.swift */; };
@@ -62,7 +61,6 @@
 		D0A255B221A97A04007F11C8 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		D0A255B421A98472007F11C8 /* EscapeRoomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EscapeRoomCell.swift; sourceTree = "<group>"; };
 		D0A255B621A9BE78007F11C8 /* RatingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
-		D0CC3E3A21C45AFA001877BC /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		D0CC3E3C21C46821001877BC /* ColumnFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnFlowLayout.swift; sourceTree = "<group>"; };
 		D0CC3E3E21C4686C001877BC /* RoomsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomsViewController.swift; sourceTree = "<group>"; };
 		D0D59B5921BD2C85004D2DE0 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
@@ -152,7 +150,6 @@
 		D0CC3E3921C45AE2001877BC /* List */ = {
 			isa = PBXGroup;
 			children = (
-				D0CC3E3A21C45AFA001877BC /* ListTableViewController.swift */,
 				D0507CED21C471F1006A26A1 /* RoomCell.swift */,
 				D0CC3E3C21C46821001877BC /* ColumnFlowLayout.swift */,
 				D0CC3E3E21C4686C001877BC /* RoomsViewController.swift */,
@@ -242,7 +239,6 @@
 				D0507CEF21C4855B006A26A1 /* Utilities */,
 				D04DE9BB21B598BE0082037F /* LoadingView.swift */,
 				D054938E21AEE5D9008FCEAF /* Filter */,
-				DB36CE45219369A800772BF5 /* AppDelegate.swift */,
 				D0FC561A21AB445000C55D4C /* Escape Room Detail */,
 				D0FBB57A21A56D680026612F /* Saved */,
 				D0FBB57921A56D5A0026612F /* Completed */,
@@ -267,6 +263,7 @@
 				D0E84D7221A41CF600657176 /* Assets.xcassets */,
 				D0F87D7321A0C72600184967 /* GoogleService-Info.plist */,
 				DB36CE51219369A800772BF5 /* Info.plist */,
+				DB36CE45219369A800772BF5 /* AppDelegate.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -474,7 +471,6 @@
 				DBDC0982219C7CAE00DB26E6 /* EscapeRoomModel.swift in Sources */,
 				D0FC562421AC464200C55D4C /* ActionsCell.swift in Sources */,
 				D0FC561C21AB446D00C55D4C /* EscapeRoomDetailViewController.swift in Sources */,
-				D0CC3E3B21C45AFA001877BC /* ListTableViewController.swift in Sources */,
 				D0A255B721A9BE78007F11C8 /* RatingControl.swift in Sources */,
 				D0FC562221AC43A500C55D4C /* SubtitleCell.swift in Sources */,
 				D0D59B6021BF0487004D2DE0 /* FiltersModel.swift in Sources */,

@@ -16,6 +16,9 @@ class SubtitleCell: UITableViewCell {
         textLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         detailTextLabel?.font = UIFont.systemFont(ofSize: 18)
         detailTextLabel?.numberOfLines = 0
+        detailTextLabel?.textColor = .white
+        textLabel?.textColor = .white
+        backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.1019638271)
     }
     
     required init?(coder aDecoder: NSCoder) {
