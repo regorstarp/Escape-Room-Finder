@@ -12,6 +12,7 @@ import CoreLocation
 import FirebaseFirestore
 import FirebaseAuth
 import FirebaseUI
+import WhatsNew
 
 class MapViewController: UIViewController {
     
@@ -86,6 +87,24 @@ class MapViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if !UserDefaults.standard.bool(forKey: "FirstTimeOpen") {
+            UserDefaults.standard.set(true, forKey: "FirstTimeOpen")
+            let whatsNew = WhatsNewViewController(items: [
+                WhatsNewItem.image(title: "Explore", subtitle: "Find your new Escape Room adventure", image: UIImage(named: "room-logo")!),
+                WhatsNewItem.image(title: "Complete", subtitle: "Keep a list of your completed rooms", image: UIImage(named: "completed-logo")!),
+                WhatsNewItem.image(title: "Save", subtitle: "Save your favourite rooms", image: UIImage(named: "bookmark-logo")!)
+                ])
+            whatsNew.titleText = "Escape Room Finder"
+            whatsNew.titleColor = .white
+            whatsNew.view.backgroundColor = UIColor.appBackgroundColor
+            whatsNew.itemSubtitleColor = .darkGray
+            whatsNew.itemTitleColor = .white
+            whatsNew.buttonText = "Continue"
+            whatsNew.buttonTextColor = .white
+            whatsNew.buttonBackgroundColor = #colorLiteral(red: 0.1869132817, green: 0.4777054191, blue: 1, alpha: 1)
+            present(whatsNew, animated: true)
+        }
         observeQuery()
     }
     

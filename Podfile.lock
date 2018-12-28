@@ -5,8 +5,6 @@ PODS:
   - BoringSSL/Implementation (10.0.6):
     - BoringSSL/Interface (= 10.0.6)
   - BoringSSL/Interface (10.0.6)
-  - Firebase (5.13.0):
-    - Firebase/Core (= 5.13.0)
   - Firebase/Auth (5.13.0):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.0.5)
@@ -15,9 +13,6 @@ PODS:
     - FirebaseAnalytics (= 5.3.0)
   - Firebase/CoreOnly (5.13.0):
     - FirebaseCore (= 5.1.8)
-  - Firebase/Database (5.13.0):
-    - Firebase/CoreOnly
-    - FirebaseDatabase (= 5.0.3)
   - Firebase/Firestore (5.13.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (= 0.15.0)
@@ -41,9 +36,6 @@ PODS:
   - FirebaseAuthInterop (1.0.0)
   - FirebaseCore (5.1.8):
     - GoogleUtilities/Logger (~> 5.2)
-  - FirebaseDatabase (5.0.3):
-    - FirebaseCore (~> 5.0)
-    - leveldb-library (~> 1.18)
   - FirebaseFirestore (0.15.0):
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 5.1)
@@ -69,13 +61,6 @@ PODS:
     - GTMSessionFetcher/Core (~> 1.1)
   - FirebaseUI/Auth (5.2.2):
     - Firebase/Auth (~> 5.0)
-  - GeoFire (3.0.0):
-    - Firebase/Database (~> 5.0)
-  - Geofirestore (1.2.0):
-    - Firebase (~> 5.4)
-    - FirebaseCore (~> 5.0)
-    - FirebaseFirestore (~> 0.12)
-    - GeoFire (~> 3.0)
   - GoogleAppMeasurement (5.3.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
     - GoogleUtilities/MethodSwizzler (~> 5.2)
@@ -127,6 +112,7 @@ PODS:
   - SDWebImage (4.4.2):
     - SDWebImage/Core (= 4.4.2)
   - SDWebImage/Core (4.4.2)
+  - WhatsNew (0.4.4)
 
 DEPENDENCIES:
   - Firebase/Auth
@@ -134,8 +120,8 @@ DEPENDENCIES:
   - Firebase/Firestore
   - Firebase/Storage
   - FirebaseUI/Auth
-  - Geofirestore
   - SDWebImage
+  - WhatsNew
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -145,13 +131,10 @@ SPEC REPOS:
     - FirebaseAuth
     - FirebaseAuthInterop
     - FirebaseCore
-    - FirebaseDatabase
     - FirebaseFirestore
     - FirebaseInstanceID
     - FirebaseStorage
     - FirebaseUI
-    - GeoFire
-    - Geofirestore
     - GoogleAppMeasurement
     - GoogleUtilities
     - "gRPC-C++"
@@ -161,6 +144,7 @@ SPEC REPOS:
     - nanopb
     - Protobuf
     - SDWebImage
+    - WhatsNew
 
 SPEC CHECKSUMS:
   BoringSSL: e10f92a27043805c01071fe815a5cd98ae8212e7
@@ -169,13 +153,10 @@ SPEC CHECKSUMS:
   FirebaseAuth: 9299ab178271bec7426967b05b2718bb6fc31f17
   FirebaseAuthInterop: 0ffa57668be100582bb7643d4fcb7615496c41fc
   FirebaseCore: fba2bfaa691c49028309b92e4dd37cc4b5512fbe
-  FirebaseDatabase: e2bcbc106adc4b11a2da3ec2eb63c0c4a44f2f54
   FirebaseFirestore: 9e9411f13a0aba72d4f631899611d09e43734c48
   FirebaseInstanceID: e2fa4cb35ef5558c200f7f0ad8a53e212215f93e
   FirebaseStorage: 3d22c041370593e639fba013d1eb698a8dae2881
   FirebaseUI: 09519bf436a055cd696bf68687d624423150e4c0
-  GeoFire: e3ae6f4be3f2466c3467ef6c1c203db3af935c59
-  Geofirestore: ad548ea5e3c1ae595c746c7b796df5534d8202f3
   GoogleAppMeasurement: 5029d78f2b438bd30ffb44e6c558b57c21622727
   GoogleUtilities: 95996bea7c7d9b8fb811b7507669a4a8762f80c7
   "gRPC-C++": 19eec1ffd34de29453f5fab5b4697ad0f240ad51
@@ -185,7 +166,8 @@ SPEC CHECKSUMS:
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
+  WhatsNew: ebb4e2a85a0975c7c2705087c0c67939451f8b49
 
-PODFILE CHECKSUM: 7e90fba9e6ae364f17cc1fc0b593c7b6dd52e7e9
+PODFILE CHECKSUM: 03f2137b929ebcce98438743741f5edc9919fcb6
 
 COCOAPODS: 1.5.0

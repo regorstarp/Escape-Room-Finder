@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Classes/Completed/CompletedViewController.swift"
-            timestampString = "566850687.119035"
+            timestampString = "566869920.450156"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "86"
@@ -26,13 +26,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Classes/Map/MapViewController.swift"
-            timestampString = "566850687.119154"
+            timestampString = "567689320.456751"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "386"
-            endingLineNumber = "386"
-            landmarkName = "searchBarCancelButtonClicked(_:)"
-            landmarkType = "7">
+            startingLineNumber = "405"
+            endingLineNumber = "405"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -40,5 +40,6 @@ class TabBarController: UITabBarController {
         tabBar.tintColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
 //        tabBar.ti
 //        tabBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        
     }
 }

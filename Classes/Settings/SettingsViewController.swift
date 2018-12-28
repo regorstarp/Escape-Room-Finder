@@ -9,11 +9,13 @@
 import UIKit
 import FirebaseUI
 import FirebaseAuth
+import WhatsNew
 
 class SettingsViewController: UIViewController {
     
     fileprivate enum SettingsRows: Int, CaseIterable {
         case account
+        case functionalities
     }
     
     private let authUI = FUIAuth.defaultAuthUI()!
@@ -64,20 +66,22 @@ class SettingsViewController: UIViewController {
         }
     }
     
-//    func presentAccountRowSelectedAlert() {
-//        let alert = UIAlertController(title: "Add Account", message: "Add an account to access many more features of Escape Room Finder", preferredStyle: .alert)
-//        let signInAction = UIAlertAction(title: "Sign In", style: .default) { (action) in
-//            self.presentAuthViewController()
-//        }
-//        alert.addAction(signInAction)
-//        let createAccountAction = UIAlertAction(title: "Create Account", style: .default) { (action) in
-//            self.presentAuthViewController()
-//        }
-//        alert.addAction(createAccountAction)
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-//        alert.addAction(cancelAction)
-//        present(alert, animated: true)
-//    }
+    func functionalitiesRowSelected() {
+        let whatsNew = WhatsNewViewController(items: [
+            WhatsNewItem.image(title: "Explore", subtitle: "Find your new Escape Room adventure", image: UIImage(named: "room-logo")!),
+            WhatsNewItem.image(title: "Complete", subtitle: "Keep a list of your completed rooms", image: UIImage(named: "completed-logo")!),
+            WhatsNewItem.image(title: "Save", subtitle: "Save your favourite rooms", image: UIImage(named: "bookmark-logo")!)
+            ])
+        whatsNew.titleText = "Escape Room Finder"
+        whatsNew.titleColor = .white
+        whatsNew.view.backgroundColor = UIColor.appBackgroundColor
+        whatsNew.itemSubtitleColor = .darkGray
+        whatsNew.itemTitleColor = .white
+        whatsNew.buttonText = "Continue"
+        whatsNew.buttonTextColor = .white
+        whatsNew.buttonBackgroundColor = #colorLiteral(red: 0.1869132817, green: 0.4777054191, blue: 1, alpha: 1)
+        present(whatsNew, animated: true)
+    }
     
     private func presentAuthViewController() {
         present(authUI.authViewController(), animated: true)
@@ -102,6 +106,9 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.textLabel?.text = "Account"
             cell.detailTextLabel?.text = Auth.auth().currentUser?.displayName ?? "Add Account"
             return cell
+        case .functionalities:
+            cell.textLabel?.text = "Functionalities"
+            return cell
         }
     }
     
@@ -112,6 +119,8 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         switch settingsRows {
         case .account:
             accountRowSelected()
+        case .functionalities:
+            functionalitiesRowSelected()
         }
     }
 }
