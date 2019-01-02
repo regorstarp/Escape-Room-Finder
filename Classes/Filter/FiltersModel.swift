@@ -19,6 +19,7 @@ enum Filters: Int, CaseIterable {
     case city
     case difficulty
     case players
+    case sort
 }
 
 class Filter {
@@ -42,14 +43,15 @@ class FilterManager {
     let difficulty = Filter(options: ["Any", "Easy", "Medium", "Hard"], name: "Difficulty")
     let category = Filter(options: ["Any","Adventure", "Investigation"], name: "Category")
     let city = Filter(options: ["Any", "Barberà del Vallès", "Sabadell"], name: "City")
-    let players = Filter(options: ["Any","2","3","4","5","6","7"], name: "Players")
-    
+    let players = Filter(options: ["Any","2","3","4","5","6","7"], name: "Number Of Players")
+    let sort = Filter(options: ["None","name", "ratingCount", "averageRating"], name: "Sort by")
     
     func resetFilters() {
         city.selectedOption = 0
         category.selectedOption = 0
         difficulty.selectedOption = 0
         players.selectedOption = 0
+        sort.selectedOption = 0
     }
     
     func updateSelectedOption(_ option: Int, forFilter index: Int) {
@@ -64,6 +66,8 @@ class FilterManager {
             difficulty.selectedOption = option
         case .players:
             players.selectedOption = option
+        case .sort:
+            sort.selectedOption = option
         }
     }
     
@@ -79,6 +83,8 @@ class FilterManager {
             return difficulty.name
         case .players:
             return players.name
+        case .sort:
+            return sort.name
         }
     }
     
@@ -94,6 +100,8 @@ class FilterManager {
             return difficulty.options[difficulty.selectedOption]
         case .players:
             return players.options[players.selectedOption]
+        case .sort:
+            return sort.options[sort.selectedOption]
         }
     }
     
@@ -109,6 +117,8 @@ class FilterManager {
             return difficulty
         case .players:
             return players
+        case .sort:
+            return sort
         }
     }
 }

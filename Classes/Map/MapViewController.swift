@@ -363,7 +363,7 @@ extension MapViewController: CLLocationManagerDelegate {
 
 extension MapViewController: FilterViewControllerDelegate {
     
-    func query(withCategory category: String?, city: String?, difficulty: Int?, players: Int?) -> Query {
+    func query(withCategory category: String?, city: String?, difficulty: Int?, players: Int?, sort: String?) -> Query {
         var filtered = baseQuery()
         
         if let category = category, !category.isEmpty {
@@ -382,17 +382,21 @@ extension MapViewController: FilterViewControllerDelegate {
             filtered = filtered.whereField("maxPlayers", isGreaterThanOrEqualTo: players)
         }
         
-//        if let sortBy = sortBy, !sortBy.isEmpty {
-//            filtered = filtered.order(by: sortBy)
-//        }
+        guard let sort = sort else { return filtered }
         
-        // Advanced queries
+        if sort == "name" {
+            filtered = filtered.order(by: "name")
+        } else if sort == "ratingCount" {
+            filtered = filtered.order(by: "ratingCount", descending: true)
+        } else if sort == "averageRating" {
+            filtered = filtered.order(by: "averageRating", descending: true)
+        }
         
         return filtered
     }
     
-    func controller(_ controller: FilterViewController, didSelectCategory category: String?, city: String?, difficulty: Int?, players: Int?) {
-        let filtered = query(withCategory: category, city: city, difficulty: difficulty, players: players)
+    func controller(_ controller: FilterViewController, didSelectCategory category: String?, city: String?, difficulty: Int?, players: Int?, sort: String?) {
+        let filtered = query(withCategory: category, city: city, difficulty: difficulty, players: players, sort: sort)
         
         query = filtered
         observeQuery()
