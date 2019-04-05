@@ -70,7 +70,7 @@ class CompletedViewController: UIViewController {
         for index in 0..<completedRooms.count {
             dispatchGroup.enter()
             let roomId = completedRooms[index].roomId
-//            print(index)
+
             let ref = Firestore.firestore().collection("room").document(roomId)
             ref.getDocument { (document, error) in
                 if let document = document, let data = document.data(), var room = Room(dictionary: data, documentId: document.documentID) {

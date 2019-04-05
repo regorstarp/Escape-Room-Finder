@@ -64,7 +64,6 @@ class MapViewController: UIViewController {
             
             let models = snapshot.documents.map { (document) -> Room in
                 if let model = Room(dictionary: document.data(), documentId: document.documentID) {
-//                    self.setupRoomAnnotation(model)
                     return model
                 }
                 else {
@@ -164,19 +163,11 @@ class MapViewController: UIViewController {
         searchController.searchBar.placeholder = "Search"
         searchController.searchBar.barStyle = .black
         navigationItem.searchController = searchController
-//        searchController.searchBar.isHidden = true
-//        searchController.searchBar.delegate = self
         definesPresentationContext = true
 
         segmentedControl.addTarget(self, action: #selector(segmentedControlChanged(_:)), for: .valueChanged)
         navigationItem.titleView = segmentedControl
     }
-    
-//    @objc func searchAction() {
-//
-//        navigationItem.searchController?.searchBar.isHidden = false
-//
-//    }
     
     private let segmentedControl: UISegmentedControl = {
         let segmented = UISegmentedControl(items: ["Map", "List"])
@@ -195,7 +186,6 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         
         query = baseQuery()
-//        title = "Escape Rooms"
         
         mapView.delegate = self
         mapView.showsCompass = false
@@ -250,7 +240,6 @@ class MapViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.addAnnotation(coordinate: coordinate, title: room.name)
                 }
-//                addAnnotation(coordinate: coordinate, title: room.name)
             }
         }
     }
@@ -287,9 +276,6 @@ extension MapViewController: MKMapViewDelegate {
         guard annotation is MKPointAnnotation else { return nil }
         
         let roomAnnotationView = RoomAnnotationView(annotation: annotation, reuseIdentifier: RoomAnnotationView.ReuseID)
-//        roomAnnotationView.canShowCallout = true
-//        let rightButton = UIButton(type: .detailDisclosure)
-//        roomAnnotationView.rightCalloutAccessoryView = rightButton
         return roomAnnotationView
     }
     
@@ -302,7 +288,6 @@ extension MapViewController: MKMapViewDelegate {
             pushDetailViewController(rooms: sameCoordinateRooms)
         } else if let clusterView = view as? ClusterAnnotationView, let clusterAnnotation = clusterView.annotation as? MKClusterAnnotation{
             let alert = UIAlertController(title: "Choose a escape room", message: nil, preferredStyle: .actionSheet)
-//            alert.view.tintColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
             for annotation in clusterAnnotation.memberAnnotations {
                 let action = UIAlertAction(title: annotation.title!, style: .default) { (action) in
                                         if let room = self.rooms.first(where: { (room) -> Bool in
@@ -320,19 +305,7 @@ extension MapViewController: MKMapViewDelegate {
             alert.addAction(cancelAction)
             present(alert, animated: true)
         }
-        
-        
-        
-        
     }
-    
-//    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-//        guard let coordinate = view.annotation?.coordinate else { return }
-//        let sameCoordinateRooms = rooms.filter { (room) -> Bool in
-//            return room.coordinate.latitude == coordinate.latitude && room.coordinate.longitude == coordinate.longitude
-//        }
-//        pushDetailViewController(rooms: sameCoordinateRooms)
-//    }
     
     func pushDetailViewController(rooms: [Room]) {
         if rooms.count == 1 {
