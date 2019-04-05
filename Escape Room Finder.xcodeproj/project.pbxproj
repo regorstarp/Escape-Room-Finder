@@ -11,7 +11,6 @@
 		D04DE9BC21B598BE0082037F /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04DE9BB21B598BE0082037F /* LoadingView.swift */; };
 		D04DE9BE21B6EDDB0082037F /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04DE9BD21B6EDDB0082037F /* RatingView.swift */; };
 		D0507CEE21C471F1006A26A1 /* RoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0507CED21C471F1006A26A1 /* RoomCell.swift */; };
-		D0507CF121C48568006A26A1 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0507CF021C48568006A26A1 /* Utilities.swift */; };
 		D054939021AEEA13008FCEAF /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D054938F21AEEA13008FCEAF /* FilterViewController.swift */; };
 		D054939221AEEBDF008FCEAF /* PickerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D054939121AEEBDF008FCEAF /* PickerViewCell.swift */; };
 		D0A255B321A97A04007F11C8 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A255B221A97A04007F11C8 /* ImageViewController.swift */; };
@@ -55,7 +54,6 @@
 		D04DE9BB21B598BE0082037F /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoadingView.swift; path = Classes/LoadingView.swift; sourceTree = SOURCE_ROOT; };
 		D04DE9BD21B6EDDB0082037F /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		D0507CED21C471F1006A26A1 /* RoomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomCell.swift; sourceTree = "<group>"; };
-		D0507CF021C48568006A26A1 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		D054938F21AEEA13008FCEAF /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		D054939121AEEBDF008FCEAF /* PickerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewCell.swift; sourceTree = "<group>"; };
 		D0A255B221A97A04007F11C8 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
@@ -125,14 +123,6 @@
 				66B11CC29D49DE1F0F797080 /* Pods-Escape Room Finder.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		D0507CEF21C4855B006A26A1 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				D0507CF021C48568006A26A1 /* Utilities.swift */,
-			);
-			path = Utilities;
 			sourceTree = "<group>";
 		};
 		D054938E21AEE5D9008FCEAF /* Filter */ = {
@@ -236,7 +226,6 @@
 		DB36CE44219369A800772BF5 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				D0507CEF21C4855B006A26A1 /* Utilities */,
 				D04DE9BB21B598BE0082037F /* LoadingView.swift */,
 				D054938E21AEE5D9008FCEAF /* Filter */,
 				D0FC561A21AB445000C55D4C /* Escape Room Detail */,
@@ -448,7 +437,6 @@
 				D0507CEE21C471F1006A26A1 /* RoomCell.swift in Sources */,
 				D0D59B5C21BEFFCA004D2DE0 /* FilterOptionsTableViewController.swift in Sources */,
 				D0FBB57821A45E1A0026612F /* TabBarController.swift in Sources */,
-				D0507CF121C48568006A26A1 /* Utilities.swift in Sources */,
 				DB4A72752197820500ABA9A3 /* WelcomeViewController.swift in Sources */,
 				D0D59B5A21BD2C85004D2DE0 /* SearchResultsViewController.swift in Sources */,
 				D0CC3E3D21C46821001877BC /* ColumnFlowLayout.swift in Sources */,

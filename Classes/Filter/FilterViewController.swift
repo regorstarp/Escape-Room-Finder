@@ -8,13 +8,6 @@
 
 import UIKit
 
-//enum FilterRows: Int, CaseIterable {
-//    case category
-//    case city
-//    case difficulty
-//    case players
-//}
-
 class FilterViewController: UIViewController {
     
     weak var delegate: FilterViewControllerDelegate?

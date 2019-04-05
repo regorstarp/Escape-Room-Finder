@@ -16,20 +16,6 @@ class WelcomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        FirebaseApp.configure()
-        
-//        let ref = Database.database().reference(withPath: "escape-room")
-//        ref.observeSingleEvent(of: .value, with: { snapshot in
-//
-//            if !snapshot.exists() { return }
-//            let snapshotValue = snapshot.children.allObjects as! [DataSnapshot]
-//            snapshotValue.forEach({
-//                let snap = $0.value as! [String:Any]
-//
-//            })
-//
-//        })
     }
 
 
@@ -60,9 +46,7 @@ class WelcomeViewController: UIViewController {
             guard let email = alert.textFields?[0].text, let password = alert.textFields?[1].text else { return }
             Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
                 
-                if let user = authResult?.user {
-                    
-                } else {
+                if authResult?.user == nil {
                     self.showAlert(title: "Register Error", message: error?.localizedDescription ?? "")
                 }
             }

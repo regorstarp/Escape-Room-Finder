@@ -158,9 +158,7 @@ class EscapeRoomDetailViewController: UIViewController {
         let imageRef = Storage.storage().reference(withPath: "\(room.image).jpg")
         
         imageRef.downloadURL { (url, error) in
-            if let error = error {
-                
-            } else {
+            if error == nil {
                 if let url = url {
                     self.imageURL = url
                 }

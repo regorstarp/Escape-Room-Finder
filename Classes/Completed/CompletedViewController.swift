@@ -107,7 +107,7 @@ class CompletedViewController: UIViewController {
         
         observeQuery()
 
-        if let userId = Auth.auth().currentUser?.uid {
+        if Auth.auth().currentUser?.uid != nil {
             userNotLoggedViewController.remove()
             tableView.isHidden = false
         } else {

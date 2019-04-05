@@ -32,17 +32,8 @@ class BusinessDetailViewController: UIViewController {
     var rooms: [Room] = []
     var businessReference: DocumentReference?
     
-    
-    enum State {
-        case loading
-        case populated()
-        case error(Error)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        view.backgroundColor = UIColor.darkColor
-//        tableView.backgroundColor = UIColor.darkColor
         tableView.delegate = self
         tableView.dataSource = self
         tableView.isHidden = true

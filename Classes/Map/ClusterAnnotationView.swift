@@ -52,16 +52,6 @@ class ClusterAnnotationView: MKAnnotationView {
             wholeColor?.setFill()
             UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 40, height: 40)).fill()
             
-//            // Fill pie with fractionColor
-//            fractionColor?.setFill()
-//            let piePath = UIBezierPath()
-//            piePath.addArc(withCenter: CGPoint(x: 20, y: 20), radius: 20,
-//                           startAngle: 0, endAngle: (CGFloat.pi * 2.0 * CGFloat(fraction)) / CGFloat(whole),
-//                           clockwise: true)
-//            piePath.addLine(to: CGPoint(x: 20, y: 20))
-//            piePath.close()
-//            piePath.fill()
-            
             // Fill inner circle with white color
             UIColor.white.setFill()
             UIBezierPath(ovalIn: CGRect(x: 8, y: 8, width: 24, height: 24)).fill()
@@ -74,23 +64,5 @@ class ClusterAnnotationView: MKAnnotationView {
             let rect = CGRect(x: 20 - size.width / 2, y: 20 - size.height / 2, width: size.width, height: size.height)
             text.draw(in: rect, withAttributes: attributes)
         }
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: true)
-//        guard selected, let cluster = annotation as? MKClusterAnnotation else { return }
-//        
-//        let alert = UIAlertController(title: "Choose escape room", message: nil, preferredStyle: .actionSheet)
-//        for annotation in cluster.memberAnnotations {
-//            let action = UIAlertAction(title: annotation.title!, style: .default) { (action) in
-//                self.delegate?.mapView(didSelect: annotation)
-//            }
-//            alert.addAction(action)
-//        }
-//        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
-//            
-//        }))
-//        UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
-        
     }
 }

@@ -46,7 +46,6 @@ class ImageViewCell: UITableViewCell {
             roomImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             roomImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             roomImageView.heightAnchor.constraint(equalToConstant: 300)
-//            roomImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 300)
             ])
     }
     

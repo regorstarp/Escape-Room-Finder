@@ -27,7 +27,6 @@ class HeaderCell: UITableViewCell {
     private var categoryLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray
-//        label.backgroundColor = UIColor(white: 1, alpha: 0.8)
         label.layer.cornerRadius = 3
         label.layer.masksToBounds = true
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -171,8 +170,6 @@ class HeaderCell: UITableViewCell {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leadingMargin),
-//            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: priceLabel.leadingAnchor),
-            
             categoryLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             categoryLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
             categoryLabel.trailingAnchor.constraint(equalTo: priceLabel.trailingAnchor)

@@ -37,8 +37,6 @@ class SavedViewController: UIViewController {
         guard let query = query else { return }
         stopObserving()
         firstTime = true
-        // Display data from Firestore, part one
-        
         listener = query.addSnapshotListener { [unowned self] (snapshot, error) in
             guard let snapshot = snapshot else {
                 print("Error feching snapshot results: \(error!)")

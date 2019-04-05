@@ -49,16 +49,11 @@ class RoomsViewController: UICollectionViewController {
     // MARK: UI Helper Methods
     
     func prepareCollectionView() {
-        
-        
-        
         // Set up the collection view.
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.backgroundColor = UIColor.appBackgroundColor
         collectionView.alwaysBounceVertical = true
-//        collectionView.indicatorStyle = .white
         collectionView.register(RoomCell.self, forCellWithReuseIdentifier: RoomCell.identifier)
-        
     }
 
 }

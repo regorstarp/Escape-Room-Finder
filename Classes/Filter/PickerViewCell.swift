@@ -13,7 +13,6 @@ class PickerViewCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSou
     static let identifier = "PickerViewCell"
     
     let textField = UITextField()
-//    private let pickerView = UIPickerView()
     private let titleLabel = UILabel()
     private let stackView = UIStackView()
     private var options: [String] = []

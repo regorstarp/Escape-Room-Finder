@@ -58,12 +58,6 @@ extension SearchResultsViewController: UISearchResultsUpdating {
         filterContentForSearchText(searchController.searchBar.text!)
     }
     
-//    func searchBarIsEmpty() -> Bool {
-//        // Returns true if the text is empty or nil
-//        return true
-////        return searchController.searchBar.text?.isEmpty ?? true
-//    }
-    
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
         filteredRooms = rooms.filter({( room : Room) -> Bool in
             return room.name.lowercased().contains(searchText.lowercased())
@@ -72,9 +66,3 @@ extension SearchResultsViewController: UISearchResultsUpdating {
         tableView.reloadData()
     }
 }
-
-//extension SearchResultsViewController: UISearchBarDelegate {
-//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-//        searchBar.
-//    }
-//}

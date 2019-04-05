@@ -19,7 +19,6 @@ class RatingControl: UIStackView {
         }
     }
     var starCount = 5
-    //MARK: Initialization
     
     //MARK: Button Action
     
