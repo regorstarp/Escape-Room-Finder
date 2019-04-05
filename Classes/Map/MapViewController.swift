@@ -109,7 +109,6 @@ class MapViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-//        navigationController?.setNavigationBarHidden(false, animated: false)
         stopObserving()
     }
     
@@ -118,8 +117,6 @@ class MapViewController: UIViewController {
     }
     
     fileprivate func baseQuery() -> Query {
-        // Firestore needs to use Timestamp type instead of Date type.
-        // https://firebase.google.com/docs/reference/swift/firebasefirestore/api/reference/Classes/FirestoreSettings
         let firestore: Firestore = Firestore.firestore()
         let settings = firestore.settings
         settings.areTimestampsInSnapshotsEnabled = true
